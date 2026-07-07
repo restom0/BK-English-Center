@@ -1,389 +1,342 @@
 # BK English Center
 
-Full-stack management system for an English language learning center.
-Built with **Vanilla JS + SCSS** on the client and **Node.js / Express + Prisma** on the server, backed by **PostgreSQL**, cached with **Redis**, and containerised with **Docker Compose**.
+BK English Center is a full-stack management system for an English language center. It combines a static HTML/CSS/JavaScript frontend with an Express API, Prisma, PostgreSQL, Redis caching, JWT role-based access, Gmail SMTP notifications, Swagger API docs, and Docker Compose deployment.
 
----
+## Contents
 
-## Table of Contents
-
-1. [Architecture](#architecture)
-2. [Tech Stack](#tech-stack)
-3. [Quick Start (Docker)](#quick-start-docker)
-4. [Local Development](#local-development)
-5. [Environment Variables](#environment-variables)
-6. [Database](#database)
-7. [API Documentation](#api-documentation)
-8. [Project Structure](#project-structure)
-9. [Features](#features)
-10. [Scripts Reference](#scripts-reference)
-
----
+- [Architecture](#architecture)
+- [Features](#features)
+- [Tech Stack](#tech-stack)
+- [Quick Start with Docker](#quick-start-with-docker)
+- [Local Development](#local-development)
+- [Environment Variables](#environment-variables)
+- [API Overview](#api-overview)
+- [Database](#database)
+- [Project Structure](#project-structure)
+- [Scripts](#scripts)
+- [Notes](#notes)
 
 ## Architecture
 
-```
-Browser
-  │
-  ▼
-┌─────────────────────────────────────────┐
-│  nginx (port 80)                        │
-│  ├─  /          → static files (client) │
-│  └─  /api/*     → backend:3000          │
-└─────────────────────────────────────────┘
-         │                  │
-         ▼                  ▼
-   ┌──────────┐      ┌──────────────┐
-   │  Static  │      │  Express API │
-   │  Files   │      │  + Prisma    │
-   │ (nginx)  │      │  + ioredis   │
-   └──────────┘      └──────┬───────┘
-                            │
-              ┌─────────────┴──────────────┐
-              ▼                            ▼
-       ┌────────────┐              ┌──────────────┐
-       │ PostgreSQL │              │    Redis 7   │
-       │    16      │              │  (cache/OTP) │
-       └────────────┘              └──────────────┘
+```mermaid
+flowchart LR
+    subgraph client ["Client"]
+        browser["Browser"]
+    end
+    subgraph gateway ["Gateway"]
+        nginx["nginx Frontend"]
+    end
+    subgraph service ["Core Services"]
+        expressApi["Express API"]
+    end
+    subgraph datastore ["Data Stores"]
+        postgres["PostgreSQL 16"]
+        redis["Redis 7"]
+    end
+    subgraph external ["External"]
+        gmail["Gmail SMTP"]
+    end
+
+    browser -->|"HTTP"| nginx
+    nginx -->|"Serves static client and proxies API"| expressApi
+    expressApi -->|"Prisma read/write"| postgres
+    expressApi -->|"Cache list/detail reads"| redis
+    expressApi -.->|"Express API: OTP and notifications"| gmail
 ```
 
----
+Runtime flow:
+
+- The `frontend` container builds SCSS, patches `client/config.js` for same-origin API calls, and serves static files with nginx.
+- nginx serves HTML/CSS/JS and reverse-proxies `/api/*` plus backend route prefixes to `backend:3000`.
+- The `backend` container runs the Express API on port `3000`.
+- PostgreSQL stores application data. Flyway applies SQL migrations from `server/sql`.
+- Redis stores list/detail cache entries for selected services and is also available for future OTP/session work.
+- Gmail SMTP is used for OTP and notification email delivery.
+
+## Features
+
+- Public pages for home, courses, course detail, contact, login, signup, and user course/profile views.
+- Role-specific areas for admin, staff, teacher, and student workflows.
+- Course and class management.
+- Student enrollment, attendance, marks, payment, and prize tracking.
+- Teacher assignment, attendance, rating, payment, prize, and file tracking.
+- Staff attendance, salary, prize, and statistics screens.
+- Sponsor, email whitelist, activity log, and registration log management.
+- JWT authentication with role gates for admin, staff, teacher, and student access.
+- OTP-assisted registration for privileged roles.
+- API i18n through `Accept-Language` with `en`, `vi`, `fr`, `de`, `es`, `ca`, and `it` locale files.
+- Redis-backed cache for course, class, student, teacher, sponsor, and join-class reads.
+- Swagger UI and raw OpenAPI JSON.
 
 ## Tech Stack
 
-| Layer     | Technology |
-|-----------|------------|
-| Frontend  | Vanilla JS, SCSS design system, Alpine.js, Bootstrap 5, Flowbite |
-| Backend   | Node.js 22, Express 4, Prisma 5 ORM |
-| Database  | PostgreSQL 16 |
-| Cache     | Redis 7 (ioredis) |
-| Auth      | JWT (jsonwebtoken), bcrypt, Google OAuth (One-Tap) |
-| Email     | Nodemailer + Gmail SMTP |
-| API Docs  | Swagger UI (swagger-jsdoc + swagger-ui-express) |
-| i18n      | Custom middleware — 7 locales: en, vi, fr, de, es, ca, it |
-| Container | Docker, Docker Compose |
-| CI/CD     | GitHub Actions |
+| Layer | Technology |
+| --- | --- |
+| Frontend | HTML, Vanilla JavaScript, SCSS, Bootstrap/Flowbite-style pages, nginx |
+| Backend | Node.js 22, Express 5, Prisma 7, `@prisma/adapter-pg` |
+| Database | PostgreSQL 16 |
+| Cache | Redis 7 with `ioredis` |
+| Auth | JWT, bcrypt, role-based middleware |
+| Email | Nodemailer with Gmail SMTP |
+| API docs | Swagger UI, swagger-jsdoc |
+| Migration | Flyway SQL migrations, Prisma schema/client |
+| Tooling | Docker Compose, Jest, Supertest, ESLint, Prettier, Sass |
 
----
+## Quick Start with Docker
 
-## Quick Start (Docker)
+Prerequisites:
 
-### Prerequisites
+- Docker Desktop or Docker Engine with the `docker compose` plugin.
+- A Gmail App Password if you want OTP and notification email to work.
 
-- [Docker Desktop](https://www.docker.com/products/docker-desktop/) 24+
-- `docker compose` plugin
-
-### Steps
+Steps:
 
 ```bash
-# 1. Clone the repository
-git clone https://github.com/your-org/DACNPM_RANG.git
-cd DACNPM_RANG
-
-# 2. Copy and edit environment variables
 cp server/.env.example .env
-#    → Fill in: POSTGRES_PASSWORD, JWT_SECRET, MAIL_USER, MAIL_PASS
-#      Optionally: GOOGLE_CLIENT_ID, REDIS_URL
+# Edit .env: POSTGRES_PASSWORD, JWT_SECRET, MAIL_USER, MAIL_PASS, and optional GOOGLE_CLIENT_ID.
 
-# 3. Build and start all services
 docker compose up --build -d
-
-# 4. (Optional) Seed the database with demo data
 docker compose exec backend npm run db:seed
-
-# 5. Open the app
-open http://localhost
-# API docs at http://localhost/api-docs
 ```
 
-> **First run note:** Prisma migrations run automatically on backend startup via `prisma migrate deploy`. The database schema is created fresh on a clean volume.
+Demo login accounts after seeding:
 
-### Default demo credentials (after seeding)
+| Role | Username | Password |
+| --- | --- | --- |
+| Admin | `admin01` | `Admin@1234` |
+| Staff | `staff01` | `Staff@1234` |
+| Teacher | `teacher01` | `Teacher@1234` |
+| Student | `student001` | `Student@1234` |
 
-| Role    | Username    | Password      |
-|---------|-------------|---------------|
-| Admin   | `admin01`   | `Admin@1234`  |
-| Staff   | `staff01`   | `Staff@1234`  |
-| Teacher | `teacher01` | `Teacher@1234`|
-| Student | `student001`| `Student@1234`|
+Open:
 
----
+- App: `http://localhost`
+- API docs: `http://localhost/api-docs`
+- Raw OpenAPI JSON: `http://localhost/api-docs.json`
+
+Stop the stack:
+
+```bash
+docker compose down
+```
+
+Remove containers and volumes:
+
+```bash
+docker compose down -v
+```
 
 ## Local Development
 
-### Prerequisites
-
-- Node.js 22+
-- PostgreSQL 16 running locally (or use Docker for just the DB)
-- Redis 7 running locally (or use Docker)
-
 ### Backend
 
+Use PostgreSQL and Redis from Docker, then run the API locally:
+
 ```bash
+cp server/.env.example .env
+docker compose up postgres redis migrate -d
+
 cd server
-cp ../.env.example .env          # edit DATABASE_URL, REDIS_URL, etc.
+cp .env.example .env
 npm install
-npx prisma generate              # generate Prisma client
-npx prisma migrate dev           # run migrations (creates DB schema)
-npm run db:seed                  # optional: populate with demo data
-npm run dev                      # start with nodemon on :3000
+npm run db:generate
+npm run db:seed
+npm run dev
 ```
+
+The backend listens on `http://localhost:3000` by default.
 
 ### Frontend
 
 ```bash
 cd client
-npm install                      # installs sass
-npm run build:css                # compile SCSS → styles/main.css
-# serve statically (e.g. VS Code Live Server, or:)
+npm install
+npm run watch:css
+```
+
+Serve the `client` folder with a static server such as VS Code Live Server or:
+
+```bash
 npx serve . -p 5500
 ```
 
-### Run only the DB + Redis via Docker (dev convenience)
-
-```bash
-docker compose up postgres redis -d
-# Then run backend + frontend locally as above
-```
-
----
+In local development, `client/config.js` points API calls at `http://localhost:3000`. During Docker builds, the frontend Dockerfile patches `API_URL` to an empty string so nginx can proxy same-origin requests.
 
 ## Environment Variables
 
-Copy `server/.env.example` to `.env` in the **root** of the repo (Docker Compose reads it from there).
+For Docker, copy `server/.env.example` to `.env` at the repository root. The compose file reads root `.env`, while the backend container also receives explicit `DATABASE_URL` and `REDIS_URL` values built from the PostgreSQL and Redis services.
 
-| Variable            | Required | Default         | Description |
-|---------------------|----------|-----------------|-------------|
-| `DATABASE_URL`      | ✅        | —               | Prisma PostgreSQL connection string |
-| `REDIS_URL`         | ✅        | —               | Redis connection string |
-| `JWT_SECRET`        | ✅        | —               | At least 32 random characters |
-| `JWT_EXPIRES_IN`    | —        | `28800`         | Token lifetime in seconds (8 h) |
-| `MAIL_USER`         | ✅ (prod) | —               | Gmail address for SMTP |
-| `MAIL_PASS`         | ✅ (prod) | —               | Gmail App Password (16 chars) |
-| `CORS_ORIGIN`       | —        | `http://localhost:5500` | Allowed CORS origin |
-| `GOOGLE_CLIENT_ID`  | —        | —               | Google OAuth Client ID for One-Tap login |
-| `CACHE_TTL`         | —        | `300`           | Redis cache TTL in seconds |
-| `NODE_ENV`          | —        | `development`   | `production` disables verbose logs |
-| `PORT`              | —        | `3000`          | Express listen port |
-| `POSTGRES_USER`     | —        | `bkec`          | Docker Compose DB user |
-| `POSTGRES_PASSWORD` | ✅        | —               | Docker Compose DB password |
-| `POSTGRES_DB`       | —        | `bkec`          | Docker Compose DB name |
+| Variable | Required | Default | Purpose |
+| --- | --- | --- | --- |
+| `PORT` | No | `3000` | Express listen port |
+| `NODE_ENV` | No | `development` | Runtime mode |
+| `DATABASE_URL` | Yes for local backend | none | Prisma/PostgreSQL connection string |
+| `REDIS_URL` | Yes for local backend | `redis://localhost:6379` | Redis connection string |
+| `JWT_SECRET` | Yes | development fallback exists | JWT signing secret |
+| `JWT_EXPIRES_IN` | No | `28800` | Token lifetime in seconds |
+| `MAIL_USER` | Yes in production | none | Gmail SMTP account |
+| `MAIL_PASS` | Yes in production | none | Gmail App Password |
+| `CORS_ORIGIN` | No | `http://localhost:5500` | Allowed browser origin |
+| `GOOGLE_CLIENT_ID` | No | none | Google Identity Services client ID |
+| `CACHE_TTL` | No | `300` | Redis cache TTL in seconds |
+| `POSTGRES_USER` | No | `bkec` | Compose PostgreSQL user |
+| `POSTGRES_PASSWORD` | Yes | `changeme` | Compose PostgreSQL password |
+| `POSTGRES_DB` | No | `bkec` | Compose PostgreSQL database |
 
----
+## API Overview
+
+Swagger is generated from `server/src/config/swagger.js`, route files, and controller JSDoc blocks.
+
+Authentication:
+
+```http
+Authorization: Bearer <jwt_token>
+Accept-Language: en
+```
+
+Important routes:
+
+| Prefix | Access | Notes |
+| --- | --- | --- |
+| `GET /users/user` | Public | Login with `username` and `userpassword` query parameters |
+| `POST /users/user` | Public or OTP-gated | Create account; admin/staff require OTP |
+| `PATCH /users/user` | Authenticated | Update current account profile |
+| `GET /users/info` | Authenticated | Current user profile |
+| `/sendMail` | Public | Send OTP email |
+| `/sendPay`, `/sendPrize`, `/sendSalary`, `/sendWarning`, `/sendFile`, `/sendCheer` | Authenticated | Notification email helpers |
+| `/courses/all` | Public | Public course catalogue |
+| `/courses` and `/courses/course` | Authenticated | Course list/detail and CRUD |
+| `/admins` | Admin | Admin dashboard/statistics |
+| `/staffs` | Staff/Admin | Staff profile, attendance, salary, prize, stats |
+| `/classes` | Staff/Admin | Class management |
+| `/teachers`, `/teacherjoinclasses` | Teacher/Staff/Admin | Teacher records and class assignments |
+| `/students`, `/studentjoinclasses` | Student/Staff/Admin | Student records, enrollments, marks, payments |
+| `/files`, `/emails`, `/sponsors`, `/logs`, `/register-logs` | Protected | Operational admin resources |
+
+Role gates live in `server/src/middleware/useApiKey.js`. Public routes are mounted in `server/routes/index.js`; most other route groups are wrapped with `requireApiKey`.
 
 ## Database
 
-### Schema (Prisma)
+The Prisma schema is in `server/prisma/schema.prisma`. The initial SQL migration is in `server/sql/V1__init.sql` and is applied by the `migrate` service in Docker Compose.
 
-The Prisma schema is at `server/prisma/schema.prisma`. Key entities:
+Core models:
 
-| Model             | Description |
-|-------------------|-------------|
-| `User`            | Auth table — username, password hash, role |
-| `Student`         | Student profile (linked to User 1:1) |
-| `Teacher`         | Teacher profile |
-| `Staff`           | Staff profile |
-| `Admin`           | Admin profile |
-| `Course`          | Course catalogue |
-| `Class`           | Scheduled class instance of a course |
-| `StudentJoinClass`| Enrolment + grades + payment status |
-| `TeacherJoinClass`| Teacher assignment + attendance + payment |
-| `ManageStaff`     | Monthly attendance + salary records |
-| `TeacherHasFile`  | Teaching material tracking |
-| `Email`           | Allowed registration email whitelist |
-| `Sponsor`         | Sponsor records |
-| `Log`             | Activity audit log |
-| `RegisterLog`     | Account registration log |
+| Model | Purpose |
+| --- | --- |
+| `User` | Login account with username, password hash, email, and role |
+| `Student`, `Teacher`, `Staff`, `Admin` | Role-specific profiles linked to `User` |
+| `Course` | Course catalogue and pricing/attendance defaults |
+| `Class` | Scheduled class instance of a course |
+| `StudentJoinClass` | Student enrollment, attendance, marks, payment, and prize state |
+| `TeacherJoinClass` | Teacher assignment, attendance, rating, payment, and prize state |
+| `ManageStaff` | Staff monthly attendance, salary, and prize state |
+| `TeacherHasFile` | Teaching material tracking |
+| `Email` | Registration email whitelist by role |
+| `Sponsor` | Sponsor records |
+| `Log` | Activity audit log |
+| `RegisterLog` | Account registration log |
 
-All mutable entities (Course, Class, Student, Teacher, Staff, Admin, Sponsor, StudentJoinClass, TeacherJoinClass) carry a `version Int @default(1)` field that **must be incremented** on every UPDATE by the service layer.
-
-### Migrations
-
-```bash
-# Create a new migration after schema changes
-cd server
-npx prisma migrate dev --name describe_your_change
-
-# Apply migrations in production (also runs automatically on container start)
-npx prisma migrate deploy
-```
-
-### Seeding
-
-```bash
-npm run db:seed
-# Seeds: 10 admins, 20 staff, 40 teachers, 120 students,
-#        10 courses, 30 classes, enrolments, sponsors, email whitelist, logs.
-```
-
----
-
-## API Documentation
-
-Interactive Swagger UI is available at:
-
-- **Docker:** `http://localhost/api-docs`
-- **Local dev:** `http://localhost:3000/api-docs`
-
-Raw OpenAPI JSON: `/api-docs.json`
-
-### Authentication
-
-All protected endpoints require:
-
-```
-Authorization: Bearer <jwt_token>
-```
-
-Obtain a token via `GET /users/login?username=...&userpassword=...`.
-
-### i18n
-
-The API responds in the language requested via the `Accept-Language` header:
-
-```
-Accept-Language: fr          → French responses
-Accept-Language: vi          → Vietnamese responses
-Accept-Language: en          → English (default)
-```
-
-Supported locales: `en`, `vi`, `fr`, `de`, `es`, `ca`, `it`.
-
-### Redis Cache
-
-List and detail endpoints are cached in Redis with a 5-minute TTL (configurable via `CACHE_TTL`). Cache is invalidated automatically on any Create/Update/Delete operation for that entity.
-
----
+Mutable profile and business entities use a `version` field that the service layer increments on updates.
 
 ## Project Structure
 
+```text
+BK-English-Center/
+|-- docker-compose.yml
+|-- .env.example
+|-- README.md
+|-- client/
+|   |-- Dockerfile
+|   |-- nginx.conf
+|   |-- config.js
+|   |-- styles/
+|   |   |-- main.scss
+|   |   |-- main.css
+|   |   |-- _variables.scss
+|   |   |-- _base.scss
+|   |   |-- _components.scss
+|   |   |-- _mobile.scss
+|   |   `-- pages/
+|   |-- js/
+|   |   |-- config.js
+|   |   |-- skeleton.js
+|   |   |-- theme.js
+|   |   `-- pages/
+|   |-- pages/
+|   |   |-- admin/
+|   |   |-- auth/
+|   |   |-- public/
+|   |   |-- staff/
+|   |   |-- student/
+|   |   `-- teacher/
+|   |-- i18n/
+|   |-- utils/
+|   `-- img/
+`-- server/
+    |-- Dockerfile
+    |-- index.js
+    |-- package.json
+    |-- prisma.config.ts
+    |-- prisma/
+    |   |-- schema.prisma
+    |   `-- seed.js
+    |-- sql/
+    |   `-- V1__init.sql
+    |-- routes/
+    |-- src/
+    |   |-- config/
+    |   |-- controllers/
+    |   |-- middleware/
+    |   |-- models/
+    |   |-- services/
+    |   `-- locales/
+    `-- test/
+        |-- api/
+        |-- integration/
+        `-- unit/
 ```
-DACNPM_RANG/
-├── .env.example              ← copy to .env (root)
-├── docker-compose.yml        ← PostgreSQL + Redis + backend + frontend
-├── README.md
-│
-├── client/                   ← Static frontend (nginx)
-│   ├── Dockerfile
-│   ├── nginx.conf
-│   ├── config.js             ← API_URL + GOOGLE_CLIENT_ID
-│   ├── styles/
-│   │   ├── main.css          ← compiled output (committed)
-│   │   ├── main.scss
-│   │   ├── _variables.scss   ← design tokens
-│   │   ├── _base.scss        ← reset + utilities + dark theme + skeleton
-│   │   ├── _components.scss  ← reusable UI components
-│   │   ├── _mobile.scss      ← responsive overrides
-│   │   └── pages/            ← page-specific partials
-│   ├── js/
-│   │   ├── theme.js          ← dark/light theme switcher
-│   │   ├── skeleton.js       ← skeleton loading + fun facts
-│   │   ├── config.js         ← shared API helpers
-│   │   ├── i18n/             ← client-side locale JSON files
-│   │   └── pages/            ← feature JS files mirroring pages/
-│   └── pages/                ← HTML pages (stakeholder/function/index.html)
-│       ├── admin/
-│       ├── auth/
-│       ├── public/
-│       ├── staff/
-│       ├── student/
-│       └── teacher/
-│
-└── server/                   ← Express API
-    ├── Dockerfile
-    ├── .env.example
-    ├── package.json
-    ├── index.js              ← app entry (CORS, i18n, Swagger, routes)
-    ├── prisma/
-    │   ├── schema.prisma     ← PostgreSQL schema + entity versioning
-    │   └── seed.js           ← demo data seeder
-    ├── routes/               ← Express route files (15 modules)
-    └── src/
-        ├── config/
-        │   ├── env.js        ← centralized env vars
-        │   ├── prisma.js     ← Prisma client singleton
-        │   ├── redis.js      ← ioredis client + cache helpers
-        │   └── swagger.js    ← OpenAPI spec
-        ├── controllers/      ← HTTP handlers (14 controllers)
-        ├── services/         ← business logic + Redis cache layer
-        ├── models/           ← MySQL2 query functions (legacy, kept for migration)
-        ├── middleware/
-        │   ├── i18n.js       ← Accept-Language → req.t() helper
-        │   ├── useApiKey.js  ← JWT auth + OTP + mail dispatch
-        │   └── usePassword.js← bcrypt helpers
-        └── locales/          ← translation JSON files (en, vi, fr, de, es, ca, it)
-```
 
----
+## Scripts
 
-## Features
+Backend (`server/package.json`):
 
-### Client
+| Command | Purpose |
+| --- | --- |
+| `npm start` | Run production API |
+| `npm run dev` | Run API with nodemon |
+| `npm run db:generate` | Generate Prisma client |
+| `npm run db:migrate` | Run Prisma migrate deploy |
+| `npm run db:seed` | Seed demo data |
+| `npm run db:studio` | Open Prisma Studio |
+| `npm test` | Run Jest tests serially |
+| `npm run test:cov` | Run Jest coverage |
+| `npm run eslint` | Lint server source |
+| `npm run format:check` | Check Prettier formatting |
 
-- **SCSS design system** — centralized tokens (colors, spacing, typography, shadows)
-- **Dark / light theme** — `theme.js` persists preference to `localStorage`, zero flash
-- **Skeleton loading** — animated shimmer overlay with random English fun facts
-- **Google Login** — One-Tap button, reads `GOOGLE_CLIENT_ID` from `config.js`
-- **i18n** — 7 language JSON files, label keys in all page JS
-- **Responsive** — mobile-first CSS overrides for tables, modals, forms, nav
-- **Page structure** — `pages/{stakeholder}/{function}/index.html` (depth-3)
+Frontend (`client/package.json`):
 
-### Server
+| Command | Purpose |
+| --- | --- |
+| `npm run build:css` | Compile compressed SCSS to `styles/main.css` |
+| `npm run build:css:dev` | Compile expanded CSS for debugging |
+| `npm run watch:css` | Watch SCSS and rebuild on changes |
+| `npm run lint` | Lint frontend JavaScript |
+| `npm run format:check` | Check Prettier formatting |
+| `npm run build:icons` | Extract developer icons |
 
-- **Prisma + PostgreSQL** — type-safe ORM, auto-migrations on startup
-- **Entity versioning** — `version` field increments on every update
-- **Redis cache** — 5-min TTL on list/detail reads, invalidated on CUD
-- **Swagger UI** — full OpenAPI 3.0 docs at `/api-docs`
-- **i18n** — 7-language `req.t()` middleware based on `Accept-Language`
-- **JWT auth** — 8-hour tokens, role-based route guards
-- **Rate limiting** — 300 req / 15 min / IP
-- **OTP registration** — email whitelist + one-time token via Nodemailer
-- **Seed script** — 100+ realistic records per table
+Docker Compose:
 
-### DevOps
+| Command | Purpose |
+| --- | --- |
+| `docker compose up --build -d` | Build and start the full stack |
+| `docker compose logs -f` | Stream service logs |
+| `docker compose exec backend npm run db:seed` | Seed demo data in the backend container |
+| `docker compose down` | Stop containers |
+| `docker compose down -v` | Stop containers and remove volumes |
 
-- **Docker Compose** — single `docker compose up --build` starts everything
-- **Multi-stage Dockerfiles** — minimal production images, non-root users
-- **GitHub Actions CI** — lint + build on push/PR
+## Notes
 
----
-
-## Scripts Reference
-
-### Backend (`cd server`)
-
-| Script               | Description |
-|----------------------|-------------|
-| `npm start`          | Production server |
-| `npm run dev`        | Development server with nodemon |
-| `npm run db:generate`| Regenerate Prisma client after schema changes |
-| `npm run db:migrate` | Apply migrations (production) |
-| `npm run db:seed`    | Populate database with demo data |
-| `npm run db:studio`  | Open Prisma Studio (visual DB browser) |
-| `npm run lint`       | Check formatting (prettier) |
-| `npm run lint:fix`   | Auto-fix formatting |
-
-### Frontend (`cd client`)
-
-| Script               | Description |
-|----------------------|-------------|
-| `npm run build:css`  | Compile SCSS → `styles/main.css` |
-| `npm run watch:css`  | Watch + recompile on change |
-
-### Docker Compose (root)
-
-| Command                              | Description |
-|--------------------------------------|-------------|
-| `docker compose up --build -d`       | Build + start all services in background |
-| `docker compose logs -f`             | Stream logs from all services |
-| `docker compose exec backend sh`     | Shell into the API container |
-| `docker compose exec backend npm run db:seed` | Seed demo data |
-| `docker compose down -v`             | Stop and remove containers + volumes |
-
----
-
-## Contributing
-
-1. Fork the repo and create a feature branch.
-2. Run `npm run lint:fix` before committing.
-3. Open a PR — GitHub Actions will run linting automatically.
+- The root `.env.example` appears older than the current PostgreSQL/Prisma Compose setup. Prefer `server/.env.example` as the source for new root `.env` files.
+- `server/src/models` still contains legacy model-style data functions, while newer service files use Prisma and Redis directly.
+- OTP state is currently an in-memory counter in `server/src/middleware/useApiKey.js`; Redis or PostgreSQL would be safer for production.
+- `server/README.md` and `client/README.md` may contain older MySQL or route descriptions. This root README reflects the current code paths checked in this repository.
