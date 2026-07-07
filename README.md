@@ -1,4 +1,4 @@
-# BK English Center — DACNPM_RANG
+# BK English Center
 
 Full-stack management system for an English language learning center.
 Built with **Vanilla JS + SCSS** on the client and **Node.js / Express + Prisma** on the server, backed by **PostgreSQL**, cached with **Redis**, and containerised with **Docker Compose**.

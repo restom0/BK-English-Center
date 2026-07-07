@@ -21,15 +21,78 @@
     "updateNoChange": "No s'han fet canvis",
     "registerSuccess": "Registre completat"
   },
-  "course": { "notFound": "Curs no trobat", "alreadyExists": "El curs ja existeix", "addSuccess": "Curs afegit", "updateSuccess": "Curs actualitzat", "deleteSuccess": "Curs eliminat", "deleteBlocked": "No es pot eliminar un curs amb classes actives" },
-  "class":   { "notFound": "Classe no trobada", "alreadyExists": "La classe ja existeix", "addSuccess": "Classe afegida", "updateSuccess": "Classe actualitzada", "deleteSuccess": "Classe eliminada" },
-  "student": { "notFound": "Estudiant no trobat", "updateSuccess": "Estudiant actualitzat", "noChange": "Sense canvis" },
-  "teacher": { "notFound": "Professor no trobat", "updateSuccess": "Professor actualitzat", "noChange": "Sense canvis" },
-  "staff":   { "notFound": "Personal no trobat", "updateSuccess": "Personal actualitzat", "deleteSuccess": "Personal eliminat" },
-  "sponsor": { "addSuccess": "Patrocinador afegit", "updateSuccess": "Patrocinador actualitzat", "deleteSuccess": "Patrocinador eliminat", "notFound": "Patrocinador no trobat" },
-  "email":   { "noPermission": "No esteu autoritzat a registrar-vos", "sendFailed": "Error en enviar el correu", "sent": "Correu enviat", "addSuccess": "Correu afegit", "updateSuccess": "Correu actualitzat", "deleteSuccess": "Correu eliminat", "deleteBlocked": "No es pot eliminar l'entrada principal", "notFound": "Correu no trobat" },
-  "file":    { "addSuccess": "Fitxer afegit", "updateSuccess": "Fitxer actualitzat", "deleteSuccess": "Fitxer eliminat", "notFound": "Fitxer no trobat" },
-  "log":     { "editAccount": "Editar compte" },
-  "server":  { "error": "Error intern del servidor", "tooManyRequests": "Massa sol·licituds, torneu-ho a intentar més tard", "noChange": "Sense canvis" },
-  "mail":    { "subjectOtp": "Registre de compte", "subjectPay": "Recordatori de matrícula", "subjectSalary": "Notificació de salari", "subjectPrize": "Notificació de premi", "subjectWarning": "Avís de rendiment", "subjectFile": "Recollida de material", "subjectCheer": "Felicitació", "invalidOtp": "Codi de verificació invàlid", "logPay": "Enviar recordatori de pagament", "logSalary": "Enviar notificació de salari", "logPrize": "Enviar notificació de premi", "logWarning": "Enviar avís", "logFile": "Enviar notificació de material", "logCheer": "Enviar felicitació" }
+  "course": {
+    "notFound": "Curs no trobat",
+    "alreadyExists": "El curs ja existeix",
+    "addSuccess": "Curs afegit",
+    "updateSuccess": "Curs actualitzat",
+    "deleteSuccess": "Curs eliminat",
+    "deleteBlocked": "No es pot eliminar un curs amb classes actives"
+  },
+  "class": {
+    "notFound": "Classe no trobada",
+    "alreadyExists": "La classe ja existeix",
+    "addSuccess": "Classe afegida",
+    "updateSuccess": "Classe actualitzada",
+    "deleteSuccess": "Classe eliminada"
+  },
+  "student": {
+    "notFound": "Estudiant no trobat",
+    "updateSuccess": "Estudiant actualitzat",
+    "noChange": "Sense canvis"
+  },
+  "teacher": {
+    "notFound": "Professor no trobat",
+    "updateSuccess": "Professor actualitzat",
+    "noChange": "Sense canvis"
+  },
+  "staff": {
+    "notFound": "Personal no trobat",
+    "updateSuccess": "Personal actualitzat",
+    "deleteSuccess": "Personal eliminat"
+  },
+  "sponsor": {
+    "addSuccess": "Patrocinador afegit",
+    "updateSuccess": "Patrocinador actualitzat",
+    "deleteSuccess": "Patrocinador eliminat",
+    "notFound": "Patrocinador no trobat"
+  },
+  "email": {
+    "noPermission": "No esteu autoritzat a registrar-vos",
+    "sendFailed": "Error en enviar el correu",
+    "sent": "Correu enviat",
+    "addSuccess": "Correu afegit",
+    "updateSuccess": "Correu actualitzat",
+    "deleteSuccess": "Correu eliminat",
+    "deleteBlocked": "No es pot eliminar l'entrada principal",
+    "notFound": "Correu no trobat"
+  },
+  "file": {
+    "addSuccess": "Fitxer afegit",
+    "updateSuccess": "Fitxer actualitzat",
+    "deleteSuccess": "Fitxer eliminat",
+    "notFound": "Fitxer no trobat"
+  },
+  "log": { "editAccount": "Editar compte" },
+  "server": {
+    "error": "Error intern del servidor",
+    "tooManyRequests": "Massa sol·licituds, torneu-ho a intentar més tard",
+    "noChange": "Sense canvis"
+  },
+  "mail": {
+    "subjectOtp": "Registre de compte",
+    "subjectPay": "Recordatori de matrícula",
+    "subjectSalary": "Notificació de salari",
+    "subjectPrize": "Notificació de premi",
+    "subjectWarning": "Avís de rendiment",
+    "subjectFile": "Recollida de material",
+    "subjectCheer": "Felicitació",
+    "invalidOtp": "Codi de verificació invàlid",
+    "logPay": "Enviar recordatori de pagament",
+    "logSalary": "Enviar notificació de salari",
+    "logPrize": "Enviar notificació de premi",
+    "logWarning": "Enviar avís",
+    "logFile": "Enviar notificació de material",
+    "logCheer": "Enviar felicitació"
+  }
 }
