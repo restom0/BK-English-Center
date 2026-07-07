@@ -73,11 +73,16 @@ const TEACHER_ROUTES = new Set(['/teachers', '/teacherjoinclasses']);
 const STUDENT_ROUTES = new Set(['/students', '/studentjoinclasses']);
 
 const requireApiKey = (req, res, next) => {
-  if (!req.headers.authorization) {
+  // Prefer the httpOnly cookie; fall back to the Authorization header
+  // for backward compatibility / non-browser API clients.
+  const token =
+    (req.cookies && req.cookies.apitoken) ||
+    (req.headers.authorization ? req.headers.authorization.split(' ')[1] : null);
+
+  if (!token) {
     return res.status(403).json({ check: false, msg: req.t('auth.notLoggedIn') });
   }
 
-  const token = req.headers.authorization.split(' ')[1];
   jwt.verify(token, JWT_SECRET, async (err, decoded) => {
     if (err || !decoded) {
       return res.status(401).json({ check: false, msg: req.t('auth.invalidToken') });

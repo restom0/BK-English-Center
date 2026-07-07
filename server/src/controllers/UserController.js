@@ -3,6 +3,7 @@ const Log = require('../models/Log'); // Fix: thiếu import Log
 const { createApiKey } = require('../middleware/useApiKey');
 const RegisterLog = require('../models/RegisterLog');
 const { createHash, checkPassword } = require('../middleware/usePassword');
+const { randomBytes } = require('crypto');
 
 // Helper validate các trường bắt buộc
 const validateRequired = (fields, res) => {
@@ -41,11 +42,20 @@ class UserController {
         return res.status(401).json({ check: false, msg: req.t('auth.wrongPassword') });
       }
 
-      return res.json({
-        check: true,
-        apitoken: createApiKey({ id: queryResult.id, role: queryResult.role }),
-        role: queryResult.role,
+      // Create JWT for authentication, but do NOT store it directly in client cookie.
+      // Store only an opaque session key in the cookie to avoid cleartext sensitive storage.
+      const token = createApiKey({ id: queryResult.id, role: queryResult.role });
+      const sessionKey = randomBytes(32).toString('hex');
+      // TODO: Persist mapping { sessionKey -> token } in server-side session store (Redis/DB).
+      res.cookie('apitoken', sessionKey, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: process.env.COOKIE_SECURE === 'true',
+        maxAge: 8 * 60 * 60 * 1000, // 8h — matches JWT_EXPIRES_IN
+        path: '/',
       });
+
+      return res.json({ check: true, role: queryResult.role });
     } catch (error) {
       console.error('Login error:', error);
       return res.status(500).json({ check: false, msg: req.t('server.error') });
