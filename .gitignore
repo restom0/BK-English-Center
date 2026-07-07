@@ -7,13 +7,35 @@
 # Local override file (never commit production secrets)
 docker-compose.override.yml
 
-# ── Editor / OS ──────────────────────────────────────────────
-.DS_Store
-Thumbs.db
-.idea/
+# ── Editor / IDE ─────────────────────────────────────────────
+# VS Code
 .vscode/
+!.vscode/extensions.json
+*.code-workspace
+.history/
+.vscode-test/
+# JetBrains
+.idea/
+*.iml
+*.iws
+# Vim / Emacs / misc
 *.swp
 *.swo
+*~
+\#*\#
+.\#*
+# Sublime
+*.sublime-project
+*.sublime-workspace
+
+# ── OS ───────────────────────────────────────────────────────
+.DS_Store
+.AppleDouble
+.LSOverride
+Thumbs.db
+ehthumbs.db
+desktop.ini
+$RECYCLE.BIN/
 
 # ── Dependencies (root-level, if any) ────────────────────────
 node_modules/
