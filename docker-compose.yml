@@ -50,6 +50,26 @@ services:
     networks:
       - internal
 
+  # ── Flyway migrations (one-shot, runs before backend) ───────
+  migrate:
+    image: flyway/flyway:10-alpine
+    command: >-
+      -url=jdbc:postgresql://postgres:5432/${POSTGRES_DB:-bkec}
+      -user=${POSTGRES_USER:-bkec}
+      -password=${POSTGRES_PASSWORD:-changeme}
+      -locations=filesystem:/flyway/sql
+      -baselineOnMigrate=true
+      -connectRetries=10
+      migrate
+    volumes:
+      - ./server/sql:/flyway/sql:ro
+    depends_on:
+      postgres:
+        condition: service_healthy
+    networks:
+      - internal
+    restart: "no"
+
   # ── Express API (Prisma + ioredis) ───────────────────────────
   backend:
     build:
@@ -67,6 +87,8 @@ services:
         condition: service_healthy
       redis:
         condition: service_healthy
+      migrate:
+        condition: service_completed_successfully
     expose:
       - "3000"
     networks:

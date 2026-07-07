@@ -7,6 +7,9 @@ npm-debug.log*
 .gitignore
 *.test.js
 *.spec.js
+test/
+sql/
+flyway.conf
 coverage/
 .nyc_output/
 nodemon.json
