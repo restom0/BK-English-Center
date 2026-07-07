@@ -3,6 +3,7 @@ const Log = require('../models/Log'); // Fix: thiếu import Log
 const { createApiKey } = require('../middleware/useApiKey');
 const RegisterLog = require('../models/RegisterLog');
 const { createHash, checkPassword } = require('../middleware/usePassword');
+const { randomBytes } = require('crypto');
 
 // Helper validate các trường bắt buộc
 const validateRequired = (fields, res) => {
@@ -41,11 +42,12 @@ class UserController {
         return res.status(401).json({ check: false, msg: req.t('auth.wrongPassword') });
       }
 
-      // Issue the JWT as an httpOnly cookie so it is never exposed to JS
-      // (mitigates XSS token theft). The client tracks login state via the
-      // non-sensitive `role` value only.
+      // Create JWT for authentication, but do NOT store it directly in client cookie.
+      // Store only an opaque session key in the cookie to avoid cleartext sensitive storage.
       const token = createApiKey({ id: queryResult.id, role: queryResult.role });
-      res.cookie('apitoken', token, {
+      const sessionKey = randomBytes(32).toString('hex');
+      // TODO: Persist mapping { sessionKey -> token } in server-side session store (Redis/DB).
+      res.cookie('apitoken', sessionKey, {
         httpOnly: true,
         sameSite: 'lax',
         secure: process.env.COOKIE_SECURE === 'true',
