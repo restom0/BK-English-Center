@@ -1,0 +1,282 @@
+// =============================================================
+// Prisma Schema -- BK English Center
+// Database: PostgreSQL 16
+// Generator: @prisma/client
+//
+// Entity versioning: mutable entities carry a `version` field
+// that increments on every UPDATE via the service layer.
+// =============================================================
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+// ── Enums ──────────────────────────────────────────────────────
+
+enum Role {
+  student
+  teacher
+  staff
+  admin
+}
+
+enum Sex {
+  male
+  female
+  other
+}
+
+// ── Users (auth table) ─────────────────────────────────────────
+
+model User {
+  id       Int    @id @default(autoincrement())
+  username String @unique @db.VarChar(50)
+  password String @db.VarChar(255)
+  email    String @db.VarChar(100)
+  role     Role
+
+  // Relations
+  student      Student?
+  teacher      Teacher?
+  staff        Staff?
+  admin        Admin?
+  logs         Log[]
+  registerLogs RegisterLog[]
+
+  @@map("users")
+}
+
+// ── Role profiles ─────────────────────────────────────────────
+
+model Student {
+  id          Int       @id
+  name        String    @db.VarChar(100)
+  sex         Sex
+  dateofbirth DateTime  @db.Date
+  phone       String    @db.VarChar(20)
+  address     String    @db.VarChar(255)
+  image       String?   @db.VarChar(255)
+  version     Int       @default(1)
+
+  user             User               @relation(fields: [id], references: [id], onDelete: Cascade)
+  studentJoinClass StudentJoinClass[]
+
+  @@map("students")
+}
+
+model Teacher {
+  id          Int       @id
+  name        String    @db.VarChar(100)
+  sex         Sex
+  dateofbirth DateTime  @db.Date
+  phone       String    @db.VarChar(20)
+  address     String    @db.VarChar(255)
+  image       String?   @db.VarChar(255)
+  version     Int       @default(1)
+
+  user             User               @relation(fields: [id], references: [id], onDelete: Cascade)
+  teacherJoinClass TeacherJoinClass[]
+  teacherHasFile   TeacherHasFile[]
+
+  @@map("teachers")
+}
+
+model Staff {
+  id          Int       @id
+  name        String    @db.VarChar(100)
+  sex         Sex
+  dateofbirth DateTime  @db.Date
+  phone       String    @db.VarChar(20)
+  address     String    @db.VarChar(255)
+  version     Int       @default(1)
+
+  user        User          @relation(fields: [id], references: [id], onDelete: Cascade)
+  manageStaff ManageStaff[]
+
+  @@map("staff")
+}
+
+model Admin {
+  id          Int       @id
+  name        String    @db.VarChar(100)
+  sex         Sex
+  dateofbirth DateTime  @db.Date
+  phone       String    @db.VarChar(20)
+  address     String    @db.VarChar(255)
+  version     Int       @default(1)
+
+  user User @relation(fields: [id], references: [id], onDelete: Cascade)
+
+  @@map("admin")
+}
+
+// ── Courses ───────────────────────────────────────────────────
+
+model Course {
+  id             Int      @id @default(autoincrement())
+  name           String   @unique @db.VarChar(100)
+  intro          String?  @db.Text
+  img            String?  @db.VarChar(255)
+  imgintro       String?  @db.VarChar(255)
+  short          String?  @db.VarChar(255)
+  description    String?  @db.Text
+  paidStudent    Int      @default(0)
+  prizeStudent   Int      @default(0)
+  paidTeacher    Int      @default(0)
+  prizeTeacher   Int      @default(0)
+  maxAttendDate  Int      @default(30)
+  version        Int      @default(1)
+
+  classes Class[]
+
+  @@map("courses")
+}
+
+// ── Classes ───────────────────────────────────────────────────
+
+model Class {
+  id         Int      @id @default(autoincrement())
+  name       String   @unique @db.VarChar(100)
+  idCourse   Int
+  startDate  DateTime @db.Date
+  endDate    DateTime @db.Date
+  maxStudent Int      @default(30)
+  address    String   @db.VarChar(255)
+  schedule   String   @db.VarChar(255)
+  version    Int      @default(1)
+
+  course           Course             @relation(fields: [idCourse], references: [id])
+  studentJoinClass StudentJoinClass[]
+  teacherJoinClass TeacherJoinClass[]
+  teacherHasFile   TeacherHasFile[]
+
+  @@map("classes")
+}
+
+// ── Join tables ───────────────────────────────────────────────
+
+model StudentJoinClass {
+  id          Int   @id @default(autoincrement())
+  idStudent   Int
+  idClass     Int
+  attendDate  Int   @default(0)
+  status      Int   @default(-1)   // -1=pending, 0=in-progress, 1=completed
+  listening   Int   @default(0)
+  writing     Int   @default(0)
+  speaking    Int   @default(0)
+  reading     Int   @default(0)
+  paidStatus  Int?                 // null=unpaid
+  prizeStatus Int?                 // null=no prize
+  version     Int   @default(1)
+
+  student Student @relation(fields: [idStudent], references: [id], onDelete: Cascade)
+  class   Class   @relation(fields: [idClass],   references: [id], onDelete: Cascade)
+
+  @@map("studentjoinclass")
+}
+
+model TeacherJoinClass {
+  id          Int   @id @default(autoincrement())
+  idTeacher   Int
+  idClass     Int
+  attendDate  Int   @default(0)
+  rating      Int   @default(0)
+  status      Int   @default(-1)   // -1=pending, 0=in-progress, 1=completed
+  paidStatus  Int?
+  prizeStatus Int?
+  version     Int   @default(1)
+
+  teacher Teacher @relation(fields: [idTeacher], references: [id], onDelete: Cascade)
+  class   Class   @relation(fields: [idClass],   references: [id], onDelete: Cascade)
+
+  @@map("teacherjoinclass")
+}
+
+// ── Staff management ──────────────────────────────────────────
+
+model ManageStaff {
+  id          Int   @id @default(autoincrement())
+  idStaff     Int
+  month       Int
+  year        Int
+  attendDate  Int   @default(0)
+  paid        Int?
+  paidStatus  Int?
+  prize       Int?
+  prizeStatus Int?
+
+  staff Staff @relation(fields: [idStaff], references: [id], onDelete: Cascade)
+
+  @@unique([idStaff, month, year])
+  @@map("managestaff")
+}
+
+// ── Files ────────────────────────────────────────────────────
+
+model TeacherHasFile {
+  id         Int    @id @default(autoincrement())
+  idTeacher  Int
+  idClass    Int
+  fileName   String @db.VarChar(255)
+  filetype   String @db.VarChar(50)
+  fileAmount Int    @default(1)
+  fileStatus Int    @default(0)
+
+  teacher Teacher @relation(fields: [idTeacher], references: [id], onDelete: Cascade)
+  class   Class   @relation(fields: [idClass],   references: [id], onDelete: Cascade)
+
+  @@map("teacherhasfile")
+}
+
+// ── Emails whitelist ─────────────────────────────────────────
+
+model Email {
+  id    Int    @id @default(autoincrement())
+  email String @db.VarChar(100)
+  role  Role
+
+  @@unique([email, role])
+  @@map("emails")
+}
+
+// ── Sponsors ─────────────────────────────────────────────────
+
+model Sponsor {
+  id      Int    @id @default(autoincrement())
+  name    String @db.VarChar(100)
+  amount  Int    @default(0)
+  status  String @db.VarChar(50)
+  version Int    @default(1)
+
+  @@map("sponsors")
+}
+
+// ── Logs ─────────────────────────────────────────────────────
+
+model Log {
+  id     Int      @id @default(autoincrement())
+  idUser Int
+  action String   @db.VarChar(255)
+  date   DateTime @default(now())
+  status Boolean  @default(true)
+
+  user User @relation(fields: [idUser], references: [id], onDelete: Cascade)
+
+  @@map("log")
+}
+
+model RegisterLog {
+  id     Int      @id @default(autoincrement())
+  idUser Int
+  email  String   @db.VarChar(100)
+  date   DateTime @default(now())
+
+  user User @relation(fields: [idUser], references: [id], onDelete: Cascade)
+
+  @@map("registerlog")
+}

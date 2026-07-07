@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../styles/main.css" />
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
+    <script src="../config.js"></script>
+    <script src="../i18n/labels.js"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar--white">
+        <a class="navbar-brand" href="../HomePage/homePage.html"><img src="../img/image0.png" alt="SEP logo"
+                class="navigation__logo"></a>
+        <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent"> -->
+        <ul class="navbar-nav mr-auto">
+            <li class="nav-item">
+                <a class="nav-link" href="../HomePage/homePage.html" data-i18n="nav.home">Trang chủ</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#" data-i18n="nav.about">Giới thiệu</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../CoursesPage/coursesPage.html" data-i18n="nav.courses">Khoá học</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="../ContactPage/contact.html" data-i18n="nav.contact">Liên hệ</a>
+            </li>
+        </ul>
+
+        <form class="form-inline my-2 my-lg-0">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-dark my-2 my-sm-0" type="submit"><i class="fa fa-search"
+                    aria-hidden="true"></i></button>
+        </form>
+
+        <div class="navigation__login nav__user-area">
+            <a class="btn btn-outline-secondary" href="./Login.html" role="button" data-i18n="nav.login">Đăng nhập</a>
+            <a class="btn btn-outline-secondary" href="Signup.html" role="button" data-i18n="nav.signup">Đăng ký</a>
+        </div>
+        <!-- </div> -->
+    </nav>
+
+    <section class="bg-gray-50 dark:bg-gray-900">
+        <div class="py-8 px-4 mx-auto max-w-screen-xl lg:py-16 grid lg:grid-cols-1 gap-8 lg:gap-16">
+            <div>
+                <div class="w-full lg:max-w-xl p-6 space-y-8 sm:p-8 bg-white rounded-lg shadow-xl dark:bg-gray-800 mx-auto">
+                    <h2 class="text-4xl text-center font-bold text-gray-900 dark:text-white" data-i18n="auth.signup_title">
+                        Đăng ký
+                    </h2>
+                    <hr class="signup__field-group">
+                    <form>
+                        <div class="relative z-0 w-full mb-6 group">
+                            <input type="text" name="floating_loginname" id="floating_loginname"
+                                class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                placeholder=" " required />
+                            <label for="floating_loginname"
+                                class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" data-i18n="auth.username">Tên
+                                đăng nhập</label>
+                        </div>
+                        <div class="relative z-0 w-full mb-6 group">
+                            <input type="password" name="floating_password" id="floating_password"
+                                class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                placeholder=" " required />
+                            <label for="floating_password"
+                                class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" data-i18n="auth.password">Mật
+                                khẩu</label>
+                        </div>
+                        <div class="relative z-0 w-full mb-6 group">
+                            <input type="password" name="repeat_password" id="floating_repeat_password"
+                                class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                placeholder=" " required />
+                            <label for="floating_repeat_password"
+                                class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" data-i18n="auth.confirm_password">Nhập
+                                lại mật khẩu</label>
+                        </div>
+                        <div class="relative z-0 w-full mb-6 group">
+                            <input type="text" name="floating_name" id="floating_name"
+                                class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                placeholder=" " required />
+                            <label for="floating_name"
+                                class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" data-i18n="field.name">Họ
+                                và tên</label>
+                        </div>
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="relative z-0 w-full mb-6 group">
+                                <input type="date" name="floating_birthday" id="floating_birthday"
+                                    class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    placeholder=" " required />
+                                <label for="floating_birthday"
+                                    class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" data-i18n="field.dob">Năm
+                                    sinh</label>
+                            </div>
+                            <div class="relative z-0 w-full mb-6 group">
+                                <select id="gender" name="gender"
+                                    class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    placeholder=" " required>
+                                    <option value="M" data-i18n="field.gender_m">Nam</option>
+                                    <option value="F" data-i18n="field.gender_f">Nữ</option>
+                                </select>
+                                <label for="gender"
+                                    class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" data-i18n="field.gender">Giới
+                                    tính</label>
+                            </div>
+                        </div>
+                        <div class="relative z-0 w-full mb-6 group">
+                            <input type="text" name="floating_address" id="floating_address"
+                                class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                placeholder=" " required />
+                            <label for="floating_address"
+                                class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" data-i18n="field.address">Địa
+                                chỉ</label>
+                        </div>
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="relative z-0 w-full mb-6 group">
+                                <input type="tel" pattern="[0-9]{3}[0-9]{3}[0-9]{4}" name="floating_phone"
+                                    id="floating_phone"
+                                    class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    placeholder=" " required />
+                                <label for="floating_phone"
+                                    class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" data-i18n="field.phone">Số
+                                    điện thoại</label>
+                            </div>
+                            <div class="relative z-0 w-full mb-6 group">
+                                <input type="email" name="floating_email" id="floating_email"
+                                    class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    placeholder=" " required />
+                                <label for="floating_email"
+                                    class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" data-i18n="label.email">Địa
+                                    chỉ Email</label>
+                            </div>
+                        </div>
+                        <div class="grid md:grid-cols-2 md:gap-6">
+                            <div class="relative z-0 w-full mb-6 group">
+                                <select name="role" onchange="toggleAuthenticationCode()"
+                                    class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                    id="floating_roles" placeholder=" " required>
+                                    <option value="student" data-i18n="auth.role_student">Học viên</option>
+                                    <option value="teacher" data-i18n="auth.role_teacher">Giáo viên</option>
+                                    <option value="staff" data-i18n="auth.role_staff">Nhân viên</option>
+                                    <option value="admin" data-i18n="auth.role_admin">Quản trị viên</option>
+                                </select>
+                                <label for="floating_address"
+                                    class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" data-i18n="auth.role">Vai
+                                    trò</label>
+                            </div>
+                            <div class="authentication-code hidden" id="authentication-code">
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <input type="text" name="floating_identified" id="floating_identified"
+                                        class="block py-2.5 px-0 w-full text-base text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-blue-500 focus:outline-none focus:ring-0 focus:border-blue-600 peer"
+                                        placeholder=" " required />
+                                    <label for="floating_identified"
+                                        class="peer-focus:font-medium absolute text-base text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-blue-600 peer-focus:dark:text-blue-500 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6" data-i18n="auth.otp_code">Mã
+                                        xác thực</label>
+                                </div>
+                                <div class="relative z-0 w-full mb-6 group">
+                                    <button id="sendMail" type="button"
+                                        class="focus:outline-none text-white bg-green-700 hover:bg-green-800 focus:ring-4 focus:ring-green-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-green-600 dark:hover:bg-green-700 dark:focus:ring-green-800" data-i18n="auth.receive_otp">Nhận
+                                        mã xác thực</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="text-base font-medium text-gray-900 dark:text-white">
+                            <span data-i18n="auth.terms_agree">Bằng cách nhấp vào Đăng ký, bạn đồng ý với</span>
+                            <a href="#" target="_blank" data-i18n="auth.terms_link">Điều khoản</a>,
+                            <a href="#" target="_blank" data-i18n="auth.privacy_link">Chính sách quyền riêng tư</a>
+                            và <a href="#" target="_blank" data-i18n="auth.cookie_link">Chính sách cookie</a> của chúng tôi.
+                            <p></p>
+                        </div>
+                        <div class="flex justify-center">
+                            <button id="register-button" type="submit"
+                                class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-base w-full sm:w-auto px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 text-large" data-i18n="auth.register_btn">Đăng ký</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>Copyright 2023 Trường Đại Học Bách Khoa - ĐHQG TP.HCM. All Rights Reserved. <br>
+            Địa chỉ: Đông Hòa, TP Dĩ An, Bình Dương. <br>
+            Email: sepenglish@gmail.com.</p>
+    </footer>
+
+    <script src="Signup.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/fl                                              

@@ -1,0 +1,149 @@
+@use '../variables' as *;
+
+// ============================================================
+// Page: CoursesPage
+// ============================================================
+
+.sep-english-1 {
+  margin: 0 10%;
+  width: 80%;
+}
+
+.text-intro {
+  margin: 20px 10% 0;
+  width: 59%;
+
+  h2 {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-semibold;
+    margin-bottom: 20px;
+  }
+
+  p { font-size: $font-size-lg; }
+}
+
+// Course listing
+.course-list {
+  list-style: none;
+  margin: 20px 10% 0;
+
+  .course { margin-bottom: 3%; }
+}
+
+.course {
+  h3 {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+  }
+
+  p {
+    font-size: 14pt;
+    margin-bottom: 2%;
+  }
+}
+
+// Course card
+.course__card {
+  display: flex;
+  width: 75%;
+  height: 250px;
+  border-radius: 20px;
+  border: 3px solid rgba(68, 68, 68, 0.20);
+  align-items: center;
+  margin: auto;
+}
+
+.card__left { margin-left: 20px; }
+
+.card__right {
+  margin-left: 70px;
+
+  h2 {
+    font-size: $font-size-2xl;
+    margin-bottom: 20px;
+  }
+
+  .more {
+    text-decoration: none;
+    color: $color-text-inverse;
+    display: block;
+    width: 200px;
+    height: 50px;
+    border-radius: $radius-full;
+    background-color: $color-primary-light;
+    font-size: $font-size-xl;
+    text-align: center;
+    line-height: 50px;
+
+    &:hover { background-color: #107bb9; color: $color-text-inverse; }
+  }
+}
+
+// ── Responsive ───────────────────────────────────────────────
+@media screen and (max-width: 1200px) and (min-width: 511px) {
+  .course__card {
+    width: 100%;
+    height: auto;
+  }
+
+  .card__left {
+    margin: 2%;
+    width: 60%;
+
+    .course__image { width: 90%; }
+  }
+
+  .card__right {
+    margin: 2%;
+    width: 40%;
+
+    h2 {
+      font-size: $font-size-lg;
+      margin-bottom: 10%;
+    }
+
+    .more {
+      width: 80%;
+      height: auto;
+      font-size: 14pt;
+      line-height: 200%;
+      margin-bottom: 10%;
+    }
+  }
+}
+
+@media screen and (max-width: 510px) {
+  .course__card {
+    flex-direction: column;
+    width: 100%;
+    height: auto;
+  }
+
+  .card__left {
+    margin: 2%;
+    width: 90%;
+
+    .course__image { width: 100%; }
+  }
+
+  .card__right {
+    margin: 2%;
+    width: 90%;
+    flex-direction: column;
+    align-items: center;
+
+    h2 {
+      font-size: $font-size-lg;
+      margin-bottom: 5%;
+      text-align: center;
+    }
+
+    .more {
+      width: 80%;
+      height: auto;
+      font-size: 14pt;
+      line-height: 200%;
+      margin-bottom: 1%;
+    }
+  }
+}

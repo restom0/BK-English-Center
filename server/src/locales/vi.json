@@ -1,0 +1,100 @@
+{
+  "auth": {
+    "missingUsername": "Chưa nhập tài khoản",
+    "missingPassword": "Chưa nhập mật khẩu",
+    "accountNotFound": "Tài khoản không tồn tại",
+    "wrongPassword": "Sai mật khẩu",
+    "notLoggedIn": "Bạn chưa đăng nhập",
+    "invalidToken": "Token không hợp lệ hoặc đã hết hạn",
+    "noPermission": "Đây là nơi không dành cho bạn",
+    "accountExists": "Tài khoản đã tồn tại"
+  },
+  "user": {
+    "missingName": "Chưa nhập tên",
+    "missingEmail": "Chưa nhập email",
+    "missingDob": "Chưa nhập ngày sinh",
+    "missingSex": "Chưa nhập giới tính",
+    "missingPhone": "Chưa nhập số điện thoại",
+    "missingAddress": "Chưa nhập địa chỉ",
+    "missingRole": "Không có vai trò",
+    "updateSuccess": "Thay đổi dữ liệu thành công",
+    "updateNoChange": "Dữ liệu không đổi",
+    "registerSuccess": "Đăng ký thành công"
+  },
+  "course": {
+    "notFound": "Khóa học không tồn tại",
+    "alreadyExists": "Khóa học đã tồn tại",
+    "addSuccess": "Thêm khóa học thành công",
+    "updateSuccess": "Cập nhật khóa học thành công",
+    "deleteSuccess": "Xóa khóa học thành công",
+    "deleteBlocked": "Không thể xóa khóa học đang có lớp học"
+  },
+  "class": {
+    "notFound": "Lớp học không tồn tại",
+    "alreadyExists": "Lớp học đã tồn tại",
+    "addSuccess": "Thêm lớp học thành công",
+    "updateSuccess": "Cập nhật lớp học thành công",
+    "deleteSuccess": "Xóa lớp học thành công"
+  },
+  "student": {
+    "notFound": "Học sinh không tồn tại",
+    "updateSuccess": "Cập nhật học sinh thành công",
+    "noChange": "Dữ liệu không đổi"
+  },
+  "teacher": {
+    "notFound": "Giáo viên không tồn tại",
+    "updateSuccess": "Cập nhật giáo viên thành công",
+    "noChange": "Dữ liệu không đổi"
+  },
+  "staff": {
+    "notFound": "Nhân viên không tồn tại",
+    "updateSuccess": "Cập nhật nhân viên thành công",
+    "deleteSuccess": "Xóa nhân viên thành công"
+  },
+  "sponsor": {
+    "addSuccess": "Thêm nhà tài trợ thành công",
+    "updateSuccess": "Cập nhật nhà tài trợ thành công",
+    "deleteSuccess": "Xóa nhà tài trợ thành công",
+    "notFound": "Nhà tài trợ không tồn tại"
+  },
+  "email": {
+    "noPermission": "Bạn không có quyền đăng ký",
+    "sendFailed": "Gửi email thất bại",
+    "sent": "Gửi email thành công",
+    "addSuccess": "Thêm email thành công",
+    "updateSuccess": "Cập nhật email thành công",
+    "deleteSuccess": "Xóa email thành công",
+    "deleteBlocked": "Không thể xóa email chính",
+    "notFound": "Email không tồn tại"
+  },
+  "file": {
+    "addSuccess": "Thêm tài liệu thành công",
+    "updateSuccess": "Cập nhật tài liệu thành công",
+    "deleteSuccess": "Xóa tài liệu thành công",
+    "notFound": "Tài liệu không tồn tại"
+  },
+  "log": {
+    "editAccount": "Chỉnh sửa tài khoản"
+  },
+  "server": {
+    "error": "Lỗi máy chủ",
+    "tooManyRequests": "Quá nhiều yêu cầu, vui lòng thử lại sau",
+    "noChange": "Dữ liệu không đổi"
+  },
+  "mail": {
+    "subjectOtp": "Đăng ký tài khoản",
+    "subjectPay": "Đóng tiền học phí",
+    "subjectSalary": "Nhận lương",
+    "subjectPrize": "Tuyên dương - Nhận thưởng",
+    "subjectWarning": "Yêu cầu chấn chỉnh",
+    "subjectFile": "Thông báo đến nhận sách",
+    "subjectCheer": "Tuyên dương",
+    "invalidOtp": "Mã xác thực không đúng",
+    "logPay": "Gửi thông báo đóng học phí",
+    "logSalary": "Gửi thông báo nhận lương",
+    "logPrize": "Gửi thông báo nhận thưởng",
+    "logWarning": "Gửi thông báo cảnh cáo",
+    "logFile": "Gửi thông báo nhận tài liệu",
+    "logCheer": "Gửi email tuyên dương"
+  }
+}

@@ -1,0 +1,22 @@
+const express = require('express');
+const router = express.Router();
+
+const StudentJoinClassController = require('../src/controllers/StudentJoinClassController');
+router.get('/', StudentJoinClassController.getStudentJoinClasses);
+router.get('/student', StudentJoinClassController.getStudentJoinClass);
+router.post('/class', StudentJoinClassController.addStudentJoinClass);
+router.get('/date', StudentJoinClassController.getNullClass);
+router.get('/null-prize', StudentJoinClassController.getNullPrize);
+router.get('/null-salary', StudentJoinClassController.getNullSalary);
+router.get('/prize', StudentJoinClassController.getPrize);
+router.get('/salary', StudentJoinClassController.getSalary);
+router.get('/rating', StudentJoinClassController.getNullRating);
+router.patch('/date', StudentJoinClassController.updateDate);
+router.patch('/prize', StudentJoinClassController.updatePrize);
+router.patch('/salary', StudentJoinClassController.updateSalary);
+router.patch('/rating', StudentJoinClassController.updateRating);
+router.delete('/salary', StudentJoinClassController.deleteSalary);
+router.delete('/prize', StudentJoinClassController.deletePrize);
+router.delete('/class', StudentJoinClassController.deleteStudentJoinClass);
+//router.get("/get/:id", StudentJoinClassController.getStudentJoinClass);
+module.exports = router;

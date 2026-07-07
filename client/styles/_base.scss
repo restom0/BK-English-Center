@@ -1,0 +1,363 @@
+@use 'variables' as *;
+
+// ── CSS Custom Properties (runtime tokens) ───────────────────
+// Cho phép dùng var(--color-primary) trong HTML / JS inline
+:root {
+  --color-primary:       #{$color-primary};
+  --color-primary-dark:  #{$color-primary-dark};
+  --color-primary-light: #{$color-primary-light};
+  --color-accent:        #{$color-accent};
+  --color-accent-dark:   #{$color-accent-dark};
+
+  --color-success:       #{$color-success};
+  --color-success-dark:  #{$color-success-dark};
+  --color-danger:        #{$color-danger};
+  --color-danger-dark:   #{$color-danger-dark};
+  --color-warning:       #{$color-warning};
+  --color-info:          #{$color-info};
+
+  --color-bg:            #{$color-bg};
+  --color-surface:       #{$color-surface};
+  --color-border:        #{$color-border};
+  --color-text:          #{$color-text};
+  --color-text-muted:    #{$color-text-muted};
+
+  --font-family:         #{$font-family};
+  --radius-sm:           #{$radius-sm};
+  --radius-md:           #{$radius-md};
+  --radius-lg:           #{$radius-lg};
+  --shadow-md:           #{$shadow-md};
+  --transition-normal:   #{$transition-normal};
+}
+
+// ── Dark theme tokens ────────────────────────────────────────
+// Applied when <html data-theme="dark"> is set by theme.js
+[data-theme="dark"] {
+  --color-bg:          #0f172a;   // slate-900
+  --color-surface:     #1e293b;   // slate-800
+  --color-border:      #334155;   // slate-700
+  --color-text:        #f1f5f9;   // slate-100
+  --color-text-muted:  #94a3b8;   // slate-400
+  --color-primary:     #38bdf8;   // sky-400
+  --color-primary-dark:#0ea5e9;   // sky-500
+  --color-accent:      #fbbf24;   // amber-400
+
+  // Override body bg/text so everything picks up the vars
+  body { background-color: var(--color-bg); color: var(--color-text); }
+
+  .navbar,
+  .nav,
+  nav {
+    background-color: var(--color-surface) !important;
+    border-bottom: 1px solid var(--color-border);
+  }
+
+  .card,
+  .my-page,
+  .my-courses,
+  table {
+    background-color: var(--color-surface) !important;
+    color: var(--color-text) !important;
+  }
+
+  input, select, textarea {
+    background-color: #334155;
+    color: var(--color-text);
+    border-color: var(--color-border);
+  }
+
+  .btn-primary {
+    background-color: var(--color-primary);
+    border-color: var(--color-primary);
+    color: #0f172a;
+  }
+}
+
+// ── Theme switcher button ─────────────────────────────────────
+.theme-switcher {
+  display:         inline-flex;
+  align-items:     center;
+  justify-content: center;
+  width:           36px;
+  height:          36px;
+  border:          none;
+  border-radius:   $radius-full;
+  background:      transparent;
+  cursor:          pointer;
+  font-size:       1.1rem;
+  transition:      background $transition-fast;
+
+  &:hover {
+    background: rgba(0, 0, 0, 0.08);
+    [data-theme="dark"] & { background: rgba(255, 255, 255, 0.08); }
+  }
+}
+
+// ── Skeleton loading ──────────────────────────────────────────
+@keyframes skeleton-shimmer {
+  0%   { background-position: -400px 0; }
+  100% { background-position:  400px 0; }
+}
+
+.skeleton-overlay {
+  position:   absolute;
+  inset:      0;
+  z-index:    500;
+  display:    flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.88);
+  opacity:    1;
+  transition: opacity 300ms ease;
+
+  [data-theme="dark"] & {
+    background: rgba(15, 23, 42, 0.92);
+  }
+
+  &--out {
+    opacity: 0;
+    pointer-events: none;
+  }
+}
+
+.skeleton-card {
+  width:         min(480px, 90vw);
+  padding:       $space-8;
+  border-radius: $radius-lg;
+  background:    var(--color-surface);
+  box-shadow:    $shadow-lg;
+  display:       flex;
+  flex-direction: column;
+  gap:           $space-4;
+}
+
+.skeleton-shimmer {
+  border-radius: $radius-sm;
+  background:    linear-gradient(
+    90deg,
+    #e2e8f0 0%,
+    #f8fafc 50%,
+    #e2e8f0 100%
+  );
+  background-size: 800px 100%;
+  animation: skeleton-shimmer 1.4s infinite linear;
+
+  [data-theme="dark"] & {
+    background-image: linear-gradient(
+      90deg,
+      #334155 0%,
+      #475569 50%,
+      #334155 100%
+    );
+  }
+}
+
+.skeleton-line {
+  height: 14px;
+  width:  100%;
+
+  &--title { height: 22px; width: 60%; }
+  &--sm    { width: 40%; }
+  &--md    { width: 75%; }
+  &--lg    { width: 90%; }
+}
+
+.skeleton-fact {
+  margin-top:    $space-4;
+  padding:       $space-4;
+  border-left:   3px solid var(--color-accent);
+  background:    rgba($color-accent, 0.06);
+  border-radius: 0 $radius-sm $radius-sm 0;
+
+  &__label {
+    display:     block;
+    font-size:   $font-size-xs;
+    font-weight: $font-weight-semibold;
+    color:       var(--color-text-muted);
+    margin-bottom: $space-2;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+  }
+
+  &__text {
+    font-size:  $font-size-sm;
+    color:      var(--color-text);
+    line-height: 1.5;
+  }
+}
+
+// ── Google login button ───────────────────────────────────────
+.btn-google {
+  display:         inline-flex;
+  align-items:     center;
+  gap:             $space-3;
+  padding:         $space-2 $space-5;
+  border:          1px solid var(--color-border);
+  border-radius:   $radius-md;
+  background:      var(--color-surface);
+  color:           var(--color-text);
+  font-size:       $font-size-sm;
+  font-weight:     $font-weight-medium;
+  cursor:          pointer;
+  text-decoration: none;
+  transition:      box-shadow $transition-fast, background $transition-fast;
+
+  &:hover {
+    box-shadow: $shadow-md;
+    background: var(--color-bg);
+  }
+
+  &__logo {
+    width:  18px;
+    height: 18px;
+    flex-shrink: 0;
+  }
+}
+
+// ── Reset ────────────────────────────────────────────────────
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 16px;
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+}
+
+body {
+  font-family: $font-family;
+  font-size: $font-size-base;
+  color: $color-text;
+  background-color: $color-bg;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+
+a {
+  color: $color-primary;
+  text-decoration: none;
+  transition: color $transition-fast;
+
+  &:hover { color: $color-primary-dark; }
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+// ── Utility helpers ──────────────────────────────────────────
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+}
+
+.hidden { display: none !important; }
+
+// ── Page wrapper ─────────────────────────────────────────────
+.page-wrapper {
+  max-width: $bp-xl;
+  margin: 0 auto;
+  padding: 0 $space-4;
+
+  @media (min-width: $bp-md) { padding: 0 $space-6; }
+}
+
+// ── Public pages with Bootstrap fixed navbar ─────────────────
+// Add class="has-public-nav" to <body> on public-facing pages.
+// The Bootstrap navbar is taller than the Flowbite admin sidebar,
+// so the margin is slightly larger and grows at narrow breakpoints.
+body.has-public-nav {
+  margin-top: 100px;
+
+  @media screen and (max-width: 850px) and (min-width: 484px) {
+    margin-top: 200px;
+  }
+
+  @media screen and (max-width: 483px) {
+    margin-top: 300px;
+  }
+}
+
+// ── Scrollbar utilities ──────────────────────────────────────
+// Used by Infostupage, Markstupage and other Flowbite pages
+.scrollbar-hidden {
+  scrollbar-width: none;        // Firefox
+  -ms-overflow-style: none;     // IE / Edge
+
+  &::-webkit-scrollbar { display: none; }
+}
+
+// ── Transition utilities ─────────────────────────────────────
+.transition-opacity {
+  transition-property: opacity;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: $transition-fast;
+}
+
+// ── Layout: sidebar-based pages (Flowbite admin/staff/teacher pages) ──────────
+// Main content div sits beside a fixed left sidebar.
+// Replace style="margin-top: 9vh" with class="main-content--offset"
+.main-content--offset    { margin-top: 9vh; }
+.main-content--sm-offset { margin-top: 4vh; }
+
+// ── Navbar utilities ─────────────────────────────────────────
+// Public Bootstrap navbar shared by HomePage, CoursesPage, ContactPage, etc.
+// Replace style="background-color: #fff" on <nav>
+.navbar--white { background-color: #fff; }
+
+// Nav icon links (FontAwesome icon colour + spacing)
+// Replace style="color:#000" on <i>
+.icon--dark { color: #000; }
+
+// Replace style="margin-right: 10px" on icon <a> links
+.nav__icon-link { margin-right: 10px; }
+
+// Replace style="margin-left: 30px; margin-right: 100px" on nav user area
+.nav__user-area {
+  margin-left: 30px;
+  margin-right: 100px;
+}
+
+// ── Misc spacing utilities ────────────────────────────────────
+.mt-1vh  { margin-top: 1vh; }
+.mt-100  { margin-top: 100px; }
+.pt-2px  { padding-top: 2px; }
+.mb-neg-40 { margin-bottom: -40px; }
+
+// ── Overlay ──────────────────────────────────────────────────
+.overlay--dark { background-color: rgba(0, 0, 0, 0.8); }
+
+// ── Typography utilities ─────────────────────────────────────
+// Login / auth pages
+.text-large { font-size: large; }
+.text-24pt  { font-size: 24pt; }
+
+// ── Auth / form utilities ─────────────────────────────────────
+.signup__field-group {
+  border: 1px solid rgb(131, 131, 131);
+  margin: 2% 0.5%;
+}
+
+// ── Footer ───────────────────────────────────────────────────
+.footer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 177px;
+  background-color: $color-primary;
+  color: $color-text-inverse;
+  font-size: $font-size-xl;
+  font-weight: $font-weight-normal;
+  text-align: center;
+}

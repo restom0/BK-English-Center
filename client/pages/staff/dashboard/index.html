@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../styles/main.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.0.min.js"
+        integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
+        <script src="../../../config.js"></script>
+        <script src="../../../utils/toast.js"></script>
+        <script src="../../../utils/date.js"></script>
+        <script src="../../../utils/auth.js"></script>
+        <script src="../../../i18n/labels.js"></script>
+
+    <script src="../../../components/components.js"></script>
+    <script src="../../../Navigation/navigation.js"></script>
+</head>
+
+<body data-sidebar="staff">
+    <div id="bk-sidebar"></div>
+    <div id="bk-topbar"></div>
+    <div class="p-4 sm:ml-64">
+        
+        <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+            <div class="mb-4">
+                <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+                    <h1 class="text-5xl dark:text-gray-500 text-xl font-bold dark:text-white" data-i18n="page.staff_portal">
+                        Cổng quản lý học viên và giảng viên
+                    </h1>
+                </div>
+            </div>
+            <div id="fullWidthTabContent" class="border-t border-gray-200 dark:border-gray-600">
+                <div class="p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="stats" role="tabpanel"
+                    aria-labelledby="stats-tab">
+                    <dl
+                        class="grid max-w-screen-xl grid-cols-2 gap-8 p-4 mx-auto text-gray-900 sm:grid-cols-3 xl:grid-cols-3 dark:text-white sm:p-8">
+                        <div class="flex flex-col items-center justify-center">
+                            <dt class="mb-2 text-3xl font-extrabold" id="student-number">100</dt>
+                            <dd class="text-gray-500 dark:text-gray-400" data-i18n="auth.role_student">Học viên</dd>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <dt class="mb-2 text-3xl font-extrabold" id="teacher-number">100</dt>
+                            <dd class="text-gray-500 dark:text-gray-400" data-i18n="class.teacher">Giảng viên</dd>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <dt class="mb-2 text-3xl font-extrabold" id="staff-number">100</dt>
+                            <dd class="text-gray-500 dark:text-gray-400" data-i18n="auth.role_staff">Nhân viên</dd>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+  <script src="../../../js/pages/staff/dashboard.js"></script>
+</body>
+
+</html>

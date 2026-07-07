@@ -1,0 +1,35 @@
+{
+  "auth": {
+    "missingUsername": "Benutzername erforderlich",
+    "missingPassword": "Passwort erforderlich",
+    "accountNotFound": "Konto nicht gefunden",
+    "wrongPassword": "Falsches Passwort",
+    "notLoggedIn": "Sie sind nicht angemeldet",
+    "invalidToken": "Token ungültig oder abgelaufen",
+    "noPermission": "Sie haben keinen Zugriff auf diese Ressource",
+    "accountExists": "Konto existiert bereits"
+  },
+  "user": {
+    "missingName": "Name erforderlich",
+    "missingEmail": "E-Mail erforderlich",
+    "missingDob": "Geburtsdatum erforderlich",
+    "missingSex": "Geschlecht erforderlich",
+    "missingPhone": "Telefonnummer erforderlich",
+    "missingAddress": "Adresse erforderlich",
+    "missingRole": "Rolle fehlt",
+    "updateSuccess": "Konto erfolgreich aktualisiert",
+    "updateNoChange": "Keine Änderungen vorgenommen",
+    "registerSuccess": "Registrierung erfolgreich"
+  },
+  "course": { "notFound": "Kurs nicht gefunden", "alreadyExists": "Kurs existiert bereits", "addSuccess": "Kurs hinzugefügt", "updateSuccess": "Kurs aktualisiert", "deleteSuccess": "Kurs gelöscht", "deleteBlocked": "Kurs mit aktiven Klassen kann nicht gelöscht werden" },
+  "class":   { "notFound": "Klasse nicht gefunden", "alreadyExists": "Klasse existiert bereits", "addSuccess": "Klasse hinzugefügt", "updateSuccess": "Klasse aktualisiert", "deleteSuccess": "Klasse gelöscht" },
+  "student": { "notFound": "Schüler nicht gefunden", "updateSuccess": "Schüler aktualisiert", "noChange": "Keine Änderungen" },
+  "teacher": { "notFound": "Lehrer nicht gefunden", "updateSuccess": "Lehrer aktualisiert", "noChange": "Keine Änderungen" },
+  "staff":   { "notFound": "Mitarbeiter nicht gefunden", "updateSuccess": "Mitarbeiter aktualisiert", "deleteSuccess": "Mitarbeiter gelöscht" },
+  "sponsor": { "addSuccess": "Sponsor hinzugefügt", "updateSuccess": "Sponsor aktualisiert", "deleteSuccess": "Sponsor gelöscht", "notFound": "Sponsor nicht gefunden" },
+  "email":   { "noPermission": "Sie sind nicht berechtigt", "sendFailed": "E-Mail-Versand fehlgeschlagen", "sent": "E-Mail gesendet", "addSuccess": "E-Mail hinzugefügt", "updateSuccess": "E-Mail aktualisiert", "deleteSuccess": "E-Mail gelöscht", "deleteBlocked": "Haupteintrag kann nicht gelöscht werden", "notFound": "E-Mail nicht gefunden" },
+  "file":    { "addSuccess": "Datei hinzugefügt", "updateSuccess": "Datei aktualisiert", "deleteSuccess": "Datei gelöscht", "notFound": "Datei nicht gefunden" },
+  "log":     { "editAccount": "Konto bearbeiten" },
+  "server":  { "error": "Interner Serverfehler", "tooManyRequests": "Zu viele Anfragen, bitte später erneut versuchen", "noChange": "Keine Änderungen" },
+  "mail":    { "subjectOtp": "Kontoregistrierung", "subjectPay": "Studiengebührerinnerung", "subjectSalary": "Gehaltsbenachrichtigung", "subjectPrize": "Prämienbenachrichtigung", "subjectWarning": "Leistungshinweis", "subjectFile": "Materialabholung", "subjectCheer": "Belobigung", "invalidOtp": "Ungültiger Bestätigungscode", "logPay": "Gebührenerinnerung senden", "logSalary": "Gehaltsbenachrichtigung senden", "logPrize": "Prämienbenachrichtigung senden", "logWarning": "Warnung senden", "logFile": "Materialbenachrichtigung senden", "logCheer": "Belobigung senden" }
+}

@@ -1,0 +1,5 @@
+node_modules
+npm-debug.log*
+styles/main.css.map
+readme.txt.txt
+nginx.conf

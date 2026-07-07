@@ -1,0 +1,23 @@
+# ── Environment & secrets ─────────────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ── Docker ───────────────────────────────────────────────────
+# Local override file (never commit production secrets)
+docker-compose.override.yml
+
+# ── Editor / OS ──────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# ── Dependencies (root-level, if any) ────────────────────────
+node_modules/
+
+# ── Logs ─────────────────────────────────────────────────────
+*.log
+logs/

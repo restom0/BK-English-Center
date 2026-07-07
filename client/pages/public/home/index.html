@@ -1,0 +1,244 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <title>Home Page</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <!-- jquery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
+
+    <!-- nav -->
+    <script src="../../../Navigation/nav.js"></script>
+        <script src="../../../config.js"></script>
+        <script src="../../../utils/toast.js"></script>
+        <script src="../../../utils/date.js"></script>
+        <script src="../../../utils/auth.js"></script>
+        <script src="../../../i18n/labels.js"></script>
+
+    <script src="../../../Navigation/navigation.js"></script>
+
+
+    <link rel="stylesheet" href="../../../styles/main.css" />
+</head>
+
+<body class="has-public-nav">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top navbar--white">
+        <a class="navbar-brand" href="../../../pages/public/home/index.html"><img src="../../../img/image0.png" alt="SEP logo"
+                class="navigation__logo"></a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../pages/public/home/index.html">Trang chủ</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Giới thiệu</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../pages/public/courses/index.html">Khoá học</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="../../../pages/public/contact/index.html">Liên hệ</a>
+                </li>
+
+                <!-- for student and teacher -->
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="my-class-link"></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#" id="my-page-link"></a>
+                </li>
+
+            </ul>
+
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-dark my-2 my-sm-0" type="submit"><i class="fa fa-search icon--dark"
+                        aria-hidden="true"></i></button>
+            </form>
+
+            <!-- for student and teacher -->
+            <!-- <div id="nav__user">
+                <a class="nav__icon-link" href="#">
+                    <i class="fa fa-bell-o icon--dark" aria-hidden="true"></i>
+                </a>
+                <a class="nav__icon-link" href="#">
+                    <i class="fa fa-comment-o icon--dark" aria-hidden="true"></i>
+                </a>
+                <a href="#">
+                    <i class="fa fa-user-circle-o icon--dark" aria-hidden="true"></i>
+                </a>
+            </div> -->
+            <ul class="nav nav-pills nav__user-area" id="nav__user">
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fa fa-bell-o icon--dark" aria-hidden="true"></i></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#"><i class="fa fa-comment-o icon--dark" aria-hidden="true"></i></a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                        aria-haspopup="true" aria-expanded="false">
+                        <i class="fa fa-user-circle-o icon--dark" aria-hidden="true"></i>
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <p class="dropdown-item">
+                            <span id="title-name">
+                                Thông Thượng Hà
+                            </span>
+                            <br>
+                            <span id="title-email">
+                                neil.sims@flowbite.com
+                            </span>
+                        </p>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item btn btn-primary" href="#" id="userinfo" data-toggle="modal"
+                            data-target="#exampleModal">Thông tin tài khoản</a>
+                        <a class="dropdown-item" href="../../../pages/public/home/index.html" id="signout">Đăng xuất</a>
+                    </div>
+                </li>
+            </ul>
+
+            <!-- for guest  -->
+            <div class="nav__user-area" id="nav__login">
+                <a class="btn btn-outline-secondary" href="../../../pages/auth/login/index.html" role="button">Đăng nhập</a>
+                <a class="btn btn-outline-secondary" href="../../../pages/auth/signup/index.html" role="button">Đăng ký</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Thông tin tài khoản</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" id="userModal1">
+                </div>
+                <!-- <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div> -->
+            </div>
+        </div>
+    </div>
+
+    <div class="home__english-1">
+        <a class="btn btn-secondary" href="#" role="button">Đăng ký ngay</a>
+    </div>
+
+    <div class="home__english-2">
+        <div class="img-1"><img src="../../../img/IMG1.png" class="img-fluid" alt=""></div>
+        <div class="text-box-1">"SEP English tự hào mang tới một nền tảng giáo dục giúp thế hệ trẻ Việt Nam sẵn sàng cho
+            tương lai."</div>
+    </div>
+
+    <div class="home__english-3">
+        <img src="../../../img/SEP-1.png" class="img-fluid" alt="" class="sep-1">
+        <div class="page-3-ft">
+            <div class="text-box-2">
+                <div>
+                    <h3>Sep English</h3>
+                    <p>Tự hào là đơn vị tiên phong đào tạo tiếng Anh toàn diện và uy tín, giúp thế hệ trẻ Việt Nam sẵn
+                        sàng cho tương lai.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="home__english-4">
+        <img src="../../../img/SEP-2.png" class="img-fluid" alt="" class="sep-2">
+    </div>
+
+    <footer class="footer">
+        <p>Copyright 2023 Trường Đại Học Bách Khoa - ĐHQG TP.HCM. All Rights Reserved. <br>
+            Địa chỉ: Đông Hòa, TP Dĩ An, Bình Dương. <br>
+            Email: sepenglish@gmail.com.</p>
+    </footer>
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+
+    <!-- ── Tech Stack Section ─────────────────────────────────── -->
+    <section class="tech-stack" aria-label="Technology stack">
+      <p class="tech-stack__heading">Được xây dựng bằng</p>
+      <div class="tech-stack__grid">
+        <a class="tech-stack__item" href="https://nodejs.org" target="_blank" rel="noopener" title="Node.js">
+          <img class="tech-stack__icon" src="../../../img/dev-icons/nodejs.svg" alt="Node.js" loading="lazy">
+          <span class="tech-stack__label">Node.js</span>
+        </a>
+        <a class="tech-stack__item" href="https://expressjs.com" target="_blank" rel="noopener" title="Express.js">
+          <img class="tech-stack__icon" src="../../../img/dev-icons/expressjsdark.svg" alt="Express.js" loading="lazy">
+          <span class="tech-stack__label">Express</span>
+        </a>
+        <a class="tech-stack__item" href="https://www.postgresql.org" target="_blank" rel="noopener" title="PostgreSQL">
+          <img class="tech-stack__icon" src="../../../img/dev-icons/postgresql.svg" alt="PostgreSQL" loading="lazy">
+          <span class="tech-stack__label">PostgreSQL</span>
+        </a>
+        <a class="tech-stack__item" href="https://redis.io" target="_blank" rel="noopener" title="Redis">
+          <img class="tech-stack__icon" src="../../../img/dev-icons/redis.svg" alt="Redis" loading="lazy">
+          <span class="tech-stack__label">Redis</span>
+        </a>
+        <a class="tech-stack__item" href="https://www.prisma.io" target="_blank" rel="noopener" title="Prisma ORM">
+          <img class="tech-stack__icon" src="../../../img/dev-icons/prisma.svg" alt="Prisma" loading="lazy">
+          <span class="tech-stack__label">Prisma</span>
+        </a>
+        <a class="tech-stack__item" href="https://www.docker.com" target="_blank" rel="noopener" title="Docker">
+          <img class="tech-stack__icon" src="../../../img/dev-icons/docker.svg" alt="Docker" loading="lazy">
+          <span class="tech-stack__label">Docker</span>
+        </a>
+        <a class="tech-stack__item" href="https://developer.mozilla.org/en-US/docs/Web/JavaScript" target="_blank" rel="noopener" title="JavaScript">
+          <img class="tech-stack__icon" src="../../../img/dev-icons/javascript.svg" alt="JavaScript" loading="lazy">
+          <span class="tech-stack__label">JavaScript</span>
+        </a>
+        <a class="tech-stack__item" href="https://getbootstrap.com" target="_blank" rel="noopener" title="Bootstrap">
+          <img class="tech-stack__icon" src="../../../img/dev-icons/bootstrap.svg" alt="Bootstrap" loading="lazy">
+          <span class="tech-stack__label">Bootstrap</span>
+        </a>
+        <a class="tech-stack__item" href="https://swagger.io" target="_blank" rel="noopener" title="Swagger / OpenAPI">
+          <img class="tech-stack__icon" src="../../../img/dev-icons/swagger.svg" alt="Swagger" loading="lazy">
+          <span class="tech-stack__label">Swagger</span>
+        </a>
+        <a class="tech-stack__item" href="https://sass-lang.com" target="_blank" rel="noopener" title="Sass / SCSS">
+          <img class="tech-stack__icon" src="../../../img/dev-icons/css3.svg" alt="SCSS" loading="lazy">
+          <span class="tech-stack__label">SCSS</span>
+        </a>
+        <a class="tech-stack__item" href="https://github.com" target="_blank" rel="noopener" title="GitHub">
+          <img class="tech-stack__icon" src="../../../img/dev-icons/github.svg" alt="GitHub" loading="lazy">
+          <span class="tech-stack__label">GitHub</span>
+        </a>
+        <a class="tech-stack__item" href="https://tailwindcss.com" target="_blank" rel="noopener" title="Tailwind CSS">
+          <img class="tech-stack__icon" src="../../../img/dev-icons/tailwindcss.svg" alt="Tailwind CSS" loading="lazy">
+          <span class="tech-stack__label">Tailwind CSS</span>
+        </a>
+      </div>
+    </section>
+
+</body>
+
+</html>                          

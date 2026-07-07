@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrator</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="../../../styles/main.css" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.0.0/flowbite.min.js"></script>
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js"></script>
+</head>
+
+<body data-sidebar="admin">
+    <div id="bk-sidebar"></div>
+    <div id="bk-topbar"></div>
+    <div class="p-4 sm:ml-64">
+        <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
+            <div class="mb-4">
+                <div class="flex items-center justify-center h-24 rounded bg-gray-50 dark:bg-gray-800">
+                    <h1 class="text-5xl dark:text-gray-500 text-xl font-bold dark:text-white">
+                        <span data-i18n="page.admin_dashboard">Administrator Dashboard</span>
+                    </h1>
+                    
+                </div>
+            </div>
+            <div id="fullWidthTabContent" class="border-t border-gray-200 dark:border-gray-600">
+                <div class="p-4 bg-white rounded-lg md:p-8 dark:bg-gray-800" id="stats" role="tabpanel"
+                    aria-labelledby="stats-tab">
+                    <dl
+                        class="grid max-w-screen-xl sm:grid-cols-2 grid-cols-2 lg:grid-cols-4 gap-8 p-4 mx-auto text-gray-900 dark:text-white sm:p-8">
+                        <div class="flex flex-col items-center justify-center">
+                            <dd class="text-gray-500 dark:text-gray-400" data-i18n="stat.access_count">Số lượng truy cập</dd>
+                            <dt id="access-number" class="mb-2 text-3xl font-extrabold">4M+</dt>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <dd class="text-gray-500 dark:text-gray-400" data-i18n="stat.student_count">Số lượng học viên</dd>
+                            <dt id="student-number" class="mb-2 text-3xl font-extrabold">1B+</dt>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <dd class="text-gray-500 dark:text-gray-400" data-i18n="stat.teacher_count">Số lượng giảng viên</dd>
+                            <dt id="teacher-number" class="mb-2 text-3xl font-extrabold">90+</dt>
+                        </div>
+                        <div class="flex flex-col items-center justify-center">
+                            <dd class="text-gray-500 dark:text-gray-400" data-i18n="stat.staff_count">Số lượng nhân viên</dd>
+                            <dt id="staff-number" class="mb-2 text-3xl font-extrabold">4M+</dt>
+                        </div>
+                    </dl>
+                </div>
+            </div>
+        </div>
+        <script src="../../../config.js"></script>
+        <script src="../../../utils/toast.js"></script>
+        <script src="../../../utils/date.js"></script>
+        <script src="../../../utils/auth.js"></script>
+        <script src="../../../i18n/labels.js"></script>
+
+        <script src="../../../components/components.js"></script>
+    <script src="../../../Navigation/navigation.js"></script>
+  <script src="../../../js/pages/admin/dashboard.js"></script>
+</body>
+
+</html>

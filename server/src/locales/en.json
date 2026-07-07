@@ -1,0 +1,100 @@
+{
+  "auth": {
+    "missingUsername": "Username is required",
+    "missingPassword": "Password is required",
+    "accountNotFound": "Account not found",
+    "wrongPassword": "Incorrect password",
+    "notLoggedIn": "You are not logged in",
+    "invalidToken": "Token is invalid or expired",
+    "noPermission": "You do not have permission to access this resource",
+    "accountExists": "Account already exists"
+  },
+  "user": {
+    "missingName": "Name is required",
+    "missingEmail": "Email is required",
+    "missingDob": "Date of birth is required",
+    "missingSex": "Gender is required",
+    "missingPhone": "Phone number is required",
+    "missingAddress": "Address is required",
+    "missingRole": "Role is missing",
+    "updateSuccess": "Account updated successfully",
+    "updateNoChange": "No changes were made",
+    "registerSuccess": "Registration successful"
+  },
+  "course": {
+    "notFound": "Course not found",
+    "alreadyExists": "Course already exists",
+    "addSuccess": "Course added successfully",
+    "updateSuccess": "Course updated successfully",
+    "deleteSuccess": "Course deleted successfully",
+    "deleteBlocked": "Cannot delete a course with active classes"
+  },
+  "class": {
+    "notFound": "Class not found",
+    "alreadyExists": "Class already exists",
+    "addSuccess": "Class added successfully",
+    "updateSuccess": "Class updated successfully",
+    "deleteSuccess": "Class deleted successfully"
+  },
+  "student": {
+    "notFound": "Student not found",
+    "updateSuccess": "Student updated successfully",
+    "noChange": "No changes were made"
+  },
+  "teacher": {
+    "notFound": "Teacher not found",
+    "updateSuccess": "Teacher updated successfully",
+    "noChange": "No changes were made"
+  },
+  "staff": {
+    "notFound": "Staff member not found",
+    "updateSuccess": "Staff updated successfully",
+    "deleteSuccess": "Staff deleted successfully"
+  },
+  "sponsor": {
+    "addSuccess": "Sponsor added successfully",
+    "updateSuccess": "Sponsor updated successfully",
+    "deleteSuccess": "Sponsor deleted",
+    "notFound": "Sponsor not found"
+  },
+  "email": {
+    "noPermission": "You are not authorized to register",
+    "sendFailed": "Failed to send email",
+    "sent": "Email sent successfully",
+    "addSuccess": "Email whitelist entry added",
+    "updateSuccess": "Email updated",
+    "deleteSuccess": "Email deleted",
+    "deleteBlocked": "Cannot delete the primary email entry",
+    "notFound": "Email entry not found"
+  },
+  "file": {
+    "addSuccess": "File record added",
+    "updateSuccess": "File record updated",
+    "deleteSuccess": "File record deleted",
+    "notFound": "File record not found"
+  },
+  "log": {
+    "editAccount": "Edit account"
+  },
+  "server": {
+    "error": "Internal server error",
+    "tooManyRequests": "Too many requests, please try again later",
+    "noChange": "No changes were made"
+  },
+  "mail": {
+    "subjectOtp": "Account registration",
+    "subjectPay": "Tuition fee reminder",
+    "subjectSalary": "Salary notification",
+    "subjectPrize": "Award notification",
+    "subjectWarning": "Performance notice",
+    "subjectFile": "Material pickup notice",
+    "subjectCheer": "Commendation",
+    "invalidOtp": "Invalid verification code",
+    "logPay": "Send tuition reminder email",
+    "logSalary": "Send salary notification email",
+    "logPrize": "Send prize notification email",
+    "logWarning": "Send warning email",
+    "logFile": "Send material pickup email",
+    "logCheer": "Send commendation email"
+  }
+}

@@ -1,0 +1,58 @@
+@use '../variables' as *;
+
+// ============================================================
+// Page: MyCourses — student's enrolled courses
+// ============================================================
+
+// User profile banner
+.my-info {
+  margin: auto;
+  border-radius: 20px;
+  width: 80%;
+  box-sizing: border-box;
+  padding-right: 30px;
+  height: 210px;
+  background-color: $color-primary-light;
+  color: $color-text-inverse;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.user-info { margin-right: 30px; }
+
+#user-name::after {
+  content: '';
+  display: block;
+  width: 70%;
+  height: 2px;
+  background-color: $color-text-inverse;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+// Avatar
+.user-avt {
+  width: 160px;
+  height: 160px;
+  overflow: hidden;
+  border-radius: 50%;
+}
+
+#user-avt { width: 160px; }
+
+// Courses section
+.my-courses {
+  margin: 8px auto;
+  background-color: $color-surface;
+  width: 80%;
+  padding: 30px 0;
+  border-radius: $radius-md;
+
+  > h2 {
+    text-align: center;
+    margin: 40px 0 30px 50px;
+    text-transform: uppercase;
+    font-size: $font-size-3xl;
+  }
+}

@@ -1,0 +1,27 @@
+// ============================================================
+// Main stylesheet -- BK English Center
+// Compile: npx sass styles/main.scss styles/main.css --style=compressed
+// Watch:   npx sass --watch styles/main.scss styles/main.css
+// ============================================================
+
+@use 'variables' as *;
+@use 'base';
+@use 'components';
+@use 'mobile';
+@use 'pages/index';
+
+// Page-level body spacing (nav is fixed 64px tall)
+body.has-nav {
+  padding-top: 80px;
+}
+
+// Dark-mode scaffold (Tailwind dark: classes still work)
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-bg:         #111827;
+    --color-surface:    #1f2937;
+    --color-border:     #374151;
+    --color-text:       #f9fafb;
+    --color-text-muted: #9ca3af;
+  }
+}

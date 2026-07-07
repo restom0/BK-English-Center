@@ -1,0 +1,38 @@
+/**
+ * i18n/features/auth.js — Authentication & login page labels
+ */
+const labelsAuth = {
+  'auth.username':        {vi: 'Tài khoản',     en: 'Username',  es: 'Usuario',       fr: "Nom d'utilisateur", de: 'Benutzername', it: 'Nome utente', ca: "Nom d'usuari"},
+  'auth.password':        {vi: 'Mật khẩu',      en: 'Password',  es: 'Contraseña',    fr: 'Mot de passe',      de: 'Passwort',     it: 'Password',    ca: 'Contrasenya'},
+  'auth.confirm_password':{vi: 'Nhập lại mật khẩu', en: 'Confirm password', es: 'Confirmar contraseña', fr: 'Confirmer le mot de passe', de: 'Passwort bestätigen', it: 'Conferma password', ca: 'Confirmar contrasenya'},
+  'auth.login_btn':       {vi: 'Đăng nhập',     en: 'Sign In',   es: 'Entrar',        fr: 'Se connecter',      de: 'Einloggen',    it: 'Accedi',      ca: 'Entrar'},
+  'auth.register_btn':    {vi: 'Đăng ký',       en: 'Register',  es: 'Registrarse',   fr: "S'inscrire",        de: 'Registrieren', it: 'Registrati',  ca: 'Registrar-se'},
+  'auth.forgot_pass':     {vi: 'Quên mật khẩu?', en: 'Forgot password?', es: '¿Olvidé mi contraseña?', fr: 'Mot de passe oublié ?', de: 'Passwort vergessen?', it: 'Password dimenticata?', ca: 'Heu oblidat la contrasenya?'},
+  'auth.send_otp':        {vi: 'Gửi mã xác thực', en: 'Send OTP', es: 'Enviar OTP', fr: 'Envoyer OTP', de: 'OTP senden', it: 'Invia OTP', ca: 'Enviar OTP'},
+  'auth.otp_code':        {vi: 'Mã xác thực',   en: 'OTP Code',  es: 'Código OTP',    fr: 'Code OTP',          de: 'OTP-Code',     it: 'Codice OTP',  ca: 'Codi OTP'},
+  'auth.role':            {vi: 'Vai trò',        en: 'Role',      es: 'Rol',           fr: 'Rôle',              de: 'Rolle',        it: 'Ruolo',       ca: 'Rol'},
+  'auth.role_student':    {vi: 'Học viên',       en: 'Student',   es: 'Estudiante',    fr: 'Étudiant',          de: 'Student',      it: 'Studente',    ca: 'Estudiant'},
+  'auth.role_teacher':    {vi: 'Giảng viên',     en: 'Teacher',   es: 'Profesor',      fr: 'Enseignant',        de: 'Lehrer',       it: 'Insegnante',  ca: 'Professor'},
+  'auth.role_staff':      {vi: 'Nhân viên',      en: 'Staff',     es: 'Personal',      fr: 'Personnel',         de: 'Personal',     it: 'Personale',   ca: 'Personal'},
+  'auth.role_admin':      {vi: 'Quản trị viên',  en: 'Admin',     es: 'Administrador', fr: 'Administrateur',    de: 'Administrator',it: 'Amministratore', ca: 'Administrador'},
+  // Auth page strings
+  'auth.login_title':     {vi: 'Đăng nhập',        en: 'Sign In',         es: 'Iniciar sesión',    fr: 'Connexion',           de: 'Anmelden',           it: 'Accedi',             ca: 'Inicia sessió'},
+  'auth.signup_title':    {vi: 'Đăng ký',           en: 'Register',        es: 'Registrarse',       fr: "S'inscrire",          de: 'Registrieren',       it: 'Registrati',         ca: 'Registrar-se'},
+  'auth.choose_role':     {vi: 'Đăng nhập dành cho', en: 'Sign in as',    es: 'Iniciar sesión como', fr: 'Se connecter en tant que', de: 'Anmelden als',  it: 'Accedi come',        ca: 'Inicia sessió com a'},
+  'auth.forgot_pass_title':{vi: 'Quên mật khẩu',   en: 'Forgot Password', es: 'Olvidé mi contraseña', fr: 'Mot de passe oublié', de: 'Passwort vergessen', it: 'Password dimenticata', ca: 'Contrasenya oblidada'},
+  'auth.signup_promo':    {vi: 'Đăng ký ngay',      en: 'Sign Up Today',   es: 'Regístrate hoy',    fr: 'Inscrivez-vous',      de: 'Jetzt registrieren', it: 'Iscriviti ora',       ca: "Registra't avui"},
+  'auth.signup_desc':     {vi: 'Nhận liền khóa học hay.', en: 'Get great courses instantly.', es: 'Obtén excelentes cursos al instante.', fr: 'Obtenez des cours de qualité instantanément.', de: 'Erhalten Sie sofort großartige Kurse.', it: 'Ottieni subito ottimi corsi.', ca: 'Obteniu cursos excel·lents immediatament.'},
+  'auth.view_courses':    {vi: 'Xem thêm các khóa học của chúng tôi', en: 'View our courses', es: 'Ver nuestros cursos', fr: 'Voir nos cours', de: 'Unsere Kurse ansehen', it: 'Vedi i nostri corsi', ca: 'Veure els nostres cursos'},
+  'auth.remember_me':     {vi: 'Ghi nhớ tài khoản', en: 'Remember me', es: 'Recordarme', fr: 'Se souvenir de moi', de: 'Angemeldet bleiben', it: 'Ricordami', ca: "Recorda'm"},
+  'auth.no_account':      {vi: 'Chưa có tài khoản?', en: 'No account yet?', es: '¿Sin cuenta?', fr: 'Pas encore de compte ?', de: 'Noch kein Konto?', it: 'Nessun account?', ca: 'Sense compte?'},
+  'auth.signup_now':      {vi: 'Đăng ký ngay',       en: 'Sign up now',    es: 'Regístrate ahora', fr: 'Inscrivez-vous maintenant', de: 'Jetzt registrieren', it: 'Registrati ora', ca: "Registra't ara"},
+  'auth.send_new_pass':   {vi: 'Gửi mật khẩu mới',  en: 'Send New Password', es: 'Enviar nueva contraseña', fr: 'Envoyer le nouveau mot de passe', de: 'Neues Passwort senden', it: 'Invia nuova password', ca: 'Enviar nova contrasenya'},
+  'auth.terms_agree':     {vi: 'Bằng cách nhấp vào Đăng ký, bạn đồng ý với', en: 'By clicking Register, you agree to our', es: 'Al hacer clic en Registrarse, aceptas nuestros', fr: "En cliquant sur S'inscrire, vous acceptez nos", de: 'Mit Klick auf Registrieren stimmen Sie unseren zu', it: 'Facendo clic su Registrati, accetti i nostri', ca: "En fer clic a Registrar-se, acceptes els nostres"},
+  'auth.terms_link':      {vi: 'Điều khoản',          en: 'Terms',       es: 'Términos',   fr: 'Conditions', de: 'Nutzungsbedingungen', it: 'Termini',  ca: 'Condicions'},
+  'auth.privacy_link':    {vi: 'Chính sách quyền riêng tư', en: 'Privacy Policy', es: 'Política de privacidad', fr: 'Politique de confidentialité', de: 'Datenschutzrichtlinie', it: 'Informativa sulla privacy', ca: 'Política de privadesa'},
+  'auth.cookie_link':     {vi: 'Chính sách cookie',   en: 'Cookie Policy', es: 'Política de cookies', fr: 'Politique de cookies', de: 'Cookie-Richtlinie', it: 'Politica sui cookie', ca: 'Política de cookies'},
+  'auth.have_account':    {vi: 'Đã có tài khoản?',    en: 'Already have an account?', es: '¿Ya tienes cuenta?', fr: 'Vous avez déjà un compte ?', de: 'Haben Sie bereits ein Konto?', it: 'Hai già un account?', ca: 'Ja teniu compte?'},
+  'auth.login_now':       {vi: 'Đăng nhập ngay',      en: 'Sign in now', es: 'Inicia sesión ahora', fr: 'Connectez-vous maintenant', de: 'Jetzt anmelden', it: 'Accedi ora', ca: 'Inicia sessió ara'},
+  'auth.receive_otp':     {vi: 'Nhận mã xác thực',    en: 'Get OTP',    es: 'Obtener OTP', fr: 'Obtenir le code OTP', de: 'OTP erhalten', it: 'Ottieni OTP', ca: 'Obtenir OTP'},
+  'auth.account_info':    {vi: 'Thông tin tài khoản', en: 'Account Info', es: 'Info de cuenta', fr: 'Infos du compte', de: 'Kontoinformationen', it: 'Informazioni account', ca: 'Informació del compte'},
+};

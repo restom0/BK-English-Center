@@ -1,0 +1,48 @@
+{
+  "auth": {
+    "missingUsername": "Nom d'utilisateur requis",
+    "missingPassword": "Mot de passe requis",
+    "accountNotFound": "Compte introuvable",
+    "wrongPassword": "Mot de passe incorrect",
+    "notLoggedIn": "Vous n'êtes pas connecté",
+    "invalidToken": "Jeton invalide ou expiré",
+    "noPermission": "Vous n'avez pas accès à cette ressource",
+    "accountExists": "Ce compte existe déjà"
+  },
+  "user": {
+    "missingName": "Le nom est requis",
+    "missingEmail": "L'e-mail est requis",
+    "missingDob": "La date de naissance est requise",
+    "missingSex": "Le genre est requis",
+    "missingPhone": "Le numéro de téléphone est requis",
+    "missingAddress": "L'adresse est requise",
+    "missingRole": "Le rôle est manquant",
+    "updateSuccess": "Compte mis à jour avec succès",
+    "updateNoChange": "Aucune modification effectuée",
+    "registerSuccess": "Inscription réussie"
+  },
+  "course": {
+    "notFound": "Cours introuvable",
+    "alreadyExists": "Ce cours existe déjà",
+    "addSuccess": "Cours ajouté avec succès",
+    "updateSuccess": "Cours mis à jour",
+    "deleteSuccess": "Cours supprimé",
+    "deleteBlocked": "Impossible de supprimer un cours avec des classes actives"
+  },
+  "class": {
+    "notFound": "Classe introuvable",
+    "alreadyExists": "Cette classe existe déjà",
+    "addSuccess": "Classe ajoutée",
+    "updateSuccess": "Classe mise à jour",
+    "deleteSuccess": "Classe supprimée"
+  },
+  "student": { "notFound": "Étudiant introuvable", "updateSuccess": "Étudiant mis à jour", "noChange": "Aucune modification" },
+  "teacher": { "notFound": "Enseignant introuvable", "updateSuccess": "Enseignant mis à jour", "noChange": "Aucune modification" },
+  "staff":   { "notFound": "Membre du personnel introuvable", "updateSuccess": "Personnel mis à jour", "deleteSuccess": "Personnel supprimé" },
+  "sponsor": { "addSuccess": "Sponsor ajouté", "updateSuccess": "Sponsor mis à jour", "deleteSuccess": "Sponsor supprimé", "notFound": "Sponsor introuvable" },
+  "email":   { "noPermission": "Vous n'êtes pas autorisé à vous inscrire", "sendFailed": "Échec d'envoi d'e-mail", "sent": "E-mail envoyé", "addSuccess": "E-mail ajouté", "updateSuccess": "E-mail mis à jour", "deleteSuccess": "E-mail supprimé", "deleteBlocked": "Impossible de supprimer l'entrée principale", "notFound": "E-mail introuvable" },
+  "file":    { "addSuccess": "Fichier ajouté", "updateSuccess": "Fichier mis à jour", "deleteSuccess": "Fichier supprimé", "notFound": "Fichier introuvable" },
+  "log":     { "editAccount": "Modifier le compte" },
+  "server":  { "error": "Erreur interne du serveur", "tooManyRequests": "Trop de requêtes, veuillez réessayer", "noChange": "Aucune modification" },
+  "mail":    { "subjectOtp": "Inscription au compte", "subjectPay": "Rappel de frais de scolarité", "subjectSalary": "Notification de salaire", "subjectPrize": "Notification de récompense", "subjectWarning": "Avis de performance", "subjectFile": "Récupération de matériel", "subjectCheer": "Félicitations", "invalidOtp": "Code de vérification invalide", "logPay": "Envoyer un rappel de frais", "logSalary": "Envoyer notification salaire", "logPrize": "Envoyer notification récompense", "logWarning": "Envoyer avertissement", "logFile": "Envoyer notification matériel", "logCheer": "Envoyer félicitations" }
+}

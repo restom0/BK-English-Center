@@ -1,0 +1,55 @@
+@use '../variables' as *;
+
+// ============================================================
+// Page: CoursesPageDetail
+// ============================================================
+
+.first-pic {
+  width: 80%;
+  margin-top: 0.2%;
+  margin-left: 10%;
+}
+
+// Override .text-intro for this page (blue background variant)
+.courses-detail-page .text-intro {
+  background-color: $color-primary;
+  margin-top: 10px;
+  margin-left: 10%;
+  width: 80%;
+  text-align: center;
+  font-size: $font-size-xl;
+  color: $color-text-inverse;
+
+  h2 {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-semibold;
+    margin-bottom: 1%;
+  }
+
+  p { font-size: $font-size-lg; }
+}
+
+// Course list for detail page
+.courses-detail-page .course-list {
+  list-style: none;
+  margin: 20px 10% 0;
+
+  .course {
+    margin-bottom: 20px;
+
+    .course-img {
+      width: 80%;
+      margin: 0 auto 0 10%;
+    }
+
+    h3 {
+      font-size: $font-size-lg;
+      font-weight: $font-weight-semibold;
+    }
+
+    p {
+      font-size: 14pt;
+      margin-bottom: 10px;
+    }
+  }
+}

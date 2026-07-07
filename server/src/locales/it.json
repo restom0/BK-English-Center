@@ -1,0 +1,35 @@
+{
+  "auth": {
+    "missingUsername": "Il nome utente è obbligatorio",
+    "missingPassword": "La password è obbligatoria",
+    "accountNotFound": "Account non trovato",
+    "wrongPassword": "Password errata",
+    "notLoggedIn": "Non sei connesso",
+    "invalidToken": "Token non valido o scaduto",
+    "noPermission": "Non hai il permesso di accedere a questa risorsa",
+    "accountExists": "L'account esiste già"
+  },
+  "user": {
+    "missingName": "Il nome è obbligatorio",
+    "missingEmail": "L'e-mail è obbligatoria",
+    "missingDob": "La data di nascita è obbligatoria",
+    "missingSex": "Il genere è obbligatorio",
+    "missingPhone": "Il numero di telefono è obbligatorio",
+    "missingAddress": "L'indirizzo è obbligatorio",
+    "missingRole": "Il ruolo manca",
+    "updateSuccess": "Account aggiornato con successo",
+    "updateNoChange": "Nessuna modifica apportata",
+    "registerSuccess": "Registrazione completata"
+  },
+  "course": { "notFound": "Corso non trovato", "alreadyExists": "Il corso esiste già", "addSuccess": "Corso aggiunto", "updateSuccess": "Corso aggiornato", "deleteSuccess": "Corso eliminato", "deleteBlocked": "Impossibile eliminare un corso con classi attive" },
+  "class":   { "notFound": "Classe non trovata", "alreadyExists": "La classe esiste già", "addSuccess": "Classe aggiunta", "updateSuccess": "Classe aggiornata", "deleteSuccess": "Classe eliminata" },
+  "student": { "notFound": "Studente non trovato", "updateSuccess": "Studente aggiornato", "noChange": "Nessuna modifica" },
+  "teacher": { "notFound": "Insegnante non trovato", "updateSuccess": "Insegnante aggiornato", "noChange": "Nessuna modifica" },
+  "staff":   { "notFound": "Membro del personale non trovato", "updateSuccess": "Personale aggiornato", "deleteSuccess": "Personale eliminato" },
+  "sponsor": { "addSuccess": "Sponsor aggiunto", "updateSuccess": "Sponsor aggiornato", "deleteSuccess": "Sponsor eliminato", "notFound": "Sponsor non trovato" },
+  "email":   { "noPermission": "Non sei autorizzato a registrarti", "sendFailed": "Invio e-mail fallito", "sent": "E-mail inviata", "addSuccess": "E-mail aggiunta", "updateSuccess": "E-mail aggiornata", "deleteSuccess": "E-mail eliminata", "deleteBlocked": "Impossibile eliminare la voce principale", "notFound": "E-mail non trovata" },
+  "file":    { "addSuccess": "File aggiunto", "updateSuccess": "File aggiornato", "deleteSuccess": "File eliminato", "notFound": "File non trovato" },
+  "log":     { "editAccount": "Modifica account" },
+  "server":  { "error": "Errore interno del server", "tooManyRequests": "Troppe richieste, riprova più tardi", "noChange": "Nessuna modifica" },
+  "mail":    { "subjectOtp": "Registrazione account", "subjectPay": "Promemoria tasse scolastiche", "subjectSalary": "Notifica stipendio", "subjectPrize": "Notifica premio", "subjectWarning": "Avviso prestazioni", "subjectFile": "Ritiro materiale", "subjectCheer": "Encomio", "invalidOtp": "Codice di verifica non valido", "logPay": "Invia promemoria pagamento", "logSalary": "Invia notifica stipendio", "logPrize": "Invia notifica premio", "logWarning": "Invia avvertimento", "logFile": "Invia notifica materiale", "logCheer": "Invia encomio" }
+}

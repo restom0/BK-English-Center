@@ -1,0 +1,11 @@
+// ============================================================
+// Pages index — imported by main.scss
+// Each partial covers one public-facing page.
+// ============================================================
+
+@use 'contact';
+@use 'home';
+@use 'courses';
+@use 'courses-detail';
+@use 'my-courses';
+@use 'my-page';

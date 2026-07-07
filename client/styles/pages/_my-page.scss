@@ -1,0 +1,40 @@
+@use '../variables' as *;
+
+// ============================================================
+// Page: MyPage — student profile & billing overview
+// ============================================================
+
+// Alpine.js cloak — hide elements until Alpine initialises
+[x-cloak] {
+  display: none;
+}
+
+// ── Alpine.js calendar ────────────────────────────────────────
+.calendar__cell {
+  width: 14.28%;
+  height: 120px;
+}
+
+.calendar__day-header {
+  width: 14.26%;
+}
+
+.calendar__events-area {
+  height: 80px;
+}
+
+// ── MyPage layout ─────────────────────────────────────────────
+.my-page {
+  margin: 8px auto;
+  background-color: $color-surface;
+  width: 80%;
+  padding: 30px 0;
+  border-radius: $radius-md;
+
+  > h2 {
+    text-align: center;
+    margin: 40px 0 20px 50px;
+    text-transform: uppercase;
+    font-size: $font-size-3xl;
+  }
+}

@@ -1,0 +1,535 @@
+@use 'variables' as *;
+
+// ============================================================
+// Reusable UI Components
+// Tất cả class dùng prefix "bk-" để tránh xung đột Tailwind
+// ============================================================
+
+// ── Mixins ───────────────────────────────────────────────────
+@mixin flex-center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+@mixin focus-ring($color: $color-primary) {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  &:focus-visible { outline: 2px solid $color; }
+}
+
+// ── Buttons ──────────────────────────────────────────────────
+.bk-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: $space-2;
+  padding: $space-2 $space-5;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  border-radius: $radius-md;
+  border: none;
+  cursor: pointer;
+  transition: background-color $transition-fast, opacity $transition-fast, box-shadow $transition-fast;
+  white-space: nowrap;
+  @include focus-ring;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+
+  // Variants
+  &--primary {
+    background-color: $color-primary;
+    color: $color-text-inverse;
+    &:hover:not(:disabled) { background-color: $color-primary-dark; }
+  }
+
+  &--success {
+    background-color: $color-success;
+    color: $color-text-inverse;
+    &:hover:not(:disabled) { background-color: $color-success-dark; }
+  }
+
+  &--danger {
+    background-color: $color-danger;
+    color: $color-text-inverse;
+    &:hover:not(:disabled) { background-color: $color-danger-dark; }
+  }
+
+  &--warning {
+    background-color: $color-warning;
+    color: $color-text;
+    &:hover:not(:disabled) { background-color: #d97706; }
+  }
+
+  &--outline {
+    background-color: transparent;
+    border: 1px solid $color-border;
+    color: $color-text;
+    &:hover:not(:disabled) { background-color: $color-bg; }
+  }
+
+  &--ghost {
+    background-color: transparent;
+    color: $color-text-muted;
+    &:hover:not(:disabled) { background-color: $color-bg; color: $color-text; }
+  }
+
+  // Sizes
+  &--sm { padding: $space-1 $space-3; font-size: $font-size-xs; }
+  &--lg { padding: $space-3 $space-6; font-size: $font-size-base; }
+}
+
+// ── Badge / Status ───────────────────────────────────────────
+.bk-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 2px $space-2;
+  border-radius: $radius-full;
+  font-size: $font-size-xs;
+  font-weight: $font-weight-semibold;
+
+  &--success { background-color: #dcfce7; color: #166534; }
+  &--danger  { background-color: #fee2e2; color: #991b1b; }
+  &--warning { background-color: #fef9c3; color: #854d0e; }
+  &--info    { background-color: #dbeafe; color: #1e40af; }
+  &--neutral { background-color: #f3f4f6; color: #374151; }
+}
+
+// ── Form controls ────────────────────────────────────────────
+.bk-input {
+  display: block;
+  width: 100%;
+  padding: $space-2 $space-3;
+  font-size: $font-size-sm;
+  color: $color-text;
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-md;
+  transition: border-color $transition-fast, box-shadow $transition-fast;
+  @include focus-ring($color-primary);
+
+  &:focus {
+    border-color: $color-primary;
+    box-shadow: 0 0 0 3px rgba($color-primary, 0.12);
+  }
+
+  &:disabled {
+    background-color: #f3f4f6;
+    cursor: not-allowed;
+    opacity: 0.7;
+  }
+
+  &--error { border-color: $color-danger; }
+}
+
+.bk-label {
+  display: block;
+  margin-bottom: $space-1;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  color: $color-text;
+}
+
+.bk-select {
+  @extend .bk-input;
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20' fill='%236b7280'%3E%3Cpath fill-rule='evenodd' d='M5.23 7.21a.75.75 0 011.06.02L10 11.168l3.71-3.938a.75.75 0 111.08 1.04l-4.25 4.5a.75.75 0 01-1.08 0l-4.25-4.5a.75.75 0 01.02-1.06z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right $space-3 center;
+  background-size: 1.25em;
+  padding-right: $space-8;
+}
+
+.bk-form-group {
+  display: flex;
+  flex-direction: column;
+  gap: $space-1;
+  margin-bottom: $space-4;
+}
+
+// ── Card ─────────────────────────────────────────────────────
+.bk-card {
+  background-color: $color-surface;
+  border: 1px solid $color-border;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-sm;
+  padding: $space-6;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $space-4;
+    padding-bottom: $space-4;
+    border-bottom: 1px solid $color-border;
+  }
+
+  &__title {
+    font-size: $font-size-lg;
+    font-weight: $font-weight-semibold;
+    color: $color-text;
+  }
+}
+
+// ── Table ────────────────────────────────────────────────────
+.bk-table-wrapper {
+  width: 100%;
+  overflow-x: auto;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+  box-shadow: $shadow-sm;
+}
+
+.bk-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: $font-size-sm;
+
+  thead {
+    background-color: $color-primary;
+    color: $color-text-inverse;
+
+    th {
+      padding: $space-3 $space-4;
+      text-align: left;
+      font-weight: $font-weight-semibold;
+      white-space: nowrap;
+    }
+  }
+
+  tbody {
+    tr {
+      border-bottom: 1px solid $color-border;
+      transition: background-color $transition-fast;
+
+      &:last-child { border-bottom: none; }
+      &:hover { background-color: #f0f9ff; }
+    }
+
+    td {
+      padding: $space-3 $space-4;
+      color: $color-text;
+      vertical-align: middle;
+    }
+  }
+}
+
+// ── Modal overlay ────────────────────────────────────────────
+.bk-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 50;
+  backdrop-filter: blur(2px);
+  animation: fadeIn $transition-normal;
+}
+
+.bk-modal {
+  background-color: $color-surface;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+  width: 100%;
+  max-width: 640px;
+  max-height: 90vh;
+  overflow-y: auto;
+  padding: $space-6;
+  animation: slideUp $transition-normal;
+
+  &__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: $space-5;
+
+    h3 {
+      font-size: $font-size-xl;
+      font-weight: $font-weight-semibold;
+    }
+  }
+
+  &__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: $space-3;
+    margin-top: $space-5;
+    padding-top: $space-4;
+    border-top: 1px solid $color-border;
+  }
+
+  &--lg  { max-width: 800px; }
+  &--xl  { max-width: 1100px; }
+}
+
+// ── Navbar ───────────────────────────────────────────────────
+.bk-nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 40;
+  background-color: $color-surface;
+  border-bottom: 1px solid $color-border;
+  box-shadow: $shadow-sm;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  padding: 0 $space-6;
+
+  &__brand {
+    font-size: $font-size-xl;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+  }
+
+  &__links {
+    display: flex;
+    align-items: center;
+    gap: $space-6;
+    margin-left: auto;
+
+    a {
+      font-size: $font-size-sm;
+      font-weight: $font-weight-medium;
+      color: $color-text-muted;
+      transition: color $transition-fast;
+      &:hover, &.active { color: $color-primary; }
+    }
+  }
+}
+
+// ── Language switcher (i18n) ─────────────────────────────────
+.bk-lang-switcher {
+  display: inline-flex;
+  align-items: center;
+  gap: $space-1;
+  border: 1px solid $color-border;
+  border-radius: $radius-full;
+  padding: $space-1 $space-2;
+  background-color: $color-surface;
+
+  button {
+    padding: 2px $space-2;
+    border-radius: $radius-full;
+    border: none;
+    background: none;
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    cursor: pointer;
+    color: $color-text-muted;
+    transition: all $transition-fast;
+
+    &.active, &:hover {
+      background-color: $color-primary;
+      color: $color-text-inverse;
+    }
+  }
+}
+
+// ── Loading spinner ──────────────────────────────────────────
+.bk-spinner {
+  width: 2rem;
+  height: 2rem;
+  border: 3px solid $color-border;
+  border-top-color: $color-primary;
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+
+// ── Stat card (dashboard) ────────────────────────────────────
+.bk-stat-card {
+  background-color: $color-surface;
+  border-radius: $radius-lg;
+  border: 1px solid $color-border;
+  padding: $space-6;
+  display: flex;
+  flex-direction: column;
+  gap: $space-2;
+  box-shadow: $shadow-sm;
+  transition: box-shadow $transition-normal;
+
+  &:hover { box-shadow: $shadow-md; }
+
+  &__label {
+    font-size: $font-size-sm;
+    color: $color-text-muted;
+  }
+
+  &__value {
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
+    color: $color-primary;
+    line-height: 1;
+  }
+}
+
+// ── Auth / Login pages ───────────────────────────────────────
+// Replaces inline <style> blocks from ChooseActor.html & Login pages
+
+// Role-picker buttons (ChooseActor.html)
+#actor-buttons {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: $space-5;
+}
+
+.actor-button {
+  width: 80%;
+  background-color: $color-primary;
+  color: $color-text-inverse;
+  border: none;
+  padding: $space-2 $space-4;
+  border-radius: $radius-md;
+  cursor: pointer;
+  font-size: $font-size-base;
+  margin: $space-1 0;
+  text-align: center;
+  text-decoration: none;
+  transition: background-color $transition-fast, opacity $transition-fast;
+
+  &:hover {
+    background-color: $color-primary-dark;
+    color: $color-text-inverse;
+    text-decoration: none;
+  }
+}
+
+// Auth hero section (left column on login pages)
+.auth-hero {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+// Auth form card
+.auth-card {
+  width: 100%;
+  padding: $space-6;
+  background-color: $color-surface;
+  border-radius: $radius-lg;
+  box-shadow: $shadow-lg;
+
+  @media (min-width: #{$bp-sm}) { padding: $space-8; }
+
+  h2 {
+    font-size: $font-size-2xl;
+    font-weight: $font-weight-bold;
+    color: $color-text;
+  }
+}
+
+// Auth page nav login/signup buttons
+.navigation__login {
+  display: flex;
+  gap: $space-2;
+  margin-left: $space-8;
+  margin-right: 100px;
+}
+
+// Auth page footer
+.auth-footer {
+  font-size: $font-size-sm;
+  color: $color-text-muted;
+  margin-top: $space-4;
+
+  a {
+    color: $color-info;
+    &:hover { text-decoration: underline; }
+  }
+}
+
+// ── Animations ───────────────────────────────────────────────
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+// ── Tech Stack Showcase ───────────────────────────────────────
+// Used on homepage footer / "Built with" section
+.tech-stack {
+  padding: $space-12 $space-4;
+  background-color: var(--color-surface);
+  border-top: 1px solid var(--color-border);
+  text-align: center;
+
+  &__heading {
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--color-text-muted);
+    margin-bottom: $space-8;
+  }
+
+  &__grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: $space-6 $space-8;
+    max-width: 900px;
+    margin: 0 auto;
+  }
+
+  &__item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: $space-2;
+    text-decoration: none;
+    color: var(--color-text-muted);
+    transition: color $transition-fast, transform $transition-fast;
+
+    &:hover {
+      color: var(--color-primary);
+      transform: translateY(-3px);
+      text-decoration: none;
+    }
+  }
+
+  &__icon {
+    width: 40px;
+    height: 40px;
+    // Monochrome filter in light mode — blend with brand primary on hover
+    filter: grayscale(20%) opacity(0.85);
+    transition: filter $transition-fast;
+
+    .tech-stack__item:hover & {
+      filter: grayscale(0%) opacity(1) drop-shadow(0 0 6px rgba($color-primary, 0.3));
+    }
+  }
+
+  &__label {
+    font-size: $font-size-xs;
+    font-weight: $font-weight-medium;
+    white-space: nowrap;
+  }
+
+  // Dark mode: icons appear brighter
+  [data-theme='dark'] & {
+    background-color: var(--color-surface);
+    border-color: var(--color-border);
+
+    .tech-stack__icon {
+      filter: brightness(0.9) opacity(0.85);
+    }
+    .tech-stack__item:hover .tech-stack__icon {
+      filter: brightness(1.1) opacity(1);
+    }
+  }
+}

@@ -1,0 +1,5 @@
+**/node_modules/
+client/styles/main.css
+client/img/
+**/prisma/migrations/
+**/*.min.js
