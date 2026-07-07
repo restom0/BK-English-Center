@@ -12,7 +12,9 @@ COPY package*.json ./
 RUN npm ci --ignore-scripts
 
 # Copy source (needed for prisma generate to locate schema.prisma)
+# prisma.config.ts holds the datasource config (Prisma 7+)
 COPY prisma ./prisma
+COPY prisma.config.ts ./
 RUN npx prisma generate
 
 # ── Stage 2: production-only deps ────────────────────────────
@@ -46,9 +48,9 @@ USER bkec
 
 EXPOSE 3000
 
-# Run Prisma migrations then start the server
-# Migrations are idempotent so this is safe on every restart.
-CMD ["sh", "-c", "npx prisma migrate deploy && node index.js"]
+# Schema migrations are handled by Flyway (the `migrate` service in
+# docker-compose), not at app startup — so just run the server.
+CMD ["node", "index.js"]
 
 HEALTHCHECK --interval=20s --timeout=5s --start-period=30s --retries=3 \
   CMD wget -qO- http://localhost:3000/courses || exit 1
