@@ -4,7 +4,7 @@
 # =============================================================
 
 # ── Stage 1: install all deps + generate Prisma client ────────
-FROM node:22-alpine AS builder
+FROM node:26-alpine AS builder
 WORKDIR /app
 
 # Install build-time deps (including prisma CLI via devDependencies)
@@ -16,14 +16,14 @@ COPY prisma ./prisma
 RUN npx prisma generate
 
 # ── Stage 2: production-only deps ────────────────────────────
-FROM node:22-alpine AS deps
+FROM node:26-alpine AS deps
 WORKDIR /app
 
 COPY package*.json ./
 RUN npm ci --omit=dev --ignore-scripts
 
 # ── Stage 3: lean production image ───────────────────────────
-FROM node:22-alpine AS runner
+FROM node:26-alpine AS runner
 
 # Security: run as non-root user
 RUN addgroup -S bkec && adduser -S bkec -G bkec
