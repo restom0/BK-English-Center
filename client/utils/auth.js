@@ -43,7 +43,7 @@ const ROLE_HOME = {
  * Gọi ở đầu mỗi page script cần bảo vệ.
  */
 function requireAuth() {
-  const token = localStorage.getItem('apitoken');
+  const token = localStorage.getItem('role');
   if (!token) {
     window.location.replace('../Loginpage/Login.html');
   }
@@ -56,7 +56,7 @@ function requireAuth() {
  */
 function guardCurrentPage() {
   const page = window.location.pathname.split('/').pop();
-  if (PROTECTED_PAGES.has(page) && !localStorage.getItem('apitoken')) {
+  if (PROTECTED_PAGES.has(page) && !localStorage.getItem('role')) {
     window.location.replace('../Loginpage/Login.html');
   }
 }
@@ -66,7 +66,7 @@ function guardCurrentPage() {
  * Gọi trong Login.js để bỏ qua form login khi đã có token.
  */
 function redirectIfLoggedIn() {
-  const token = localStorage.getItem('apitoken');
+  const token = localStorage.getItem('role');
   const role = localStorage.getItem('role');
   if (token && role && ROLE_HOME[role]) {
     window.location.replace(ROLE_HOME[role]);
@@ -91,7 +91,8 @@ function redirectAfterLogin(role) {
  * @returns {string|null}
  */
 function getToken() {
-  return localStorage.getItem('apitoken');
+  // JWT is stored in an httpOnly cookie and cannot be read from JS.
+  return null;
 }
 
 /**

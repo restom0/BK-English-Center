@@ -1,4 +1,4 @@
-if (!localStorage.getItem("apitoken")) {
+if (!localStorage.getItem("role")) {
   window.location.replace("../Loginpage/Login.html");
 } else if (localStorage.getItem("role") === "student") {
   var str = "";

@@ -13,14 +13,36 @@ const GOOGLE_CLIENT_ID = 'GOOGLE_CLIENT_ID_PLACEHOLDER';
 
 // ── Auth helpers ──────────────────────────────────────────────
 
-/** Get the stored JWT token */
+/** The JWT now lives in an httpOnly cookie and is not readable from JS. */
 function getToken() {
-  return localStorage.getItem('apitoken');
+  return null;
 }
 
-/** Build Authorization header object */
+/** Build Authorization header object (legacy; auth now rides the httpOnly cookie) */
 function authHeader() {
   return { Authorization: 'Bearer ' + getToken() };
+}
+
+/** Read a non-HttpOnly cookie by name (used for the CSRF token). */
+function readCookie(name) {
+  const m = document.cookie.match('(?:^|; )' + name + '=([^;]*)');
+  return m ? decodeURIComponent(m[1]) : '';
+}
+
+// ── Global AJAX policy ────────────────────────────────────────
+// 1. Send cookies (httpOnly JWT + CSRF token) with every request.
+// 2. Echo the CSRF token in a header on state-changing requests.
+if (window.jQuery) {
+  const SAFE_METHODS = { GET: 1, HEAD: 1, OPTIONS: 1 };
+  jQuery.ajaxSetup({
+    xhrFields: { withCredentials: true },
+    beforeSend: function (xhr, settings) {
+      const method = (settings.type || 'GET').toUpperCase();
+      if (!SAFE_METHODS[method]) {
+        xhr.setRequestHeader('X-CSRF-Token', readCookie('csrfToken'));
+      }
+    },
+  });
 }
 
 /**

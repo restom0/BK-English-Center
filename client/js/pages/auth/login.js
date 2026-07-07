@@ -1,4 +1,4 @@
-if (localStorage.getItem('apitoken')) {
+if (localStorage.getItem('role')) {
   switch (localStorage.getItem('role')) {
     case 'student':
       window.location.replace('../../../pages/public/my-courses/index.html');
@@ -49,7 +49,6 @@ function login() {
             icon: 'success',
             title: 'Đăng nhập thành công',
           }).then(() => {
-            localStorage.setItem('apitoken', res.apitoken);
             localStorage.setItem('role', res.role);
             switch (res.role) {
               case 'student':

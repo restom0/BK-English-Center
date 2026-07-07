@@ -41,11 +41,19 @@ class UserController {
         return res.status(401).json({ check: false, msg: req.t('auth.wrongPassword') });
       }
 
-      return res.json({
-        check: true,
-        apitoken: createApiKey({ id: queryResult.id, role: queryResult.role }),
-        role: queryResult.role,
+      // Issue the JWT as an httpOnly cookie so it is never exposed to JS
+      // (mitigates XSS token theft). The client tracks login state via the
+      // non-sensitive `role` value only.
+      const token = createApiKey({ id: queryResult.id, role: queryResult.role });
+      res.cookie('apitoken', token, {
+        httpOnly: true,
+        sameSite: 'lax',
+        secure: process.env.COOKIE_SECURE === 'true',
+        maxAge: 8 * 60 * 60 * 1000, // 8h — matches JWT_EXPIRES_IN
+        path: '/',
       });
+
+      return res.json({ check: true, role: queryResult.role });
     } catch (error) {
       console.error('Login error:', error);
       return res.status(500).json({ check: false, msg: req.t('server.error') });
