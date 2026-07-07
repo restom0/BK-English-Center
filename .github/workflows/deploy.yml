@@ -67,7 +67,7 @@ jobs:
             type=raw,value=latest,enable={{is_default_branch}}
 
       - name: Build & push backend
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: server
           file: server/Dockerfile
@@ -80,7 +80,7 @@ jobs:
             ghcr.io/${{ github.repository_owner }}/bkec-backend:latest
 
       - name: Build & push frontend
-        uses: docker/build-push-action@v5
+        uses: docker/build-push-action@v7
         with:
           context: client
           file: client/Dockerfile
