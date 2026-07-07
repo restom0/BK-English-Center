@@ -21,15 +21,78 @@
     "updateNoChange": "No se realizaron cambios",
     "registerSuccess": "Registro exitoso"
   },
-  "course": { "notFound": "Curso no encontrado", "alreadyExists": "El curso ya existe", "addSuccess": "Curso añadido", "updateSuccess": "Curso actualizado", "deleteSuccess": "Curso eliminado", "deleteBlocked": "No se puede eliminar un curso con clases activas" },
-  "class":   { "notFound": "Clase no encontrada", "alreadyExists": "La clase ya existe", "addSuccess": "Clase añadida", "updateSuccess": "Clase actualizada", "deleteSuccess": "Clase eliminada" },
-  "student": { "notFound": "Estudiante no encontrado", "updateSuccess": "Estudiante actualizado", "noChange": "Sin cambios" },
-  "teacher": { "notFound": "Profesor no encontrado", "updateSuccess": "Profesor actualizado", "noChange": "Sin cambios" },
-  "staff":   { "notFound": "Personal no encontrado", "updateSuccess": "Personal actualizado", "deleteSuccess": "Personal eliminado" },
-  "sponsor": { "addSuccess": "Patrocinador añadido", "updateSuccess": "Patrocinador actualizado", "deleteSuccess": "Patrocinador eliminado", "notFound": "Patrocinador no encontrado" },
-  "email":   { "noPermission": "No está autorizado para registrarse", "sendFailed": "Error al enviar correo", "sent": "Correo enviado", "addSuccess": "Correo añadido", "updateSuccess": "Correo actualizado", "deleteSuccess": "Correo eliminado", "deleteBlocked": "No se puede eliminar la entrada principal", "notFound": "Correo no encontrado" },
-  "file":    { "addSuccess": "Archivo añadido", "updateSuccess": "Archivo actualizado", "deleteSuccess": "Archivo eliminado", "notFound": "Archivo no encontrado" },
-  "log":     { "editAccount": "Editar cuenta" },
-  "server":  { "error": "Error interno del servidor", "tooManyRequests": "Demasiadas solicitudes, inténtelo de nuevo más tarde", "noChange": "Sin cambios" },
-  "mail":    { "subjectOtp": "Registro de cuenta", "subjectPay": "Recordatorio de matrícula", "subjectSalary": "Notificación de salario", "subjectPrize": "Notificación de premio", "subjectWarning": "Aviso de rendimiento", "subjectFile": "Recogida de material", "subjectCheer": "Felicitación", "invalidOtp": "Código de verificación inválido", "logPay": "Enviar recordatorio de pago", "logSalary": "Enviar notificación de salario", "logPrize": "Enviar notificación de premio", "logWarning": "Enviar advertencia", "logFile": "Enviar notificación de material", "logCheer": "Enviar felicitación" }
+  "course": {
+    "notFound": "Curso no encontrado",
+    "alreadyExists": "El curso ya existe",
+    "addSuccess": "Curso añadido",
+    "updateSuccess": "Curso actualizado",
+    "deleteSuccess": "Curso eliminado",
+    "deleteBlocked": "No se puede eliminar un curso con clases activas"
+  },
+  "class": {
+    "notFound": "Clase no encontrada",
+    "alreadyExists": "La clase ya existe",
+    "addSuccess": "Clase añadida",
+    "updateSuccess": "Clase actualizada",
+    "deleteSuccess": "Clase eliminada"
+  },
+  "student": {
+    "notFound": "Estudiante no encontrado",
+    "updateSuccess": "Estudiante actualizado",
+    "noChange": "Sin cambios"
+  },
+  "teacher": {
+    "notFound": "Profesor no encontrado",
+    "updateSuccess": "Profesor actualizado",
+    "noChange": "Sin cambios"
+  },
+  "staff": {
+    "notFound": "Personal no encontrado",
+    "updateSuccess": "Personal actualizado",
+    "deleteSuccess": "Personal eliminado"
+  },
+  "sponsor": {
+    "addSuccess": "Patrocinador añadido",
+    "updateSuccess": "Patrocinador actualizado",
+    "deleteSuccess": "Patrocinador eliminado",
+    "notFound": "Patrocinador no encontrado"
+  },
+  "email": {
+    "noPermission": "No está autorizado para registrarse",
+    "sendFailed": "Error al enviar correo",
+    "sent": "Correo enviado",
+    "addSuccess": "Correo añadido",
+    "updateSuccess": "Correo actualizado",
+    "deleteSuccess": "Correo eliminado",
+    "deleteBlocked": "No se puede eliminar la entrada principal",
+    "notFound": "Correo no encontrado"
+  },
+  "file": {
+    "addSuccess": "Archivo añadido",
+    "updateSuccess": "Archivo actualizado",
+    "deleteSuccess": "Archivo eliminado",
+    "notFound": "Archivo no encontrado"
+  },
+  "log": { "editAccount": "Editar cuenta" },
+  "server": {
+    "error": "Error interno del servidor",
+    "tooManyRequests": "Demasiadas solicitudes, inténtelo de nuevo más tarde",
+    "noChange": "Sin cambios"
+  },
+  "mail": {
+    "subjectOtp": "Registro de cuenta",
+    "subjectPay": "Recordatorio de matrícula",
+    "subjectSalary": "Notificación de salario",
+    "subjectPrize": "Notificación de premio",
+    "subjectWarning": "Aviso de rendimiento",
+    "subjectFile": "Recogida de material",
+    "subjectCheer": "Felicitación",
+    "invalidOtp": "Código de verificación inválido",
+    "logPay": "Enviar recordatorio de pago",
+    "logSalary": "Enviar notificación de salario",
+    "logPrize": "Enviar notificación de premio",
+    "logWarning": "Enviar advertencia",
+    "logFile": "Enviar notificación de material",
+    "logCheer": "Enviar felicitación"
+  }
 }

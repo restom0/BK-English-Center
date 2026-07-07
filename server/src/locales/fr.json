@@ -36,13 +36,63 @@
     "updateSuccess": "Classe mise à jour",
     "deleteSuccess": "Classe supprimée"
   },
-  "student": { "notFound": "Étudiant introuvable", "updateSuccess": "Étudiant mis à jour", "noChange": "Aucune modification" },
-  "teacher": { "notFound": "Enseignant introuvable", "updateSuccess": "Enseignant mis à jour", "noChange": "Aucune modification" },
-  "staff":   { "notFound": "Membre du personnel introuvable", "updateSuccess": "Personnel mis à jour", "deleteSuccess": "Personnel supprimé" },
-  "sponsor": { "addSuccess": "Sponsor ajouté", "updateSuccess": "Sponsor mis à jour", "deleteSuccess": "Sponsor supprimé", "notFound": "Sponsor introuvable" },
-  "email":   { "noPermission": "Vous n'êtes pas autorisé à vous inscrire", "sendFailed": "Échec d'envoi d'e-mail", "sent": "E-mail envoyé", "addSuccess": "E-mail ajouté", "updateSuccess": "E-mail mis à jour", "deleteSuccess": "E-mail supprimé", "deleteBlocked": "Impossible de supprimer l'entrée principale", "notFound": "E-mail introuvable" },
-  "file":    { "addSuccess": "Fichier ajouté", "updateSuccess": "Fichier mis à jour", "deleteSuccess": "Fichier supprimé", "notFound": "Fichier introuvable" },
-  "log":     { "editAccount": "Modifier le compte" },
-  "server":  { "error": "Erreur interne du serveur", "tooManyRequests": "Trop de requêtes, veuillez réessayer", "noChange": "Aucune modification" },
-  "mail":    { "subjectOtp": "Inscription au compte", "subjectPay": "Rappel de frais de scolarité", "subjectSalary": "Notification de salaire", "subjectPrize": "Notification de récompense", "subjectWarning": "Avis de performance", "subjectFile": "Récupération de matériel", "subjectCheer": "Félicitations", "invalidOtp": "Code de vérification invalide", "logPay": "Envoyer un rappel de frais", "logSalary": "Envoyer notification salaire", "logPrize": "Envoyer notification récompense", "logWarning": "Envoyer avertissement", "logFile": "Envoyer notification matériel", "logCheer": "Envoyer félicitations" }
+  "student": {
+    "notFound": "Étudiant introuvable",
+    "updateSuccess": "Étudiant mis à jour",
+    "noChange": "Aucune modification"
+  },
+  "teacher": {
+    "notFound": "Enseignant introuvable",
+    "updateSuccess": "Enseignant mis à jour",
+    "noChange": "Aucune modification"
+  },
+  "staff": {
+    "notFound": "Membre du personnel introuvable",
+    "updateSuccess": "Personnel mis à jour",
+    "deleteSuccess": "Personnel supprimé"
+  },
+  "sponsor": {
+    "addSuccess": "Sponsor ajouté",
+    "updateSuccess": "Sponsor mis à jour",
+    "deleteSuccess": "Sponsor supprimé",
+    "notFound": "Sponsor introuvable"
+  },
+  "email": {
+    "noPermission": "Vous n'êtes pas autorisé à vous inscrire",
+    "sendFailed": "Échec d'envoi d'e-mail",
+    "sent": "E-mail envoyé",
+    "addSuccess": "E-mail ajouté",
+    "updateSuccess": "E-mail mis à jour",
+    "deleteSuccess": "E-mail supprimé",
+    "deleteBlocked": "Impossible de supprimer l'entrée principale",
+    "notFound": "E-mail introuvable"
+  },
+  "file": {
+    "addSuccess": "Fichier ajouté",
+    "updateSuccess": "Fichier mis à jour",
+    "deleteSuccess": "Fichier supprimé",
+    "notFound": "Fichier introuvable"
+  },
+  "log": { "editAccount": "Modifier le compte" },
+  "server": {
+    "error": "Erreur interne du serveur",
+    "tooManyRequests": "Trop de requêtes, veuillez réessayer",
+    "noChange": "Aucune modification"
+  },
+  "mail": {
+    "subjectOtp": "Inscription au compte",
+    "subjectPay": "Rappel de frais de scolarité",
+    "subjectSalary": "Notification de salaire",
+    "subjectPrize": "Notification de récompense",
+    "subjectWarning": "Avis de performance",
+    "subjectFile": "Récupération de matériel",
+    "subjectCheer": "Félicitations",
+    "invalidOtp": "Code de vérification invalide",
+    "logPay": "Envoyer un rappel de frais",
+    "logSalary": "Envoyer notification salaire",
+    "logPrize": "Envoyer notification récompense",
+    "logWarning": "Envoyer avertissement",
+    "logFile": "Envoyer notification matériel",
+    "logCheer": "Envoyer félicitations"
+  }
 }

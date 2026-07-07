@@ -78,9 +78,13 @@ app.use((err, req, res, _next) => {
 });
 
 // ── Start ─────────────────────────────────────────────────────
-app.listen(env.port, () => {
-  console.log(`✅  Server running on port ${env.port} [${env.nodeEnv}]`);
-  console.log(`📖  API docs: http://localhost:${env.port}/api-docs`);
-});
+// Only listen when run directly (`node index.js`), so tests can
+// import `app` into supertest without binding a port.
+if (require.main === module) {
+  app.listen(env.port, () => {
+    console.log(`✅  Server running on port ${env.port} [${env.nodeEnv}]`);
+    console.log(`📖  API docs: http://localhost:${env.port}/api-docs`);
+  });
+}
 
 module.exports = app;
