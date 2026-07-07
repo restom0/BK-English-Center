@@ -12,6 +12,7 @@
 
 const { PrismaClient } = require('@prisma/client');
 const bcrypt = require('bcrypt');
+const { randomInt } = require('node:crypto');
 
 const prisma = new PrismaClient();
 
@@ -20,7 +21,9 @@ const prisma = new PrismaClient();
 const SALT_ROUNDS = 10;
 const hash = (pw) => bcrypt.hash(pw, SALT_ROUNDS);
 
-const rand = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+// Use a CSPRNG even for seed data — Math.random() trips CodeQL's
+// insecure-randomness rule. randomInt(min, max) is exclusive of max.
+const rand = (min, max) => randomInt(min, max + 1);
 const pick = (arr) => arr[rand(0, arr.length - 1)];
 
 const SEXES = ['male', 'female'];
