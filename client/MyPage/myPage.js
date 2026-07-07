@@ -1,4 +1,4 @@
-if (!localStorage.getItem("apitoken")) {
+if (!localStorage.getItem("role")) {
   window.location.replace("../Loginpage/Login.html");
 }
 $(document).ready(function () {

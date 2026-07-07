@@ -15,6 +15,7 @@ const swaggerUi = require('swagger-ui-express');
 const env = require('./src/config/env');
 const swaggerSpec = require('./src/config/swagger');
 const i18n = require('./src/middleware/i18n');
+const { csrfProtection } = require('./src/middleware/csrf');
 
 const app = express();
 
@@ -49,6 +50,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 // ── i18n — must come before routes ───────────────────────────
 app.use(i18n);
+
+// ── CSRF — double-submit cookie; must come after cookie-parser ───
+app.use(csrfProtection);
 
 // ── Swagger UI — available at /api-docs ───────────────────────
 app.use(
