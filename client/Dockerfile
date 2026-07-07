@@ -28,7 +28,7 @@ RUN sed -i \
 RUN rm -rf node_modules styles/*.scss styles/main.css.map package*.json
 
 # ── Stage 2: minimal nginx image ─────────────────────────────
-FROM nginx:1.27-alpine AS runner
+FROM nginx:1.31-alpine AS runner
 
 # Remove default nginx page
 RUN rm -f /usr/share/nginx/html/*
