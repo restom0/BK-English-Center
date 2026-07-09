@@ -1,0 +1,35 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="bg" x1="72" y1="64" x2="440" y2="448" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#1A6FA8"/>
+      <stop offset="1" stop-color="#0D3D61"/>
+    </linearGradient>
+    <linearGradient id="book" x1="142" y1="152" x2="370" y2="356" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#FFFFFF"/>
+      <stop offset="1" stop-color="#DFF4FF"/>
+    </linearGradient>
+    <filter id="soft-shadow" x="63" y="72" width="386" height="371" filterUnits="userSpaceOnUse" color-interpolation-filters="sRGB">
+      <feDropShadow dx="0" dy="18" stdDeviation="20" flood-color="#071B2B" flood-opacity="0.28"/>
+    </filter>
+  </defs>
+
+  <rect x="32" y="32" width="448" height="448" rx="104" fill="url(#bg)"/>
+  <path d="M84 114C117 76 170 56 255 56C340 56 395 78 428 117" stroke="#38BDF8" stroke-width="14" stroke-linecap="round" opacity="0.42"/>
+  <path d="M79 393C119 434 179 456 256 456C333 456 393 434 433 393" stroke="#0EA5E9" stroke-width="12" stroke-linecap="round" opacity="0.35"/>
+
+  <g filter="url(#soft-shadow)">
+    <path d="M139 164C139 151 149 141 162 141H242C258 141 270 146 280 158C290 146 302 141 318 141H350C363 141 373 151 373 164V340C373 353 363 363 350 363H313C298 363 287 369 280 380C273 369 262 363 247 363H162C149 363 139 353 139 340V164Z" fill="url(#book)"/>
+    <path d="M280 158V380" stroke="#125380" stroke-width="12" stroke-linecap="round"/>
+    <path d="M168 186H238" stroke="#125380" stroke-width="14" stroke-linecap="round" opacity="0.82"/>
+    <path d="M168 224H238" stroke="#125380" stroke-width="10" stroke-linecap="round" opacity="0.34"/>
+    <path d="M168 258H234" stroke="#125380" stroke-width="10" stroke-linecap="round" opacity="0.34"/>
+    <path d="M168 292H228" stroke="#125380" stroke-width="10" stroke-linecap="round" opacity="0.34"/>
+  </g>
+
+  <path d="M301 135H382C402 135 418 151 418 171V214C418 234 402 250 382 250H351L315 279V250H301C281 250 265 234 265 214V171C265 151 281 135 301 135Z" fill="#FFCE4A"/>
+  <path d="M311 192L334 214L381 163" stroke="#0D3D61" stroke-width="15" stroke-linecap="round" stroke-linejoin="round"/>
+  <circle cx="318" cy="176" r="8" fill="#0D3D61" opacity="0.72"/>
+  <circle cx="349" cy="176" r="8" fill="#0D3D61" opacity="0.72"/>
+  <path d="M340 282L362 304L407 250" stroke="#FFCE4A" stroke-width="18" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M118 118L140 96M394 412L418 388" stroke="#FFCE4A" stroke-width="12" stroke-linecap="round" opacity="0.85"/>
+</svg>
