@@ -1,0 +1,42 @@
+# ============================================================
+# SonarCloud — static analysis + coverage (quality gate)
+# Kept separate from ci.yml so a missing SONAR_TOKEN can't turn the
+# core checks red. Requires repo secret: SONAR_TOKEN.
+# ============================================================
+
+name: SonarCloud
+
+on:
+  push:
+    branches: [main, develop]
+  pull_request:
+    branches: [main, develop]
+
+jobs:
+  sonar:
+    name: SonarCloud scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # full history → better blame/new-code detection
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+          cache: 'npm'
+          cache-dependency-path: server/package-lock.json
+
+      - name: Server tests with coverage
+        working-directory: server
+        run: |
+          npm ci
+          npx prisma generate
+          npm run test:cov || true # coverage is best-effort; don't block the scan
+
+      - name: SonarCloud scan
+        uses: SonarSource/sonarqube-scan-action@v4
+        env:
+          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
