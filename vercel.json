@@ -1,0 +1,30 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Content-Type-Options", "value": "nosniff" },
+        { "key": "X-Frame-Options", "value": "SAMEORIGIN" },
+        { "key": "Referrer-Policy", "value": "strict-origin" }
+      ]
+    }
+  ],
+  "redirects": [
+    { "source": "/", "destination": "/client/HomePage/homePage.html", "permanent": false },
+    { "source": "/home", "destination": "/client/HomePage/homePage.html", "permanent": false },
+    { "source": "/courses", "destination": "/client/CoursesPage/coursesPage.html", "permanent": false },
+    { "source": "/course-detail", "destination": "/client/CoursesPageDetail/CoursesPageDetail.html", "permanent": false },
+    { "source": "/contact", "destination": "/client/ContactPage/contact.html", "permanent": false },
+    { "source": "/login", "destination": "/client/Loginpage/Login.html", "permanent": false },
+    { "source": "/signup", "destination": "/client/Loginpage/Signup.html", "permanent": false },
+    { "source": "/forgot-password", "destination": "/client/Loginpage/ForgotPass.html", "permanent": false },
+    { "source": "/choose-actor", "destination": "/client/Loginpage/ChooseActor.html", "permanent": false },
+    { "source": "/my-courses", "destination": "/client/MyCourses/myCourses.html", "permanent": false },
+    { "source": "/my-page", "destination": "/client/MyPage/myPage.html", "permanent": false },
+    { "source": "/admin", "destination": "/client/Adminpage/Adminpage.html", "permanent": false },
+    { "source": "/staff", "destination": "/client/Staffpage/Staffpage.html", "permanent": false }
+  ]
+}
