@@ -10,6 +10,9 @@ $(document).ready(function () {
     success: function (res) {
       var str = "";
       res.data.forEach(function (el, index) {
+        const detailHref = typeof routeHref === "function"
+          ? routeHref("course-detail", { id: index })
+          : `../CoursesPageDetail/CoursesPageDetail.html?id=${index}`;
         str += `
                     <li class="course">
                         <h3>${index + 1}. ${el.name}</h3>
@@ -22,7 +25,7 @@ $(document).ready(function () {
                             </div>
                             <div class="card__right">
                                 <h2> Khoá học ${el.name}</h2>
-                                <a class="more" href="../CoursesPageDetail/CoursesPageDetail.html?id=${index}" role="button">Tìm hiểu thêm</a>
+                                <a class="more" href="${detailHref}" role="button">Tìm hiểu thêm</a>
                             </div>
                         </div>
                     </li>`;

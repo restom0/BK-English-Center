@@ -45,7 +45,7 @@ function getNavInfo() {
     })
     .fail(function () {
       localStorage.clear();
-      window.location.replace('../Loginpage/Login.html');
+      window.location.replace(typeof routeHref === 'function' ? routeHref('login') : '../Loginpage/Login.html');
     });
 }
 

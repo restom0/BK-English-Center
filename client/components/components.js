@@ -27,6 +27,10 @@ var BK_ICONS = {
   calendar_month: '<span class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">calendar_month</span>',
 };
 
+function _bkRouteHref(route, fallback) {
+  return typeof routeHref === 'function' ? routeHref(route) : fallback;
+}
+
 /* ── HTML builders ────────────────────────────────────────────────────────── */
 
 /** Build a collapsible sidebar section */
@@ -59,7 +63,7 @@ function _bkFooter(homeHref) {
 
 /** Build admin sidebar HTML */
 function _bkAdminSidebar() {
-  var homeHref = '../Adminpage/Adminpage.html';
+  var homeHref = _bkRouteHref('admin', '../Adminpage/Adminpage.html');
 
   var statSection = '<button type="button" style="margin-top:1vh;" class="px-3 flex items-center w-full text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700" aria-controls="sb-stat" data-collapse-toggle="sb-stat">' +
     '<span class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white group">' +
@@ -67,27 +71,27 @@ function _bkAdminSidebar() {
     '<span class="ml-3 mr-2" data-i18n="sidebar.stat">Thống kê</span>' +
     BK_ICONS.chevron + '</span></button>' +
     '<ul id="sb-stat" class="space-y-2 px-3">' +
-    '<li><a href="../Statfinancialpage/Statfinancialpage.html" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">' +
+    '<li><a href="' + _bkRouteHref('stat-financial', '../Statfinancialpage/Statfinancialpage.html') + '" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">' +
     BK_ICONS.dollar + '<span class="flex-1 ml-3 whitespace-nowrap" data-i18n="sidebar.stat_financial">Thống kê tài chính</span></a></li>' +
-    '<li><a href="../Stataccesspage/Stataccesspage.html" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">' +
+    '<li><a href="' + _bkRouteHref('stat-access', '../Stataccesspage/Stataccesspage.html') + '" class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">' +
     BK_ICONS.right_click + '<span class="flex-1 ml-3 whitespace-nowrap" data-i18n="sidebar.stat_access">Thống kê truy cập</span></a></li>' +
     '</ul>';
 
   var classSection = _bkSection('sb-class-admin', BK_ICONS.chart, 'sidebar.manage_class', [
-    {href: '../Statclasspage/Statclasspage.html', icon: BK_ICONS.school, key: 'sidebar.classes', label: 'Lớp học'},
-    {href: '../manageCoursePage/manageCoursePage.html', icon: BK_ICONS.calendar_month, key: 'sidebar.courses', label: 'Khóa học'},
+    {href: _bkRouteHref('stat-class', '../Statclasspage/Statclasspage.html'), icon: BK_ICONS.school, key: 'sidebar.classes', label: 'Lớp học'},
+    {href: _bkRouteHref('manage-courses', '../manageCoursePage/manageCoursePage.html'), icon: BK_ICONS.calendar_month, key: 'sidebar.courses', label: 'Khóa học'},
   ]);
 
   var staffSection = _bkSection('sb-staff', BK_ICONS.chart, 'sidebar.manage_staff', [
-    {href: '../Infostaffpage/Infostaffpage.html', icon: BK_ICONS.person_card, key: 'sidebar.staff_info', label: 'Thông tin nhân viên'},
-    {href: '../Attendstaffpage/Attendstaffpage.html', icon: BK_ICONS.calendar, key: 'sidebar.attendance', label: 'Chấm công'},
-    {href: '../Paystaffpage/Paystaffpage.html', icon: BK_ICONS.pay, key: 'sidebar.salary', label: 'Lương và thưởng'},
+    {href: _bkRouteHref('staff-info', '../Infostaffpage/Infostaffpage.html'), icon: BK_ICONS.person_card, key: 'sidebar.staff_info', label: 'Thông tin nhân viên'},
+    {href: _bkRouteHref('staff-attendance', '../Attendstaffpage/Attendstaffpage.html'), icon: BK_ICONS.calendar, key: 'sidebar.attendance', label: 'Chấm công'},
+    {href: _bkRouteHref('staff-pay', '../Paystaffpage/Paystaffpage.html'), icon: BK_ICONS.pay, key: 'sidebar.salary', label: 'Lương và thưởng'},
   ]);
 
   var stuTeaLink = '<button type="button" style="margin-top:1vh;" class="px-3 flex items-center w-full text-base text-gray-900 transition duration-75 rounded-lg group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 border-t border-gray-200 dark:border-gray-700">' +
     '<span class="flex items-center p-2 text-gray-900 rounded-lg dark:text-white group">' +
     BK_ICONS.chart +
-    '<span class="ml-3"><a href="../Staffpage/Staffpage.html" data-i18n="sidebar.student_teacher">Học viên và giảng viên</a></span>' +
+    '<span class="ml-3"><a href="' + _bkRouteHref('staff', '../Staffpage/Staffpage.html') + '" data-i18n="sidebar.student_teacher">Học viên và giảng viên</a></span>' +
     '</span></button>';
 
   return '<button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"><span class="sr-only">Open sidebar</span>' + BK_ICONS.hamburger + '</button>' +
@@ -100,26 +104,26 @@ function _bkAdminSidebar() {
 
 /** Build staff sidebar HTML */
 function _bkStaffSidebar() {
-  var homeHref = '../Staffpage/Staffpage.html';
+  var homeHref = _bkRouteHref('staff', '../Staffpage/Staffpage.html');
 
   var studentSection = _bkSection('sb-student', BK_ICONS.chart, 'sidebar.manage_student', [
-    {href: '../Infostupage/Infostupage.html', icon: BK_ICONS.person_card, key: 'sidebar.student_info', label: 'Thông tin học viên'},
-    {href: '../Attendstupage/Attendstupage.html', icon: BK_ICONS.calendar, key: 'sidebar.daily_attend', label: 'Điểm danh hằng ngày'},
-    {href: '../Markstupage/Markstupage.html', icon: BK_ICONS.badge, key: 'sidebar.student_mark', label: 'Điểm của học viên'},
-    {href: '../Paystupage/Paystupage.html', icon: BK_ICONS.pay, key: 'sidebar.tuition', label: 'Học phí và học bổng'},
+    {href: _bkRouteHref('student-info', '../Infostupage/Infostupage.html'), icon: BK_ICONS.person_card, key: 'sidebar.student_info', label: 'Thông tin học viên'},
+    {href: _bkRouteHref('student-attendance', '../Attendstupage/Attendstupage.html'), icon: BK_ICONS.calendar, key: 'sidebar.daily_attend', label: 'Điểm danh hằng ngày'},
+    {href: _bkRouteHref('student-marks', '../Markstupage/Markstupage.html'), icon: BK_ICONS.badge, key: 'sidebar.student_mark', label: 'Điểm của học viên'},
+    {href: _bkRouteHref('student-pay', '../Paystupage/Paystupage.html'), icon: BK_ICONS.pay, key: 'sidebar.tuition', label: 'Học phí và học bổng'},
   ]);
 
   var teacherSection = _bkSection('sb-teacher', BK_ICONS.chart, 'sidebar.manage_teacher', [
-    {href: '../Infoteapage/Infoteapage.html', icon: BK_ICONS.person_card, key: 'sidebar.teacher_info', label: 'Thông tin giảng viên'},
-    {href: '../Attendteapage/Attendteapage.html', icon: BK_ICONS.calendar, key: 'sidebar.attendance', label: 'Chấm công'},
-    {href: '../Rateteapage/Rateteapage.html', icon: BK_ICONS.badge, key: 'sidebar.teacher_rate', label: 'Đánh giá giảng viên'},
-    {href: '../Payteapage/Payteapage.html', icon: BK_ICONS.pay, key: 'sidebar.salary', label: 'Lương và thưởng'},
-    {href: '../Fileteapage/Fileteapage.html', icon: BK_ICONS.file, key: 'sidebar.documents', label: 'Tài liệu'},
+    {href: _bkRouteHref('teacher-info', '../Infoteapage/Infoteapage.html'), icon: BK_ICONS.person_card, key: 'sidebar.teacher_info', label: 'Thông tin giảng viên'},
+    {href: _bkRouteHref('teacher-attendance', '../Attendteapage/Attendteapage.html'), icon: BK_ICONS.calendar, key: 'sidebar.attendance', label: 'Chấm công'},
+    {href: _bkRouteHref('teacher-rate', '../Rateteapage/Rateteapage.html'), icon: BK_ICONS.badge, key: 'sidebar.teacher_rate', label: 'Đánh giá giảng viên'},
+    {href: _bkRouteHref('teacher-pay', '../Payteapage/Payteapage.html'), icon: BK_ICONS.pay, key: 'sidebar.salary', label: 'Lương và thưởng'},
+    {href: _bkRouteHref('teacher-files', '../Fileteapage/Fileteapage.html'), icon: BK_ICONS.file, key: 'sidebar.documents', label: 'Tài liệu'},
   ]);
 
   var classSection = _bkSection('sb-class-staff', BK_ICONS.chart, 'sidebar.manage_class', [
-    {href: '../Statclasspage/Statclasspage.html', icon: BK_ICONS.school, key: 'sidebar.classes', label: 'Lớp học'},
-    {href: '../manageCoursePage/manageCoursePage.html', icon: BK_ICONS.calendar_month, key: 'sidebar.courses', label: 'Khóa học'},
+    {href: _bkRouteHref('stat-class', '../Statclasspage/Statclasspage.html'), icon: BK_ICONS.school, key: 'sidebar.classes', label: 'Lớp học'},
+    {href: _bkRouteHref('manage-courses', '../manageCoursePage/manageCoursePage.html'), icon: BK_ICONS.calendar_month, key: 'sidebar.courses', label: 'Khóa học'},
   ]);
 
   return '<button data-drawer-target="logo-sidebar" data-drawer-toggle="logo-sidebar" aria-controls="logo-sidebar" type="button" class="inline-flex items-center p-2 mt-2 ml-3 text-sm text-gray-500 rounded-lg sm:hidden hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-gray-200 dark:text-gray-400 dark:hover:bg-gray-700 dark:focus:ring-gray-600"><span class="sr-only">Open sidebar</span>' + BK_ICONS.hamburger + '</button>' +
@@ -132,7 +136,9 @@ function _bkStaffSidebar() {
 
 /** Build topbar HTML (common to all protected pages) */
 function _bkTopbar(type) {
-  var homeHref = type === 'admin' ? '../Adminpage/Adminpage.html' : '../Staffpage/Staffpage.html';
+  var homeHref = type === 'admin'
+    ? _bkRouteHref('admin', '../Adminpage/Adminpage.html')
+    : _bkRouteHref('staff', '../Staffpage/Staffpage.html');
   return '<nav class="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">' +
     '<div class="px-3 py-3 lg:px-5 lg:pl-3">' +
     '<div class="flex items-center justify-between">' +
@@ -196,6 +202,10 @@ $(function () {
 
   $('#bk-sidebar').replaceWith(sidebarHtml);
   $('#bk-topbar').replaceWith(topbarHtml);
+
+  if (window.BkRouter) {
+    window.BkRouter.bind(document);
+  }
 
   // Re-initialize Flowbite for dynamically added dropdown/drawer elements
   if (typeof initFlowbite === 'function') {

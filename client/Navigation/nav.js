@@ -16,6 +16,6 @@ function loadNav() {
   } else {
     $("#nav__user").remove();
   }
-  $("#my-class-link").attr("href", "../MyCourses/myCourses.html");
-  $("#my-page-link").attr("href", "../MyPage/myPage.html");
+  $("#my-class-link").attr("href", typeof routeHref === "function" ? routeHref("my-courses") : "../MyCourses/myCourses.html");
+  $("#my-page-link").attr("href", typeof routeHref === "function" ? routeHref("my-page") : "../MyPage/myPage.html");
 }

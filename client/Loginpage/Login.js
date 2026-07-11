@@ -1,18 +1,5 @@
 if (localStorage.getItem("role")) {
-  switch (localStorage.getItem("role")) {
-    case "student":
-      window.location.replace("../MyCourses/myCourses.html");
-      break;
-    case "teacher":
-      window.location.replace("../MyCourses/myCourses.html");
-      break;
-    case "staff":
-      window.location.replace("../Staffpage/Staffpage.html");
-      break;
-    case "admin":
-      window.location.replace("../Adminpage/Adminpage.html");
-      break;
-  }
+  redirectAfterLogin(localStorage.getItem("role"));
 }
 $(document).ready(function () {
   login();
@@ -50,22 +37,7 @@ function login() {
             title: "Đăng nhập thành công",
           }).then(() => {
             localStorage.setItem("role", res.role);
-            switch (res.role) {
-              case "student":
-                window.location.replace("../MyCourses/myCourses.html");
-                break;
-              case "teacher":
-                window.location.replace("../MyCourses/myCourses.html");
-                break;
-              case "staff":
-                window.location.replace("../Staffpage/Staffpage.html");
-                break;
-              case "admin":
-                window.location.replace("../Adminpage/Adminpage.html");
-                break;
-              default:
-                break;
-            }
+            redirectAfterLogin(res.role);
           });
         }
       },

@@ -32,11 +32,26 @@ const PROTECTED_PAGES = new Set([
 
 /** Trang đích sau khi đăng nhập theo role */
 const ROLE_HOME = {
+  student: 'my-courses',
+  teacher: 'my-courses',
+  staff: 'staff',
+  admin: 'admin',
+};
+
+const ROLE_HOME_FALLBACK = {
   student: '../MyCourses/myCourses.html',
   teacher: '../MyCourses/myCourses.html',
   staff: '../Staffpage/Staffpage.html',
   admin: '../Adminpage/Adminpage.html',
 };
+
+function authRouteHref(route, fallback) {
+  return typeof routeHref === 'function' ? routeHref(route) : fallback;
+}
+
+function roleHomeHref(role) {
+  return authRouteHref(ROLE_HOME[role], ROLE_HOME_FALLBACK[role]);
+}
 
 /**
  * Bảo vệ trang hiện tại — redirect về Login nếu chưa đăng nhập.
@@ -45,7 +60,7 @@ const ROLE_HOME = {
 function requireAuth() {
   const token = localStorage.getItem('role');
   if (!token) {
-    window.location.replace('../Loginpage/Login.html');
+    window.location.replace(authRouteHref('login', '../Loginpage/Login.html'));
   }
 }
 
@@ -57,7 +72,7 @@ function requireAuth() {
 function guardCurrentPage() {
   const page = window.location.pathname.split('/').pop();
   if (PROTECTED_PAGES.has(page) && !localStorage.getItem('role')) {
-    window.location.replace('../Loginpage/Login.html');
+    window.location.replace(authRouteHref('login', '../Loginpage/Login.html'));
   }
 }
 
@@ -69,7 +84,7 @@ function redirectIfLoggedIn() {
   const token = localStorage.getItem('role');
   const role = localStorage.getItem('role');
   if (token && role && ROLE_HOME[role]) {
-    window.location.replace(ROLE_HOME[role]);
+    window.location.replace(roleHomeHref(role));
   }
 }
 
@@ -78,11 +93,11 @@ function redirectIfLoggedIn() {
  * @param {string} role
  */
 function redirectAfterLogin(role) {
-  const dest = ROLE_HOME[role];
+  const dest = roleHomeHref(role);
   if (dest) {
     window.location.replace(dest);
   } else {
-    window.location.replace('../HomePage/homePage.html');
+    window.location.replace(authRouteHref('home', '../HomePage/homePage.html'));
   }
 }
 
@@ -120,5 +135,5 @@ function getCachedUser() {
  */
 function logout() {
   localStorage.clear();
-  window.location.replace('../HomePage/homePage.html');
+  window.location.replace(authRouteHref('home', '../HomePage/homePage.html'));
 }
