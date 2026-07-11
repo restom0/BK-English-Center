@@ -189,49 +189,8 @@ function bindUserModal(user) {
 
 /* ── 4. Language switcher ────────────────────────────────────────── */
 function injectLangSwitcher() {
-  if (typeof i18n === 'undefined') return;
-
-  var current = i18n.getLang();
-  var langs   = i18n.getLanguages();
-
-  var buttons = Object.entries(langs).map(function (entry) {
-    var code = entry[0], label = entry[1];
-    var active = code === current ? ' active' : '';
-    return `<button data-lang="${code}" class="bk-lang-btn${active}" title="${label}">${code.toUpperCase()}</button>`;
-  }).join('');
-
-  var switcher = `<div id="bk-lang-switcher" class="bk-lang-switcher" style="margin-left:12px;">${buttons}</div>`;
-
-  // Bootstrap navbar: inject after .form-inline
-  if ($('.form-inline').length) {
-    if (!$('#bk-lang-switcher').length) {
-      $('.form-inline').after(switcher);
-    }
-  }
-  // Flowbite sidebar: inject into sidebar bottom (ul.space-y-2 footer)
-  else if ($('[data-drawer-target], .sidebar, aside').length) {
-    if (!$('#bk-lang-switcher').length) {
-      $('body').append(
-        `<div id="bk-lang-switcher" class="bk-lang-switcher"
-          style="position:fixed;bottom:16px;right:16px;z-index:100;">${buttons}</div>`
-      );
-    }
-  }
-
-  // Bind click
-  $(document).on('click', '.bk-lang-btn', function () {
-    var lang = $(this).attr('data-lang');
-    i18n.setLang(lang);
-    $('.bk-lang-btn').removeClass('active');
-    $(`.bk-lang-btn[data-lang="${lang}"]`).addClass('active');
-  });
-
-  // Re-render on lang change
-  $(document).on('i18n:changed', function () {
-    var cur = i18n.getLang();
-    $('.bk-lang-btn').removeClass('active');
-    $(`.bk-lang-btn[data-lang="${cur}"]`).addClass('active');
-  });
+  if (typeof i18n === 'undefined' || typeof i18n.mountLanguageSwitcher !== 'function') return;
+  i18n.mountLanguageSwitcher();
 }
 
 /* ── 5. Đăng xuất ────────────────────────────────────────────────── */

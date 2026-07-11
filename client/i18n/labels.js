@@ -40,6 +40,8 @@ const labels = {
   'nav.login':      {vi: 'Đăng nhập', en: 'Login',   es: 'Iniciar sesión', fr: 'Connexion',    de: 'Anmelden',     it: 'Accedi',        ca: 'Iniciar sessió'},
   'nav.logout':     {vi: 'Đăng xuất', en: 'Logout',  es: 'Cerrar sesión',  fr: 'Déconnexion',  de: 'Abmelden',     it: 'Esci',          ca: 'Tancar sessió'},
   'nav.signup':     {vi: 'Đăng ký',   en: 'Sign Up', es: 'Registrarse',    fr: "S'inscrire",   de: 'Registrieren', it: 'Registrati',    ca: 'Registrar-se'},
+  'nav.search':     {vi: 'Tìm kiếm', en: 'Search', es: 'Buscar', fr: 'Rechercher', de: 'Suchen', it: 'Cerca', ca: 'Cercar'},
+  'language.selector': {vi: 'Chọn ngôn ngữ', en: 'Choose language', es: 'Elegir idioma', fr: 'Choisir la langue', de: 'Sprache auswählen', it: 'Scegli lingua', ca: 'Tria idioma'},
 
   // ── Feature: auth ─────────────────────────────────────────────────────────────
   'auth.username':          {vi: 'Tài khoản',     en: 'Username',  es: 'Usuario',       fr: "Nom d'utilisateur", de: 'Benutzername', it: 'Nome utente', ca: "Nom d'usuari"},
@@ -76,6 +78,7 @@ const labels = {
   'auth.account_info':      {vi: 'Thông tin tài khoản', en: 'Account Info', es: 'Info de cuenta', fr: 'Infos du compte', de: 'Kontoinformationen', it: 'Informazioni account', ca: 'Informació del compte'},
 
   // ── Feature: common — actions ─────────────────────────────────────────────────
+  'footer.copyright': {vi: 'Copyright 2023 Trường Đại Học Bách Khoa - ĐHQG TP.HCM. All Rights Reserved.\nĐịa chỉ: Đông Hòa, TP Dĩ An, Bình Dương.\nEmail: sepenglish@gmail.com.', en: 'Copyright 2023 Ho Chi Minh City University of Technology - VNU-HCM. All Rights Reserved.\nAddress: Dong Hoa, Di An City, Binh Duong.\nEmail: sepenglish@gmail.com.', es: 'Copyright 2023 Universidad de Tecnología de Ciudad Ho Chi Minh - VNU-HCM. Todos los derechos reservados.\nDirección: Dong Hoa, ciudad de Di An, Binh Duong.\nEmail: sepenglish@gmail.com.', fr: 'Copyright 2023 Université de technologie de Hô Chi Minh-Ville - VNU-HCM. Tous droits réservés.\nAdresse : Dong Hoa, ville de Di An, Binh Duong.\nEmail : sepenglish@gmail.com.', de: 'Copyright 2023 Ho-Chi-Minh-Stadt Universität für Technologie - VNU-HCM. Alle Rechte vorbehalten.\nAdresse: Dong Hoa, Di An City, Binh Duong.\nE-Mail: sepenglish@gmail.com.', it: 'Copyright 2023 Università di Tecnologia di Ho Chi Minh City - VNU-HCM. Tutti i diritti riservati.\nIndirizzo: Dong Hoa, città di Di An, Binh Duong.\nEmail: sepenglish@gmail.com.', ca: 'Copyright 2023 Universitat de Tecnologia de Ciutat Ho Chi Minh - VNU-HCM. Tots els drets reservats.\nAdreça: Dong Hoa, ciutat de Di An, Binh Duong.\nEmail: sepenglish@gmail.com.'},
   'action.add':           {vi: 'Thêm',          en: 'Add',          es: 'Agregar',      fr: 'Ajouter',       de: 'Hinzufügen',  it: 'Aggiungi',  ca: 'Afegeix'},
   'action.edit':          {vi: 'Chỉnh sửa',     en: 'Edit',         es: 'Editar',       fr: 'Modifier',      de: 'Bearbeiten',  it: 'Modifica',  ca: 'Edita'},
   'action.delete':        {vi: 'Xóa',           en: 'Delete',       es: 'Eliminar',     fr: 'Supprimer',     de: 'Löschen',     it: 'Elimina',   ca: 'Suprimeix'},
@@ -371,8 +374,18 @@ const labels = {
 const i18n = (function () {
   const STORAGE_KEY = 'bk_lang';
   const FALLBACK = 'vi';
+  const LANGUAGE_META = {
+    vi: { flag: '🇻🇳', code: 'VI' },
+    en: { flag: '🇺🇸', code: 'EN' },
+    es: { flag: '🇪🇸', code: 'ES' },
+    fr: { flag: '🇫🇷', code: 'FR' },
+    de: { flag: '🇩🇪', code: 'DE' },
+    it: { flag: '🇮🇹', code: 'IT' },
+    ca: { flag: '🇪🇸', code: 'CA' },
+  };
 
   let _lang = localStorage.getItem(STORAGE_KEY) || FALLBACK;
+  let _switcherBound = false;
 
   /**
    * Get the translation for key in the current language.
@@ -407,6 +420,7 @@ const i18n = (function () {
     _lang = lang;
     localStorage.setItem(STORAGE_KEY, lang);
     applyAll();
+    syncLanguageSwitchers();
     document.dispatchEvent(new CustomEvent('i18n:changed', { detail: { lang } }));
   }
 
@@ -415,6 +429,97 @@ const i18n = (function () {
 
   /** Return the LANGUAGES map. */
   function getLanguages() { return LANGUAGES; }
+
+  /** Return display metadata for a language option. */
+  function getLanguageMeta(lang) {
+    return LANGUAGE_META[lang] || { flag: '🌐', code: String(lang || '').toUpperCase() };
+  }
+
+  function escapeHtml(value) {
+    return String(value)
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#039;');
+  }
+
+  function buildLanguageSwitcher(fixed) {
+    const options = Object.keys(LANGUAGES).map(function (lang) {
+      const meta = getLanguageMeta(lang);
+      const selected = lang === _lang ? ' selected' : '';
+      return `<option value="${lang}"${selected}>${meta.flag} ${meta.code}</option>`;
+    }).join('');
+    const meta = getLanguageMeta(_lang);
+    const fixedClass = fixed ? ' bk-lang-switcher--fixed' : '';
+
+    return `<label id="bk-lang-switcher" class="bk-lang-switcher${fixedClass}" aria-label="${escapeHtml(t('language.selector'))}" data-i18n-aria-label="language.selector">
+      <span class="bk-lang-switcher__flag" aria-hidden="true">${meta.flag}</span>
+      <select class="bk-lang-select" aria-label="${escapeHtml(t('language.selector'))}" data-i18n-aria-label="language.selector">${options}</select>
+    </label>`;
+  }
+
+  function bindLanguageSwitcher() {
+    if (_switcherBound) return;
+    document.addEventListener('change', function (event) {
+      const select = event.target && event.target.closest ? event.target.closest('.bk-lang-select') : null;
+      if (!select) return;
+      setLang(select.value);
+    });
+    _switcherBound = true;
+  }
+
+  function mountLanguageSwitcher() {
+    bindLanguageSwitcher();
+
+    if (!document.getElementById('bk-lang-switcher')) {
+      const form = document.querySelector('.navbar .form-inline, .form-inline');
+      const userArea = document.querySelector('.navbar .navigation__login');
+      const sidebar = document.querySelector('[data-drawer-target], .sidebar, aside');
+
+      if (form && form.parentNode) {
+        form.insertAdjacentHTML('afterend', buildLanguageSwitcher(false));
+      } else if (userArea && userArea.parentNode) {
+        userArea.insertAdjacentHTML('beforebegin', buildLanguageSwitcher(false));
+      } else if (sidebar && document.body) {
+        document.body.insertAdjacentHTML('beforeend', buildLanguageSwitcher(true));
+      }
+    }
+
+    syncLanguageSwitchers();
+  }
+
+  function syncLanguageSwitchers() {
+    const meta = getLanguageMeta(_lang);
+    document.querySelectorAll('.bk-lang-select').forEach(function (select) {
+      select.value = _lang;
+      select.setAttribute('aria-label', t('language.selector'));
+    });
+    document.querySelectorAll('.bk-lang-switcher').forEach(function (switcher) {
+      switcher.setAttribute('aria-label', t('language.selector'));
+    });
+    document.querySelectorAll('.bk-lang-switcher__flag').forEach(function (flag) {
+      flag.textContent = meta.flag;
+    });
+  }
+
+  function setMultilineHtml(el, key) {
+    el.innerHTML = escapeHtml(t(key)).replace(/\n/g, '<br>');
+  }
+
+  function applySharedStaticLabels() {
+    document.querySelectorAll('.navbar .form-inline input[type="search"]').forEach(function (input) {
+      if (!input.hasAttribute('data-i18n-placeholder')) input.placeholder = t('nav.search');
+      if (!input.hasAttribute('data-i18n-aria-label')) input.setAttribute('aria-label', t('nav.search'));
+    });
+    document.querySelectorAll('.navbar .form-inline button[type="submit"]').forEach(function (button) {
+      if (!button.hasAttribute('data-i18n-aria-label')) button.setAttribute('aria-label', t('nav.search'));
+      if (!button.hasAttribute('data-i18n-title')) button.title = t('nav.search');
+    });
+    document.querySelectorAll('.footer p').forEach(function (footer) {
+      if (!footer.hasAttribute('data-i18n')) setMultilineHtml(footer, 'footer.copyright');
+    });
+  }
 
   /**
    * Translate all [data-i18n] elements in the document.
@@ -429,14 +534,30 @@ const i18n = (function () {
       const key = el.getAttribute('data-i18n-placeholder');
       el.placeholder = t(key);
     });
+    document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
+      const key = el.getAttribute('data-i18n-title');
+      el.title = t(key);
+    });
+    document.querySelectorAll('[data-i18n-aria-label]').forEach(function (el) {
+      const key = el.getAttribute('data-i18n-aria-label');
+      el.setAttribute('aria-label', t(key));
+    });
+    applySharedStaticLabels();
+  }
+
+  function ready() {
+    applyAll();
+    mountLanguageSwitcher();
   }
 
   // Auto-apply on DOM ready
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', applyAll);
+    document.addEventListener('DOMContentLoaded', ready);
   } else {
-    applyAll();
+    ready();
   }
 
-  return { t, setLang, getLang, getLanguages, applyAll };
+  const api = { t, setLang, getLang, getLanguages, getLanguageMeta, applyAll, mountLanguageSwitcher, syncLanguageSwitchers };
+  if (typeof window !== 'undefined') window.i18n = api;
+  return api;
 })();

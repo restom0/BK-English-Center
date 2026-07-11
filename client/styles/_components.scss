@@ -307,27 +307,40 @@
 .bk-lang-switcher {
   display: inline-flex;
   align-items: center;
-  gap: $space-1;
+  column-gap: $spacingX;
   border: 1px solid $color-border;
   border-radius: $radius-full;
-  padding: $space-1 $space-2;
+  padding: 2px $spacingX;
   background-color: $color-surface;
+  color: $color-text;
+  min-height: 38px;
 
-  button {
-    padding: 2px $space-2;
-    border-radius: $radius-full;
+  &--fixed {
+    position: fixed;
+    right: $spacingX;
+    bottom: $spacingY;
+    z-index: 100;
+    box-shadow: $shadow-md;
+  }
+
+  &__flag {
+    line-height: 1;
+    font-size: $font-size-base;
+  }
+
+  select {
+    min-width: 84px;
+    padding: 0 18px 0 0;
     border: none;
-    background: none;
+    outline: none;
+    appearance: auto;
+    background-color: transparent;
     font-size: $font-size-xs;
-    font-weight: $font-weight-medium;
+    font-weight: $font-weight-semibold;
     cursor: pointer;
-    color: $color-text-muted;
-    transition: all $transition-fast;
+    color: $color-text;
 
-    &.active, &:hover {
-      background-color: $color-primary;
-      color: $color-text-inverse;
-    }
+    &:focus-visible { outline: 2px solid $color-primary; }
   }
 }
 
@@ -424,12 +437,107 @@
   }
 }
 
+body:not(.has-public-nav) > .navbar--white + section {
+  min-height: calc(100vh - 140px);
+  padding: ($body-gutter + $spacingY) $body-gutter $section-gap !important;
+
+  > .grid {
+    width: 100%;
+    max-width: $bp-xl;
+    padding: 0 !important;
+    column-gap: $spacingX !important;
+    row-gap: $spacingY !important;
+    align-items: center;
+  }
+
+  > .grid > div {
+    min-width: 0;
+  }
+
+  > .grid > .flex,
+  > .grid > div:first-child {
+    row-gap: $spacingY;
+  }
+
+  > .grid h1,
+  > .grid p {
+    margin-bottom: $spacingY !important;
+  }
+
+  > .grid h1 {
+    max-width: 640px;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    letter-spacing: 0;
+  }
+
+  .w-full.lg\:max-w-xl,
+  .w-full.lg\:max-w-xl.mx-auto {
+    width: 100%;
+    max-width: 520px;
+    padding: $section-gap !important;
+    border-radius: $radius-md !important;
+  }
+
+  form:not(.form-inline) {
+    display: flex;
+    flex-direction: column;
+    row-gap: $spacingY;
+    margin-top: $section-gap !important;
+  }
+
+  form:not(.form-inline) > * {
+    margin-top: 0 !important;
+    margin-bottom: 0 !important;
+  }
+
+  form:not(.form-inline) .grid {
+    column-gap: $spacingX !important;
+    row-gap: $spacingY !important;
+  }
+
+  form:not(.form-inline) .group {
+    margin-bottom: $spacingY !important;
+  }
+
+  .flex.items-start {
+    column-gap: $spacingX;
+    row-gap: $spacingY;
+    flex-wrap: wrap;
+  }
+
+  > br { display: none; }
+
+  @media (min-width: #{$bp-lg}) {
+    > .grid.lg\:grid-cols-2 {
+      grid-template-columns: minmax(0, 1fr) minmax(360px, 520px) !important;
+    }
+  }
+
+  @media (max-width: #{$bp-lg}) {
+    padding-inline: clamp(#{$spacingX}, 5vw, #{$body-gutter}) !important;
+
+    > .grid {
+      grid-template-columns: 1fr !important;
+    }
+
+    .w-full.lg\:max-w-xl,
+    .w-full.lg\:max-w-xl.mx-auto {
+      max-width: 100%;
+    }
+  }
+}
+
+body:not(.has-public-nav) > .footer.fixed {
+  position: static !important;
+}
+
 // Auth page nav login/signup buttons
 .navigation__login {
   display: flex;
-  gap: $space-2;
-  margin-left: $space-8;
-  margin-right: 100px;
+  column-gap: $spacingX;
+  row-gap: $spacingY;
+  margin-left: $spacingX;
+  margin-right: 0;
 }
 
 // Auth page footer

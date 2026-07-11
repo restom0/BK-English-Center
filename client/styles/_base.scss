@@ -28,6 +28,10 @@
   --radius-lg:           #{$radius-lg};
   --shadow-md:           #{$shadow-md};
   --transition-normal:   #{$transition-normal};
+  --spacing-x:           #{$spacingX};
+  --spacing-y:           #{$spacingY};
+  --section-gap:         #{$section-gap};
+  --body-gutter:         #{$body-gutter};
 }
 
 // ── Dark theme tokens ────────────────────────────────────────
@@ -278,14 +282,14 @@ img {
 // The Bootstrap navbar is taller than the Flowbite admin sidebar,
 // so the margin is slightly larger and grows at narrow breakpoints.
 body.has-public-nav {
-  margin-top: 100px;
+  margin-top: $body-gutter + $section-gap;
 
   @media screen and (max-width: 850px) and (min-width: 484px) {
-    margin-top: 200px;
+    margin-top: ($body-gutter * 2) + $section-gap;
   }
 
   @media screen and (max-width: 483px) {
-    margin-top: 300px;
+    margin-top: ($body-gutter * 2) + ($section-gap * 2);
   }
 }
 
@@ -314,19 +318,79 @@ body.has-public-nav {
 // ── Navbar utilities ─────────────────────────────────────────
 // Public Bootstrap navbar shared by HomePage, CoursesPage, ContactPage, etc.
 // Replace style="background-color: #fff" on <nav>
-.navbar--white { background-color: #fff; }
+.navbar--white {
+  display: flex;
+  align-items: center;
+  gap: $spacingX;
+  min-height: $body-gutter + $spacingY;
+  padding: $spacingY $body-gutter;
+  background-color: #fff;
+  box-shadow: 0 1px 8px rgb(17 24 39 / 0.04);
+
+  .navbar-brand {
+    margin-right: $section-gap;
+    padding: 0;
+  }
+
+  .navbar-nav {
+    align-items: center;
+    column-gap: $spacingX;
+    row-gap: $spacingY;
+  }
+
+  .nav-link {
+    padding: 0;
+    white-space: nowrap;
+  }
+
+  .form-inline {
+    display: flex;
+    align-items: center;
+    column-gap: $spacingX;
+    row-gap: $spacingY;
+    margin-left: auto;
+    margin-bottom: 0 !important;
+  }
+
+  .form-inline .form-control {
+    min-width: clamp(160px, 18vw, 280px);
+    margin-right: 0 !important;
+  }
+
+  .btn {
+    white-space: nowrap;
+  }
+
+  @media (max-width: #{$bp-lg}) {
+    flex-wrap: wrap;
+    padding-inline: clamp(#{$spacingX}, 5vw, #{$body-gutter});
+
+    .form-inline {
+      flex: 1 1 260px;
+      margin-left: 0;
+    }
+  }
+}
 
 // Nav icon links (FontAwesome icon colour + spacing)
 // Replace style="color:#000" on <i>
 .icon--dark { color: #000; }
 
 // Replace style="margin-right: 10px" on icon <a> links
-.nav__icon-link { margin-right: 10px; }
+.nav__icon-link { margin-right: $spacingX; }
 
 // Replace style="margin-left: 30px; margin-right: 100px" on nav user area
 .nav__user-area {
-  margin-left: 30px;
-  margin-right: 100px;
+  display: flex;
+  align-items: center;
+  column-gap: $spacingX;
+  row-gap: $spacingY;
+  margin-left: $spacingX;
+  margin-right: 0;
+
+  @media (max-width: #{$bp-lg}) {
+    margin-left: 0;
+  }
 }
 
 // ── Misc spacing utilities ────────────────────────────────────
@@ -354,10 +418,20 @@ body.has-public-nav {
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 177px;
+  min-height: $body-gutter + ($spacingY * 3);
+  height: auto;
+  padding: $section-gap $body-gutter;
   background-color: $color-primary;
   color: $color-text-inverse;
-  font-size: $font-size-xl;
+  font-size: $font-size-lg;
   font-weight: $font-weight-normal;
   text-align: center;
+  line-height: 1.5;
+
+  p { margin: 0; }
+
+  @media (max-width: #{$bp-md}) {
+    padding-inline: clamp(#{$spacingX}, 5vw, #{$body-gutter});
+    font-size: $font-size-base;
+  }
 }

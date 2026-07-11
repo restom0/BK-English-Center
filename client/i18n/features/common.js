@@ -2,6 +2,8 @@
  * i18n/features/common.js — Common actions, fields, labels, placeholders, selects
  */
 const labelsCommon = {
+  'footer.copyright': {vi: 'Copyright 2023 Trường Đại Học Bách Khoa - ĐHQG TP.HCM. All Rights Reserved.\nĐịa chỉ: Đông Hòa, TP Dĩ An, Bình Dương.\nEmail: sepenglish@gmail.com.', en: 'Copyright 2023 Ho Chi Minh City University of Technology - VNU-HCM. All Rights Reserved.\nAddress: Dong Hoa, Di An City, Binh Duong.\nEmail: sepenglish@gmail.com.', es: 'Copyright 2023 Universidad de Tecnología de Ciudad Ho Chi Minh - VNU-HCM. Todos los derechos reservados.\nDirección: Dong Hoa, ciudad de Di An, Binh Duong.\nEmail: sepenglish@gmail.com.', fr: 'Copyright 2023 Université de technologie de Hô Chi Minh-Ville - VNU-HCM. Tous droits réservés.\nAdresse : Dong Hoa, ville de Di An, Binh Duong.\nEmail : sepenglish@gmail.com.', de: 'Copyright 2023 Ho-Chi-Minh-Stadt Universität für Technologie - VNU-HCM. Alle Rechte vorbehalten.\nAdresse: Dong Hoa, Di An City, Binh Duong.\nE-Mail: sepenglish@gmail.com.', it: 'Copyright 2023 Università di Tecnologia di Ho Chi Minh City - VNU-HCM. Tutti i diritti riservati.\nIndirizzo: Dong Hoa, città di Di An, Binh Duong.\nEmail: sepenglish@gmail.com.', ca: 'Copyright 2023 Universitat de Tecnologia de Ciutat Ho Chi Minh - VNU-HCM. Tots els drets reservats.\nAdreça: Dong Hoa, ciutat de Di An, Binh Duong.\nEmail: sepenglish@gmail.com.'},
+
   // Actions
   'action.add':           {vi: 'Thêm',          en: 'Add',          es: 'Agregar',      fr: 'Ajouter',       de: 'Hinzufügen',  it: 'Aggiungi',  ca: 'Afegeix'},
   'action.edit':          {vi: 'Chỉnh sửa',     en: 'Edit',         es: 'Editar',       fr: 'Modifier',      de: 'Bearbeiten',  it: 'Modifica',  ca: 'Edita'},

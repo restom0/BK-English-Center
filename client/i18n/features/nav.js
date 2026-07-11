@@ -12,4 +12,6 @@ const labelsNav = {
   'nav.login':      {vi: 'Đăng nhập', en: 'Login', es: 'Iniciar sesión', fr: 'Connexion', de: 'Anmelden', it: 'Accedi', ca: 'Iniciar sessió'},
   'nav.logout':     {vi: 'Đăng xuất', en: 'Logout', es: 'Cerrar sesión', fr: 'Déconnexion', de: 'Abmelden', it: 'Esci', ca: 'Tancar sessió'},
   'nav.signup':     {vi: 'Đăng ký',   en: 'Sign Up', es: 'Registrarse',  fr: "S'inscrire", de: 'Registrieren', it: 'Registrati', ca: 'Registrar-se'},
+  'nav.search':     {vi: 'Tìm kiếm', en: 'Search', es: 'Buscar', fr: 'Rechercher', de: 'Suchen', it: 'Cerca', ca: 'Cercar'},
+  'language.selector': {vi: 'Chọn ngôn ngữ', en: 'Choose language', es: 'Elegir idioma', fr: 'Choisir la langue', de: 'Sprache auswählen', it: 'Scegli lingua', ca: 'Tria idioma'},
 };

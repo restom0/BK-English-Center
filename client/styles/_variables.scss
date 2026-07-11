@@ -54,6 +54,12 @@ $space-10: 2.5rem;
 $space-12: 3rem;
 $space-16: 4rem;
 
+// Layout spacing requested for public/auth pages
+$spacingX:    12px;
+$spacingY:    16px;
+$section-gap: $spacingY * 2;
+$body-gutter: $spacingX * 5;
+
 // ── Border ───────────────────────────────────────────────────
 $radius-sm:   0.25rem;
 $radius-md:   0.5rem;
