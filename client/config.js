@@ -1,10 +1,28 @@
 // =============================================================
 // Client global configuration — BK English Center
-// In Docker, API_URL is patched to "" by the Dockerfile build step
-// so all requests use same-origin paths (proxied by nginx).
+// Static dev servers use the local Express API. Deployed builds use
+// same-origin /api paths proxied by nginx or Vercel.
 // =============================================================
 
-const API_URL = 'http://localhost:3000';
+function bkResolveApiUrl() {
+  const host = window.location.hostname;
+  const port = window.location.port;
+  const isLoopback = host === 'localhost' || host === '127.0.0.1' || host === '[::1]';
+
+  if (window.location.protocol === 'file:') {
+    return 'http://localhost:3000';
+  }
+
+  if (isLoopback) {
+    if (!port || port === '80' || port === '443') return '/api';
+    if (port === '3000') return '';
+    return 'http://localhost:3000';
+  }
+
+  return '/api';
+}
+
+const API_URL = bkResolveApiUrl();
 
 // Google OAuth Client ID — set to your own from Google Cloud Console.
 // In production this is patched by the Dockerfile build step:

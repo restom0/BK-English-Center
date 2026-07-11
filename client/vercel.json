@@ -13,6 +13,34 @@
     }
   ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "https://YOUR-BACKEND-HOST/$1" }
+    { "source": "/", "destination": "/HomePage/homePage.html" },
+    { "source": "/home", "destination": "/HomePage/homePage.html" },
+    { "source": "/courses", "destination": "/CoursesPage/coursesPage.html" },
+    { "source": "/course-detail", "destination": "/CoursesPageDetail/CoursesPageDetail.html" },
+    { "source": "/contact", "destination": "/ContactPage/contact.html" },
+    { "source": "/login", "destination": "/Loginpage/Login.html" },
+    { "source": "/signup", "destination": "/Loginpage/Signup.html" },
+    { "source": "/forgot-password", "destination": "/Loginpage/ForgotPass.html" },
+    { "source": "/choose-actor", "destination": "/Loginpage/ChooseActor.html" },
+    { "source": "/my-courses", "destination": "/MyCourses/myCourses.html" },
+    { "source": "/my-page", "destination": "/MyPage/myPage.html" },
+    { "source": "/admin", "destination": "/Adminpage/Adminpage.html" },
+    { "source": "/staff", "destination": "/Staffpage/Staffpage.html" },
+    { "source": "/stat-financial", "destination": "/Statfinancialpage/Statfinancialpage.html" },
+    { "source": "/stat-access", "destination": "/Stataccesspage/Stataccesspage.html" },
+    { "source": "/stat-class", "destination": "/Statclasspage/Statclasspage.html" },
+    { "source": "/manage-courses", "destination": "/manageCoursePage/manageCoursePage.html" },
+    { "source": "/staff-info", "destination": "/Infostaffpage/Infostaffpage.html" },
+    { "source": "/staff-attendance", "destination": "/Attendstaffpage/Attendstaffpage.html" },
+    { "source": "/staff-pay", "destination": "/Paystaffpage/Paystaffpage.html" },
+    { "source": "/student-info", "destination": "/Infostupage/Infostupage.html" },
+    { "source": "/student-attendance", "destination": "/Attendstupage/Attendstupage.html" },
+    { "source": "/student-marks", "destination": "/Markstupage/Markstupage.html" },
+    { "source": "/student-pay", "destination": "/Paystupage/Paystupage.html" },
+    { "source": "/teacher-info", "destination": "/Infoteapage/Infoteapage.html" },
+    { "source": "/teacher-attendance", "destination": "/Attendteapage/Attendteapage.html" },
+    { "source": "/teacher-rate", "destination": "/Rateteapage/Rateteapage.html" },
+    { "source": "/teacher-pay", "destination": "/Payteapage/Payteapage.html" },
+    { "source": "/teacher-files", "destination": "/Fileteapage/Fileteapage.html" }
   ]
 }

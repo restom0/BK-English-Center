@@ -18,11 +18,6 @@ COPY . .
 # Compile SCSS to compressed CSS
 RUN npm run build:css
 
-# Patch API_URL: in Docker, nginx proxies API paths so we use
-# same-origin (empty string) instead of http://localhost:3000
-RUN sed -i \
-    's|const API_URL = "http://localhost:3000"|const API_URL = ""|g' \
-    config.js
 
 # Remove SCSS source & node_modules from the artifact — not needed at runtime
 RUN rm -rf node_modules styles/*.scss styles/main.css.map package*.json

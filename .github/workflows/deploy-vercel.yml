@@ -1,8 +1,7 @@
 # ============================================================
 # Deploy client → Vercel (static frontend)
 # Requires repo secrets: VERCEL_TOKEN, VERCEL_ORG_ID, VERCEL_PROJECT_ID
-# Also set client/config.js API_URL to the backend's public URL (or
-# the /api rewrite in client/vercel.json) — see README/notes.
+# Set Vercel env BACKEND_URL to the backend's public URL so /api/* can proxy.
 # ============================================================
 
 name: Deploy client (Vercel)

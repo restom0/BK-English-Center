@@ -160,7 +160,7 @@ Serve the `client` folder with a static server such as VS Code Live Server or:
 npx serve . -p 5500
 ```
 
-In local development, `client/config.js` points API calls at `http://localhost:3000`. During Docker builds, the frontend Dockerfile patches `API_URL` to an empty string so nginx can proxy same-origin requests.
+In local development, `client/config.js` points API calls at `http://localhost:3000`. On Docker or Vercel deployments it uses same-origin `/api` requests. For Vercel, set the project environment variable `BACKEND_URL` to the public backend URL so `client/api/[...path].js` can proxy requests.
 
 ## Environment Variables
 
