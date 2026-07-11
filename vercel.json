@@ -26,5 +26,8 @@
     { "source": "/my-page", "destination": "/client/MyPage/myPage.html", "permanent": false },
     { "source": "/admin", "destination": "/client/Adminpage/Adminpage.html", "permanent": false },
     { "source": "/staff", "destination": "/client/Staffpage/Staffpage.html", "permanent": false }
+  ],
+  "rewrites": [
+    { "source": "/api/(.*)", "destination": "/api/proxy?path=$1" }
   ]
 }
