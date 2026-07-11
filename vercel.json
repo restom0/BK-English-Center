@@ -1,5 +1,7 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "cd client && npm ci --prefer-offline && npm run build:css",
+  "outputDirectory": "client",
   "cleanUrls": false,
   "trailingSlash": false,
   "headers": [
@@ -12,22 +14,36 @@
       ]
     }
   ],
-  "redirects": [
-    { "source": "/", "destination": "/client/HomePage/homePage.html", "permanent": false },
-    { "source": "/home", "destination": "/client/HomePage/homePage.html", "permanent": false },
-    { "source": "/courses", "destination": "/client/CoursesPage/coursesPage.html", "permanent": false },
-    { "source": "/course-detail", "destination": "/client/CoursesPageDetail/CoursesPageDetail.html", "permanent": false },
-    { "source": "/contact", "destination": "/client/ContactPage/contact.html", "permanent": false },
-    { "source": "/login", "destination": "/client/Loginpage/Login.html", "permanent": false },
-    { "source": "/signup", "destination": "/client/Loginpage/Signup.html", "permanent": false },
-    { "source": "/forgot-password", "destination": "/client/Loginpage/ForgotPass.html", "permanent": false },
-    { "source": "/choose-actor", "destination": "/client/Loginpage/ChooseActor.html", "permanent": false },
-    { "source": "/my-courses", "destination": "/client/MyCourses/myCourses.html", "permanent": false },
-    { "source": "/my-page", "destination": "/client/MyPage/myPage.html", "permanent": false },
-    { "source": "/admin", "destination": "/client/Adminpage/Adminpage.html", "permanent": false },
-    { "source": "/staff", "destination": "/client/Staffpage/Staffpage.html", "permanent": false }
-  ],
   "rewrites": [
-    { "source": "/api/(.*)", "destination": "/api/proxy?path=$1" }
+    { "source": "/api/(.*)", "destination": "/api/proxy?path=$1" },
+    { "source": "/", "destination": "/HomePage/homePage.html" },
+    { "source": "/home", "destination": "/HomePage/homePage.html" },
+    { "source": "/courses", "destination": "/CoursesPage/coursesPage.html" },
+    { "source": "/course-detail", "destination": "/CoursesPageDetail/CoursesPageDetail.html" },
+    { "source": "/contact", "destination": "/ContactPage/contact.html" },
+    { "source": "/login", "destination": "/Loginpage/Login.html" },
+    { "source": "/signup", "destination": "/Loginpage/Signup.html" },
+    { "source": "/forgot-password", "destination": "/Loginpage/ForgotPass.html" },
+    { "source": "/choose-actor", "destination": "/Loginpage/ChooseActor.html" },
+    { "source": "/my-courses", "destination": "/MyCourses/myCourses.html" },
+    { "source": "/my-page", "destination": "/MyPage/myPage.html" },
+    { "source": "/admin", "destination": "/Adminpage/Adminpage.html" },
+    { "source": "/staff", "destination": "/Staffpage/Staffpage.html" },
+    { "source": "/stat-financial", "destination": "/Statfinancialpage/Statfinancialpage.html" },
+    { "source": "/stat-access", "destination": "/Stataccesspage/Stataccesspage.html" },
+    { "source": "/stat-class", "destination": "/Statclasspage/Statclasspage.html" },
+    { "source": "/manage-courses", "destination": "/manageCoursePage/manageCoursePage.html" },
+    { "source": "/staff-info", "destination": "/Infostaffpage/Infostaffpage.html" },
+    { "source": "/staff-attendance", "destination": "/Attendstaffpage/Attendstaffpage.html" },
+    { "source": "/staff-pay", "destination": "/Paystaffpage/Paystaffpage.html" },
+    { "source": "/student-info", "destination": "/Infostupage/Infostupage.html" },
+    { "source": "/student-attendance", "destination": "/Attendstupage/Attendstupage.html" },
+    { "source": "/student-marks", "destination": "/Markstupage/Markstupage.html" },
+    { "source": "/student-pay", "destination": "/Paystupage/Paystupage.html" },
+    { "source": "/teacher-info", "destination": "/Infoteapage/Infoteapage.html" },
+    { "source": "/teacher-attendance", "destination": "/Attendteapage/Attendteapage.html" },
+    { "source": "/teacher-rate", "destination": "/Rateteapage/Rateteapage.html" },
+    { "source": "/teacher-pay", "destination": "/Payteapage/Payteapage.html" },
+    { "source": "/teacher-files", "destination": "/Fileteapage/Fileteapage.html" }
   ]
 }
