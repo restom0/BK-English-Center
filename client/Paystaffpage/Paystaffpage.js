@@ -48,7 +48,7 @@ function morePay() {
                     <td class="px-6 py-4 flex justify-center">
                         <button data-id=${el['id']} data-tooltip-target="notification"
                             class="payWarning flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" `;
-        if (el['paidStatus'] === 1) {
+        if (Number(el['paidStatus']) === 1) {
           str += 'disabled';
         }
         str += `>
@@ -226,7 +226,7 @@ function morePrize() {
                     <td class="px-6 py-4 flex justify-center">
                         <button data-id=${el['id']} data-tooltip-target="notification"
                             class="prizeWarning flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" `;
-        if (el['prizeStatus'] === 1) {
+        if (Number(el['prizeStatus']) === 1) {
           str += 'disabled';
         }
         str += `>
@@ -1381,9 +1381,17 @@ function editPay(id, idArr) {
     const fullName = $('#namePay').val();
     const month = $('#month').val();
     const year = $('#year').val();
-    const payAmount = Number($('#pay').val());
+    const payValue = $('#pay').val();
+    const payAmount = Number(payValue);
     const status = $('#payStatus').val();
-    if (fullName === '' || month === '' || year === '' || payAmount === '' || status === '') {
+    if (
+      fullName === '' ||
+      month === '' ||
+      year === '' ||
+      payValue === '' ||
+      Number.isNaN(payAmount) ||
+      status === ''
+    ) {
       Toast.fire({
         icon: 'error',
         title: i18n.t('toast.fill_all'),
@@ -1601,7 +1609,8 @@ function editPrize(id, idArr) {
     const fullName = $('#namePrize').val();
     const month = $('#month').val();
     const year = $('#year').val();
-    const prizeAmount = Number($('#prize').val());
+    const prizeValue = $('#prize').val();
+    const prizeAmount = Number(prizeValue);
     const status = $('#prizeStatus').val();
     tableData.forEach((el) => {
       if (el['name'] === fullName && el['month'] === Number(month) && el['year'] === Number(year)) {
@@ -1633,7 +1642,14 @@ function editPrize(id, idArr) {
         });
       }
     });
-    if (fullName === '' || month === '' || year === '' || prizeAmount === '' || status === '') {
+    if (
+      fullName === '' ||
+      month === '' ||
+      year === '' ||
+      prizeValue === '' ||
+      Number.isNaN(prizeAmount) ||
+      status === ''
+    ) {
       Toast.fire({
         icon: 'error',
         title: i18n.t('toast.fill_all'),
