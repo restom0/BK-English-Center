@@ -1,12 +1,12 @@
 if (!localStorage.getItem('role')) {
   window.location.replace('../../../pages/auth/login/index.html');
 } else if (localStorage.getItem('role') === 'student') {
-  var str = '';
+  let str = '';
   $.ajax({
     type: 'get',
-    url: API_URL + '/studentjoinclasses/student',
+    url: `${API_URL}/studentjoinclasses/student`,
     headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
     },
     dataType: 'JSON',
     success: function (res) {
@@ -29,43 +29,28 @@ if (!localStorage.getItem('role')) {
       <tbody id="mark-list">
       `;
       (res?.data ?? []).forEach((el, index) => {
-        str +=
-          `<tr>
-        <th scope="row" class="course-no">` +
-          (index + 1) +
-          `</th>
-        <td class="course-name">` +
-          el.className +
-          `</td>
-          <td class="course-name">` +
-          el.listening +
-          `</td>
-          <td class="course-name">` +
-          el.writing +
-          `</td>
-          <td class="course-name">` +
-          el.reading +
-          `</td>
-          <td class="course-name">` +
-          el.speaking +
-          `</td>
-          <td class="course-name">` +
-          (el.listening + el.writing + el.reading + el.speaking) / 4 +
-          `</td>
+        str += `<tr>
+        <th scope="row" class="course-no">${index + 1}</th>
+        <td class="course-name">${el.className}</td>
+          <td class="course-name">${el.listening}</td>
+          <td class="course-name">${el.writing}</td>
+          <td class="course-name">${el.reading}</td>
+          <td class="course-name">${el.speaking}</td>
+          <td class="course-name">${(el.listening + el.writing + el.reading + el.speaking) / 4}</td>
     </tr>`;
       });
       str += `
       </tbody>
   </table>`;
-      $('.rate').html(str);
+      BkSecurity.setSafeHtml($('.rate'), str);
     },
   });
 } else if (localStorage.getItem('role') === 'teacher') {
   $.ajax({
     type: 'get',
-    url: API_URL + '/teacherjoinclasses/teacher',
+    url: `${API_URL}/teacherjoinclasses/teacher`,
     headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
     },
     dataType: 'JSON',
     success: function (res) {
@@ -84,14 +69,9 @@ if (!localStorage.getItem('role')) {
       <tbody id="mark-list">
       `;
       (res?.data ?? []).forEach((el, index) => {
-        str +=
-          `<tr>
-        <th scope="row" class="course-no">` +
-          (index + 1) +
-          `</th>
-        <td class="course-name">` +
-          el.className +
-          `</td>
+        str += `<tr>
+        <th scope="row" class="course-no">${index + 1}</th>
+        <td class="course-name">${el.className}</td>
           <td class="course-name">`;
         for (let i = 0; i < el['rating']; i++) {
           str += `<i class='bx bxs-star' style='color:#ffed00'  ></i>`;
@@ -106,7 +86,7 @@ if (!localStorage.getItem('role')) {
       str += `
       </tbody>
   </table>`;
-      $('.rate').html(str);
+      BkSecurity.setSafeHtml($('.rate'), str);
     },
   });
 }
@@ -114,34 +94,24 @@ function loadCourses(courseList) {
   courseList.forEach((element, index) => {
     $('#course-list').append(
       `<tr>
-                <th scope="row" class="course-no">` +
-        (index + 1) +
-        `</th>
-                <td class="course-name">` +
-        element.className +
-        `</td>
-                <td class="course-date">` +
-        formatDate(element.startDate) +
-        `</td>
-                <td class="course-date">` +
-        formatDate(element.endDate) +
-        `</td>
-        <td class="course-date">` +
-        element.attendDate +
-        `</td>
-                <td class="course-status">` +
-        (localStorage.getItem('role') === 'student'
-          ? element.status === 1
-            ? 'Đã học'
-            : element.status === 0
-              ? 'Đang học'
-              : 'Chưa học'
-          : element.status === 1
-            ? 'Đã dạy'
-            : element.status === 0
-              ? 'Đang dạy'
-              : 'Chưa dạy') +
-        `</td>
+                <th scope="row" class="course-no">${index + 1}</th>
+                <td class="course-name">${element.className}</td>
+                <td class="course-date">${formatDate(element.startDate)}</td>
+                <td class="course-date">${formatDate(element.endDate)}</td>
+        <td class="course-date">${element.attendDate}</td>
+                <td class="course-status">${
+                  localStorage.getItem('role') === 'student'
+                    ? element.status === 1
+                      ? 'Đã học'
+                      : element.status === 0
+                        ? 'Đang học'
+                        : 'Chưa học'
+                    : element.status === 1
+                      ? 'Đã dạy'
+                      : element.status === 0
+                        ? 'Đang dạy'
+                        : 'Chưa dạy'
+                }</td>
             </tr>`
     );
   });

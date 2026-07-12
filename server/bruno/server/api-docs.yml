@@ -1,0 +1,31 @@
+info:
+  name: OpenAPI contract
+  type: http
+  seq: 1
+  tags:
+    - smoke
+    - contract
+
+http:
+  method: GET
+  url: '{{baseUrl}}/api-docs.json'
+
+runtime:
+  scripts:
+    - type: tests
+      code: |-
+        test("returns HTTP 200", function() {
+          expect(res.status).to.equal(200);
+        });
+
+        test("exposes an OpenAPI document", function() {
+          expect(res.body).to.be.an("object");
+          expect(res.body.openapi).to.be.a("string");
+          expect(res.body.info.title).to.equal("BK English Center API");
+        });
+
+settings:
+  encodeUrl: true
+  timeout: 10000
+  followRedirects: true
+  maxRedirects: 5

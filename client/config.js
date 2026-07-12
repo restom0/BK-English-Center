@@ -30,7 +30,7 @@ const API_URL = bkResolveApiUrl();
 const GOOGLE_CLIENT_ID = 'GOOGLE_CLIENT_ID_PLACEHOLDER';
 
 // Client-side route map for static HTML pages.
-var BK_ROUTES = Object.freeze({
+const BK_ROUTES = Object.freeze({
   '/': 'HomePage/homePage.html',
   '/home': 'HomePage/homePage.html',
   home: 'HomePage/homePage.html',
@@ -91,15 +91,15 @@ var BK_ROUTES = Object.freeze({
 });
 
 function bkSplitHref(href) {
-  var path = String(href || '/');
-  var hash = '';
-  var query = '';
-  var hashIndex = path.indexOf('#');
+  let path = String(href || '/');
+  let hash = '';
+  let query = '';
+  const hashIndex = path.indexOf('#');
   if (hashIndex !== -1) {
     hash = path.slice(hashIndex);
     path = path.slice(0, hashIndex);
   }
-  var queryIndex = path.indexOf('?');
+  const queryIndex = path.indexOf('?');
   if (queryIndex !== -1) {
     query = path.slice(queryIndex);
     path = path.slice(0, queryIndex);
@@ -108,24 +108,24 @@ function bkSplitHref(href) {
 }
 
 function bkCleanRoutePath(path) {
-  var clean = String(path || '/').replace(/\\/g, '/');
+  let clean = String(path || '/').replace(/\\/g, '/');
   clean = clean.replace(/^(\.\/|\.\.\/)+/, '');
   if (clean.length > 1) clean = clean.replace(/\/+$/, '');
   return clean || '/';
 }
 
 function bkFindRouteTarget(route) {
-  var parts = bkSplitHref(route);
-  var key = bkCleanRoutePath(parts.path);
-  var direct = BK_ROUTES[key] || BK_ROUTES[key.toLowerCase()];
+  const parts = bkSplitHref(route);
+  const key = bkCleanRoutePath(parts.path);
+  const direct = BK_ROUTES[key] || BK_ROUTES[key.toLowerCase()];
   if (direct) return direct;
 
-  var clean = key.replace(/^\/+/, '');
-  var lower = clean.toLowerCase();
-  var routeValues = Object.keys(BK_ROUTES).map(function (routeKey) {
+  const clean = key.replace(/^\/+/, '');
+  const lower = clean.toLowerCase();
+  const routeValues = Object.keys(BK_ROUTES).map(function (routeKey) {
     return BK_ROUTES[routeKey];
   });
-  for (var i = 0; i < routeValues.length; i += 1) {
+  for (let i = 0; i < routeValues.length; i += 1) {
     if (routeValues[i].toLowerCase() === lower) return routeValues[i];
   }
   return clean;
@@ -135,21 +135,21 @@ function bkIsRoutableHref(href) {
   if (!href || href === '#') return false;
   if (/^(https?:|mailto:|tel:|javascript:|data:|\/\/)/i.test(href)) return false;
 
-  var parts = bkSplitHref(href);
-  var key = bkCleanRoutePath(parts.path);
+  const parts = bkSplitHref(href);
+  const key = bkCleanRoutePath(parts.path);
   if (BK_ROUTES[key] || BK_ROUTES[key.toLowerCase()]) return true;
 
-  var clean = key.replace(/^\/+/, '').toLowerCase();
+  const clean = key.replace(/^\/+/, '').toLowerCase();
   return Object.keys(BK_ROUTES).some(function (routeKey) {
     return BK_ROUTES[routeKey].toLowerCase() === clean;
   });
 }
 
 function bkClientBasePath() {
-  var path = window.location.pathname.replace(/\\/g, '/');
-  var lower = path.toLowerCase();
-  var marker = '/client/';
-  var markerIndex = lower.indexOf(marker);
+  const path = window.location.pathname.replace(/\\/g, '/');
+  const lower = path.toLowerCase();
+  const marker = '/client/';
+  const markerIndex = lower.indexOf(marker);
   if (markerIndex !== -1) {
     return path.slice(0, markerIndex + marker.length);
   }
@@ -158,26 +158,26 @@ function bkClientBasePath() {
 
 function bkBuildQuery(params) {
   if (!params) return '';
-  var search = new URLSearchParams();
+  const search = new URLSearchParams();
   Object.keys(params).forEach(function (key) {
-    var value = params[key];
+    const value = params[key];
     if (value !== undefined && value !== null) search.set(key, value);
   });
   return search.toString();
 }
 
 function routeHref(route, params) {
-  var raw = String(route || '/');
+  const raw = String(route || '/');
   if (/^(https?:|mailto:|tel:|javascript:|data:|\/\/)/i.test(raw) || raw === '#') {
     return raw;
   }
 
-  var parts = bkSplitHref(raw);
-  var target = bkFindRouteTarget(parts.path).replace(/^\/+/, '');
-  var base = bkClientBasePath().replace(/\/?$/, '/');
-  var extraQuery = bkBuildQuery(params);
-  var query = parts.query;
-  if (extraQuery) query += query ? '&' + extraQuery : '?' + extraQuery;
+  const parts = bkSplitHref(raw);
+  const target = bkFindRouteTarget(parts.path).replace(/^\/+/, '');
+  const base = bkClientBasePath().replace(/\/?$/, '/');
+  const extraQuery = bkBuildQuery(params);
+  let query = parts.query;
+  if (extraQuery) query += query ? `&${extraQuery}` : `?${extraQuery}`;
 
   return base + target + query + parts.hash;
 }
@@ -187,16 +187,16 @@ function goToRoute(route, params) {
 }
 
 function bindRouteLinks(root) {
-  var scope = root || document;
+  const scope = root || document;
   scope.querySelectorAll('a[href], a[data-route]').forEach(function (link) {
-    var route = link.getAttribute('data-route') || link.getAttribute('href');
+    const route = link.getAttribute('data-route') || link.getAttribute('href');
     if (bkIsRoutableHref(route)) {
       link.setAttribute('href', routeHref(route));
     }
   });
 }
 
-var BkRouter = {
+const BkRouter = {
   routes: BK_ROUTES,
   href: routeHref,
   go: goToRoute,
@@ -206,6 +206,217 @@ var BkRouter = {
 window.BK_ROUTES = BK_ROUTES;
 window.BkRouter = BkRouter;
 window.routeHref = routeHref;
+
+const BkSecurity = (function () {
+  const SVG_NS = 'http://www.w3.org/2000/svg';
+  const ALLOWED_TAGS = {
+    a: 1,
+    b: 1,
+    br: 1,
+    button: 1,
+    div: 1,
+    em: 1,
+    form: 1,
+    h1: 1,
+    h2: 1,
+    h3: 1,
+    h4: 1,
+    h5: 1,
+    h6: 1,
+    hr: 1,
+    i: 1,
+    img: 1,
+    input: 1,
+    label: 1,
+    li: 1,
+    ol: 1,
+    option: 1,
+    p: 1,
+    path: 1,
+    select: 1,
+    small: 1,
+    span: 1,
+    strong: 1,
+    svg: 1,
+    table: 1,
+    tbody: 1,
+    td: 1,
+    textarea: 1,
+    th: 1,
+    thead: 1,
+    tr: 1,
+    ul: 1,
+  };
+  const SVG_TAGS = { svg: 1, path: 1 };
+  const ALLOWED_ATTRS = {
+    alt: 1,
+    checked: 1,
+    class: 1,
+    colspan: 1,
+    d: 1,
+    disabled: 1,
+    fill: 1,
+    for: 1,
+    height: 1,
+    href: 1,
+    id: 1,
+    max: 1,
+    maxlength: 1,
+    min: 1,
+    name: 1,
+    placeholder: 1,
+    pattern: 1,
+    readonly: 1,
+    rel: 1,
+    required: 1,
+    role: 1,
+    rows: 1,
+    rowspan: 1,
+    scope: 1,
+    selected: 1,
+    src: 1,
+    step: 1,
+    style: 1,
+    target: 1,
+    title: 1,
+    type: 1,
+    value: 1,
+    viewbox: 1,
+    width: 1,
+    xmlns: 1,
+  };
+  const SAFE_STYLE_PROPS = {
+    color: 1,
+    display: 1,
+    'font-size': 1,
+    'font-weight': 1,
+    margin: 1,
+    'margin-left': 1,
+    'max-width': 1,
+    'text-align': 1,
+  };
+
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function isAllowedAttr(name) {
+    const cleanName = String(name || '').toLowerCase();
+    if (cleanName.indexOf('on') === 0) return false;
+    if (cleanName.indexOf('data-') === 0) return true;
+    if (cleanName.indexOf('aria-') === 0) return true;
+    return Boolean(ALLOWED_ATTRS[cleanName]);
+  }
+
+  function isSafeUrl(value) {
+    const clean = String(value || '').trim();
+    if (!clean) return true;
+    return /^(https?:|mailto:|tel:|\/|\.\/|\.\.\/|#)/i.test(clean);
+  }
+
+  function sanitizeStyle(value) {
+    const declarations = String(value || '').split(';');
+    const safe = [];
+    declarations.forEach(function (declaration) {
+      const pair = declaration.split(':');
+      if (pair.length < 2) return;
+      const property = pair.shift().trim().toLowerCase();
+      const cssValue = pair.join(':').trim();
+      if (!SAFE_STYLE_PROPS[property]) return;
+      if (/url\s*\(|expression\s*\(|javascript:/i.test(cssValue)) return;
+      safe.push(`${property}: ${cssValue}`);
+    });
+    return safe.join('; ');
+  }
+
+  function createCleanElement(tagName) {
+    if (SVG_TAGS[tagName]) return document.createElementNS(SVG_NS, tagName);
+    return document.createElement(tagName);
+  }
+
+  function cleanNode(node) {
+    if (node.nodeType === Node.TEXT_NODE) {
+      return document.createTextNode(node.textContent || '');
+    }
+    if (node.nodeType !== Node.ELEMENT_NODE) {
+      return document.createDocumentFragment();
+    }
+
+    const tagName = node.tagName.toLowerCase();
+    if (!ALLOWED_TAGS[tagName]) {
+      return document.createTextNode(node.textContent || '');
+    }
+
+    const clean = createCleanElement(tagName);
+    Array.prototype.slice.call(node.attributes).forEach(function (attr) {
+      const attrName = attr.name;
+      const attrKey = attrName.toLowerCase();
+      let attrValue = attr.value;
+      if (!isAllowedAttr(attrKey)) return;
+      if ((attrKey === 'href' || attrKey === 'src') && !isSafeUrl(attrValue)) return;
+      if (attrKey === 'style') {
+        attrValue = sanitizeStyle(attrValue);
+        if (!attrValue) return;
+      }
+      clean.setAttribute(attrName, attrValue);
+    });
+    if (clean.tagName.toLowerCase() === 'a' && clean.getAttribute('target') === '_blank') {
+      clean.setAttribute('rel', 'noopener noreferrer');
+    }
+
+    Array.prototype.slice.call(node.childNodes).forEach(function (child) {
+      clean.appendChild(cleanNode(child));
+    });
+    return clean;
+  }
+
+  function sanitizeHtml(html) {
+    const parser = new DOMParser();
+    const parsed = parser.parseFromString(String(html ?? ''), 'text/html');
+    const fragment = document.createDocumentFragment();
+    Array.prototype.slice.call(parsed.body.childNodes).forEach(function (node) {
+      fragment.appendChild(cleanNode(node));
+    });
+    return fragment;
+  }
+
+  function targetsFor(target) {
+    if (!target) return [];
+    if (target.jquery) return target.toArray();
+    if (typeof target === 'string')
+      return Array.prototype.slice.call(document.querySelectorAll(target));
+    if (target.nodeType === Node.ELEMENT_NODE) return [target];
+    if (typeof target.length === 'number') return Array.prototype.slice.call(target);
+    return [];
+  }
+
+  function setSafeHtml(target, html) {
+    targetsFor(target).forEach(function (element) {
+      while (element.firstChild) element.removeChild(element.firstChild);
+      element.appendChild(sanitizeHtml(html));
+    });
+  }
+
+  function setText(target, value) {
+    targetsFor(target).forEach(function (element) {
+      element.textContent = String(value ?? '');
+    });
+  }
+
+  return {
+    escapeHtml: escapeHtml,
+    sanitizeHtml: sanitizeHtml,
+    setSafeHtml: setSafeHtml,
+    setText: setText,
+  };
+})();
+
+window.BkSecurity = BkSecurity;
 
 if (document.readyState === 'loading') {
   document.addEventListener('DOMContentLoaded', function () {
@@ -224,12 +435,12 @@ function getToken() {
 
 /** Build Authorization header object (legacy; auth now rides the httpOnly cookie) */
 function authHeader() {
-  return { Authorization: 'Bearer ' + getToken() };
+  return { Authorization: `Bearer ${getToken()}` };
 }
 
 /** Read a non-HttpOnly cookie by name (used for the CSRF token). */
 function readCookie(name) {
-  const m = document.cookie.match('(?:^|; )' + name + '=([^;]*)');
+  const m = document.cookie.match(`(?:^|; )${name}=([^;]*)`);
   return m ? decodeURIComponent(m[1]) : '';
 }
 

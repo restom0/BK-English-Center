@@ -402,7 +402,7 @@ const i18n = (function () {
     let text = entry[_lang] || entry[FALLBACK] || key;
     if (vars) {
       Object.keys(vars).forEach(function (k) {
-        text = text.replace(new RegExp('\\{' + k + '\\}', 'g'), vars[k]);
+        text = text.replace(new RegExp(`\\{${  k  }\\}`, 'g'), vars[k]);
       });
     }
     return text;
@@ -478,11 +478,11 @@ const i18n = (function () {
       const sidebar = document.querySelector('[data-drawer-target], .sidebar, aside');
 
       if (form && form.parentNode) {
-        form.insertAdjacentHTML('afterend', buildLanguageSwitcher(false));
+        form.parentNode.insertBefore(BkSecurity.sanitizeHtml(buildLanguageSwitcher(false)), form.nextSibling);
       } else if (userArea && userArea.parentNode) {
-        userArea.insertAdjacentHTML('beforebegin', buildLanguageSwitcher(false));
+        userArea.parentNode.insertBefore(BkSecurity.sanitizeHtml(buildLanguageSwitcher(false)), userArea);
       } else if (sidebar && document.body) {
-        document.body.insertAdjacentHTML('beforeend', buildLanguageSwitcher(true));
+        document.body.appendChild(BkSecurity.sanitizeHtml(buildLanguageSwitcher(true)));
       }
     }
 
@@ -504,7 +504,13 @@ const i18n = (function () {
   }
 
   function setMultilineHtml(el, key) {
-    el.innerHTML = escapeHtml(t(key)).replace(/\n/g, '<br>');
+    el.textContent = '';
+    String(t(key))
+      .split('\n')
+      .forEach(function (line, index) {
+        if (index > 0) el.appendChild(document.createElement('br'));
+        el.appendChild(document.createTextNode(line));
+      });
   }
 
   function applySharedStaticLabels() {

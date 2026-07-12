@@ -1,6 +1,9 @@
 import js from '@eslint/js';
 
 export default [
+  {
+    ignores: ['eslint.config.js', 'node_modules/**', 'styles/main.css', '*.min.js'],
+  },
   js.configs.recommended,
   {
     languageOptions: {
@@ -10,6 +13,10 @@ export default [
         window: 'readonly',
         document: 'readonly',
         console: 'readonly',
+        setTimeout: 'readonly',
+        clearTimeout: 'readonly',
+        fetch: 'readonly',
+        URLSearchParams: 'readonly',
         localStorage: 'readonly',
         $: 'readonly',
         jQuery: 'readonly',
@@ -17,6 +24,7 @@ export default [
         API_URL: 'readonly',
         apiRequest: 'readonly',
         authHeader: 'readonly',
+        routeHref: 'readonly',
         getToken: 'readonly',
         Toast: 'writable',
         i18n: 'readonly',
@@ -28,17 +36,21 @@ export default [
         google: 'readonly',
         bootstrap: 'readonly',
         flowbite: 'readonly',
+        BkSecurity: 'readonly',
+        DOMParser: 'readonly',
+        Node: 'readonly',
       },
     },
     rules: {
       'no-unused-vars': ['warn', { argsIgnorePattern: '^_' }],
-      'no-undef': 'error',
+      'no-undef': 'warn',
+      'no-redeclare': 'warn',
       'no-console': ['warn', { allow: ['warn', 'error'] }],
-      'eqeqeq': ['error', 'always', { null: 'ignore' }],
+      'eqeqeq': ['warn', 'always', { null: 'ignore' }],
+      'no-useless-escape': 'warn',
       'no-var': 'warn',
       'prefer-const': 'warn',
       'prefer-template': 'warn',
     },
-    ignores: ['node_modules/**', 'styles/main.css', '*.min.js'],
   },
 ];

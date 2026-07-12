@@ -24,8 +24,8 @@ $(document).ready(function () {
 function register() {
   $('#sendMail').click(function (e) {
     e.preventDefault();
-    var email = $('#floating_email').val();
-    var role = $('#floating_roles').val();
+    const email = $('#floating_email').val();
+    const role = $('#floating_roles').val();
     if (!email) {
       Toast.fire({
         icon: 'error',
@@ -39,7 +39,7 @@ function register() {
     } else {
       $.ajax({
         type: 'get',
-        url: API_URL + '/sendMail?to=' + email + '&role=' + role,
+        url: `${API_URL}/sendMail?to=${email}&role=${role}`,
         dataType: 'JSON',
         success: function (res) {
           if (res.check === true) {
@@ -60,17 +60,17 @@ function register() {
   });
   $('#register-button').click(function (e) {
     e.preventDefault();
-    var username = $('#floating_loginname').val();
-    var password = $('#floating_password').val();
-    var repeatPassword = $('#floating_repeat_password').val();
-    var name = $('#floating_name').val();
-    var birthday = $('#floating_birthday').val();
-    var gender = $('#gender').val();
-    var address = $('#floating_address').val();
-    var phone = $('#floating_phone').val();
-    var email = $('#floating_email').val();
-    var role = $('#floating_roles').val();
-    var key = $('#floating_identified').val();
+    const username = $('#floating_loginname').val();
+    const password = $('#floating_password').val();
+    const repeatPassword = $('#floating_repeat_password').val();
+    const name = $('#floating_name').val();
+    const birthday = $('#floating_birthday').val();
+    const gender = $('#gender').val();
+    const address = $('#floating_address').val();
+    const phone = $('#floating_phone').val();
+    const email = $('#floating_email').val();
+    const role = $('#floating_roles').val();
+    const key = $('#floating_identified').val();
     if (!username || username == '') {
       Toast.fire({
         icon: 'error',
@@ -129,9 +129,9 @@ function register() {
     } else {
       $.ajax({
         type: 'post',
-        url: API_URL + '/users/user',
+        url: `${API_URL}/users/user`,
         headers: {
-          Authorization: 'Bearer ' + key,
+          Authorization: `Bearer ${key}`,
         },
         data: {
           username: username,

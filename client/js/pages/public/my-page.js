@@ -10,46 +10,45 @@ $(document).ready(function () {
 });
 
 function studentPage() {
-  $('#bill-intro').html('Hoá đơn và thanh toán');
-  $('#bill-col').html(`
+  BkSecurity.setSafeHtml($('#bill-intro'), 'Hoá đơn và thanh toán');
+  BkSecurity.setSafeHtml(
+    $('#bill-col'),
+    `
     <tr>
         <th class="col-md-3">#</th>
         <th class="col-md-3">Khoá học</th>
         <th class="col-md-3">Học phí</th>
         <th class="col-md-3">Trạng thái</th>
-    </tr>`);
+    </tr>`
+  );
 
   $('#bill-row').empty();
-  $('#prize-intro').html('Học bổng');
-  $('#prize-col').html(`
+  BkSecurity.setSafeHtml($('#prize-intro'), 'Học bổng');
+  BkSecurity.setSafeHtml(
+    $('#prize-col'),
+    `
     <tr>
         <th scope="col">#</th>
         <th scope="col">Lớp</th>
         <th scope="col">Học bổng</th>
         <th scope="col">Trạng thái</th>
-    </tr>`);
-  var str = '';
+    </tr>`
+  );
+  let str = '';
   $.ajax({
     type: 'get',
-    url: API_URL + '/studentjoinclasses/salary',
+    url: `${API_URL}/studentjoinclasses/salary`,
     headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
     },
     dataType: 'JSON',
     success: function (res) {
       (res?.data ?? []).forEach((element, index) => {
-        str +=
-          `
+        str += `
             <tr>
-            <th scope="row">` +
-          (index + 1) +
-          `</th>
-            <td>` +
-          element.className +
-          `</td>
-            <td>` +
-          element.paid.toLocaleString('en-US') +
-          ` đ</td>`;
+            <th scope="row">${index + 1}</th>
+            <td>${element.className}</td>
+            <td>${element.paid.toLocaleString('en-US')} đ</td>`;
         if (element.paidStatus == 1)
           str +=
             `<td><button type="button" class="btn btn-success">` +
@@ -61,31 +60,24 @@ function studentPage() {
             'Chưa thanh toán' +
             `</button></td> </tr>`;
       });
-      $('#bill-row').html(str);
+      BkSecurity.setSafeHtml($('#bill-row'), str);
     },
   });
   $.ajax({
     type: 'get',
-    url: API_URL + '/studentjoinclasses/prize',
+    url: `${API_URL}/studentjoinclasses/prize`,
     headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
     },
     dataType: 'JSON',
     success: function (res) {
-      var str = '';
+      let str = '';
       (res?.data ?? []).forEach((element, index) => {
-        str +=
-          `
+        str += `
             <tr>
-            <th scope="row">` +
-          (index + 1) +
-          `</th>
-            <td>` +
-          element.className +
-          `</td>
-            <td>` +
-          element.prize.toLocaleString('en-US') +
-          ` đ</td>`;
+            <th scope="row">${index + 1}</th>
+            <td>${element.className}</td>
+            <td>${element.prize.toLocaleString('en-US')} đ</td>`;
         if (element.prizeStatus == 1)
           str +=
             `<td><button type="button" class="btn btn-success">` +
@@ -97,45 +89,41 @@ function studentPage() {
             'Chưa nhận' +
             `</button></td> </tr>`;
       });
-      $('#prize-row').html(str);
+      BkSecurity.setSafeHtml($('#prize-row'), str);
     },
   });
 }
 
 function teacherPage() {
-  $('#bill-intro').html('Lương');
-  $('#bill-col').html(`
+  BkSecurity.setSafeHtml($('#bill-intro'), 'Lương');
+  BkSecurity.setSafeHtml(
+    $('#bill-col'),
+    `
     <tr>
         <th scope="col">#</th>
         <th scope="col">Lớp</th>
         <th scope="col">Lương</th>
         <th scope="col">Trạng thái</th>
-    </tr>`);
+    </tr>`
+  );
 
   $('#bill-row').empty();
 
-  var str = '';
+  let str = '';
   $.ajax({
     type: 'get',
-    url: API_URL + '/teacherjoinclasses/salary',
+    url: `${API_URL}/teacherjoinclasses/salary`,
     headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
     },
     dataType: 'JSON',
     success: function (res) {
       (res?.data ?? []).forEach((element, index) => {
-        str +=
-          `
+        str += `
             <tr>
-            <th scope="row">` +
-          (index + 1) +
-          `</th>
-            <td>` +
-          element.className +
-          `</td>
-            <td>` +
-          element.paid.toLocaleString('en-US') +
-          ` đ</td>`;
+            <th scope="row">${index + 1}</th>
+            <td>${element.className}</td>
+            <td>${element.paid.toLocaleString('en-US')} đ</td>`;
         if (element.paidStatus == 1)
           str +=
             `<td><button type="button" class="btn btn-success">` +
@@ -147,40 +135,36 @@ function teacherPage() {
             'Chưa nhận' +
             `</button></td> </tr>`;
       });
-      $('#bill-row').html(str);
+      BkSecurity.setSafeHtml($('#bill-row'), str);
     },
   });
-  $('#prize-intro').html('Thưởng');
-  $('#prize-col').html(`
+  BkSecurity.setSafeHtml($('#prize-intro'), 'Thưởng');
+  BkSecurity.setSafeHtml(
+    $('#prize-col'),
+    `
     <tr>
         <th scope="col">#</th>
         <th scope="col">Lớp</th>
         <th scope="col">Thưởng</th>
         <th scope="col">Trạng thái</th>
-    </tr>`);
+    </tr>`
+  );
 
   $.ajax({
     type: 'get',
-    url: API_URL + '/teacherjoinclasses/prize',
+    url: `${API_URL}/teacherjoinclasses/prize`,
     headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
     },
     dataType: 'JSON',
     success: function (res) {
-      var str = '';
+      let str = '';
       (res?.data ?? []).forEach((element, index) => {
-        str +=
-          `
+        str += `
             <tr>
-            <th scope="row">` +
-          (index + 1) +
-          `</th>
-            <td>` +
-          element.className +
-          `</td>
-            <td>` +
-          element.prize.toLocaleString('en-US') +
-          ` đ</td>`;
+            <th scope="row">${index + 1}</th>
+            <td>${element.className}</td>
+            <td>${element.prize.toLocaleString('en-US')} đ</td>`;
         if (element.prizeStatus == 1)
           str +=
             `<td><button type="button" class="btn btn-success">` +
@@ -192,7 +176,7 @@ function teacherPage() {
             'Chưa nhận' +
             `</button></td> </tr>`;
       });
-      $('#prize-row').html(str);
+      BkSecurity.setSafeHtml($('#prize-row'), str);
     },
   });
 }

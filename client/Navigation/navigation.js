@@ -27,8 +27,8 @@ function getNavInfo() {
       localStorage.setItem('user', JSON.stringify(user));
 
       // Header chips
-      $('#title-name').html(user.name);
-      $('#title-email').html(user.email);
+      BkSecurity.setSafeHtml($('#title-name'), user.name);
+      BkSecurity.setSafeHtml($('#title-email'), user.email);
 
       // Sidebar / dropdown
       const role = getRole();
@@ -36,8 +36,8 @@ function getNavInfo() {
         'https://th.bing.com/th/id/OIP.CVdkzge14K0HJZWZg5DiMQHaHn?pid=ImgDet&rs=1';
 
       if (role === 'student' || role === 'teacher') {
-        $('#user-name').html(user.name);
-        $('#user-role').html(role === 'student' ? 'Học viên' : 'Giảng viên');
+        BkSecurity.setSafeHtml($('#user-name'), user.name);
+        BkSecurity.setSafeHtml($('#user-role'), role === 'student' ? 'Học viên' : 'Giảng viên');
         $('#user-avt').attr('src', user.image || DEFAULT_AVT);
       }
 
@@ -45,7 +45,9 @@ function getNavInfo() {
     })
     .fail(function () {
       localStorage.clear();
-      window.location.replace(typeof routeHref === 'function' ? routeHref('login') : '../Loginpage/Login.html');
+      window.location.replace(
+        typeof routeHref === 'function' ? routeHref('login') : '../Loginpage/Login.html'
+      );
     });
 }
 
@@ -58,15 +60,16 @@ function bindUserModal(user) {
   $('#userinfo').on('click', function (e) {
     e.preventDefault();
 
-    const dob     = toLocalDate(user.dateofbirth); // utils/date.js
-    const isMale  = user.sex === 'M';
-    const DEFAULT_AVT =
-      'https://th.bing.com/th/id/OIP.CVdkzge14K0HJZWZg5DiMQHaHn?pid=ImgDet&rs=1';
+    const dob = toLocalDate(user.dateofbirth); // utils/date.js
+    const isMale = user.sex === 'M';
+    const DEFAULT_AVT = 'https://th.bing.com/th/id/OIP.CVdkzge14K0HJZWZg5DiMQHaHn?pid=ImgDet&rs=1';
     const avatarSrc = user.image || DEFAULT_AVT;
 
     // ── Tailwind modal ─────────────────────────────────────────────
     if ($('#userModal').length) {
-      $('#userModal').html(`
+      BkSecurity.setSafeHtml(
+        $('#userModal'),
+        `
         <div class="col-span-2">
           <form>
             <div class="gap-6 mb-6">
@@ -126,13 +129,16 @@ function bindUserModal(user) {
             <input disabled id="dropzone-file" type="file" class="hidden">
           </div>
         </div>
-      `);
+      `
+      );
       return;
     }
 
     // ── Bootstrap modal ────────────────────────────────────────────
     if ($('#userModal1').length) {
-      $('#userModal1').html(`
+      BkSecurity.setSafeHtml(
+        $('#userModal1'),
+        `
         <div class="container-fluid">
           <div class="row">
             <div class="col-sm-auto">
@@ -182,7 +188,8 @@ function bindUserModal(user) {
             </div>
           </div>
         </div>
-      `);
+      `
+      );
     }
   });
 }

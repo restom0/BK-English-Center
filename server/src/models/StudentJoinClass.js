@@ -155,6 +155,19 @@ class StudentJoinClass {
     }));
   }
 
+  async getNullRating() {
+    const rows = await prisma.studentJoinClass.findMany({
+      where: {
+        listening: 0,
+        writing: 0,
+        speaking: 0,
+        reading: 0,
+      },
+      include: FULL_INCLUDE,
+    });
+    return rows.map((r) => shapeSJC(r));
+  }
+
   async getSalary() {
     const rows = await prisma.studentJoinClass.findMany({ include: FULL_INCLUDE });
     return rows.map((r) => shapeSJC(r));

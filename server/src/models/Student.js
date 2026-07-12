@@ -35,6 +35,15 @@ class Student {
   async getStudent(id) {
     return prisma.student.findUnique({ where: { id: Number(id) } });
   }
+
+  async removeStudent(id) {
+    try {
+      await prisma.user.delete({ where: { id: Number(id) } });
+      return true;
+    } catch {
+      return false;
+    }
+  }
 }
 
 module.exports = new Student();

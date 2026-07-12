@@ -40,19 +40,26 @@
     const overlay = document.createElement('div');
     overlay.id = 'skeleton-overlay';
     overlay.className = 'skeleton-overlay';
-    overlay.innerHTML = `
-      <div class="skeleton-card">
-        <div class="skeleton-shimmer skeleton-line skeleton-line--title"></div>
-        <div class="skeleton-shimmer skeleton-line skeleton-line--md"></div>
-        <div class="skeleton-shimmer skeleton-line skeleton-line--sm"></div>
-        <div class="skeleton-shimmer skeleton-line skeleton-line--lg"></div>
-        <div class="skeleton-shimmer skeleton-line skeleton-line--md"></div>
-        <div class="skeleton-fact">
-          <span class="skeleton-fact__label">💡 Did you know?</span>
-          <p class="skeleton-fact__text">${randomFact()}</p>
-        </div>
-      </div>
-    `;
+    const card = document.createElement('div');
+    card.className = 'skeleton-card';
+    ['title', 'md', 'sm', 'lg', 'md'].forEach((size) => {
+      const line = document.createElement('div');
+      line.className = `skeleton-shimmer skeleton-line skeleton-line--${size}`;
+      card.appendChild(line);
+    });
+
+    const fact = document.createElement('div');
+    fact.className = 'skeleton-fact';
+    const label = document.createElement('span');
+    label.className = 'skeleton-fact__label';
+    label.textContent = 'Did you know?';
+    const text = document.createElement('p');
+    text.className = 'skeleton-fact__text';
+    text.textContent = randomFact();
+    fact.appendChild(label);
+    fact.appendChild(text);
+    card.appendChild(fact);
+    overlay.appendChild(card);
     return overlay;
   }
 

@@ -40,7 +40,7 @@ function login() {
     };
     $.ajax({
       type: 'get',
-      url: API_URL + '/users/user',
+      url: `${API_URL}/users/user`,
       data: info,
       dataType: 'JSON',
       success: function (res) {

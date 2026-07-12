@@ -1,4 +1,4 @@
-var courseData;
+let courseData;
 $(document).ready(function () {
   loadData();
   loadAddData();
@@ -6,51 +6,38 @@ $(document).ready(function () {
 function loadData() {
   $.ajax({
     type: 'get',
-    url: API_URL + '/courses',
+    url: `${API_URL}/courses`,
     headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
     },
     dataType: 'JSON',
     success: function (res) {
       courseData = res.data;
       (res?.data ?? []).forEach((el, index) => {
-        str +=
-          `<tr
+        str += `<tr
         class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
         <td class="px-6 py-4">
-            ` +
-          el['name'] +
-          `
+            ${el['name']}
         </td>
         <td class="px-6 py-4">
-        ` +
-          BkCurrency.format(el['paidStudent']) +
-          `
+        ${BkCurrency.format(el['paidStudent'])}
         </td>
         <td class="px-6 py-4">
-        ` +
-          BkCurrency.format(el['prizeStudent']) +
-          `
+        ${BkCurrency.format(el['prizeStudent'])}
         </td>
         <td class="px-6 py-4">
-        ` +
-          BkCurrency.format(el['paidTeacher']) +
-          `
+        ${BkCurrency.format(el['paidTeacher'])}
         </td>
         <td class="px-6 py-4">
-        ` +
-          BkCurrency.format(el['prizeTeacher']) +
-          `
+        ${BkCurrency.format(el['prizeTeacher'])}
         </td>
         <td class="px-6 py-4">
-        ` +
-          el['maxAttendDate'] +
-          ` buổi
+        ${el['maxAttendDate']} buổi
         </td>
         <td class="px-6 py-4 flex justify-center">
-<button type="button" data-modal-target="extralarge-modal" data-modal-toggle="extralarge-modal" data-id=` +
-          index +
-          ` data-tooltip-target="detail"
+<button type="button" data-modal-target="extralarge-modal" data-modal-toggle="extralarge-modal" data-id=${
+          index
+        } data-tooltip-target="detail"
                 class="detailBtn flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
         viewBox="0 0 20 20">
@@ -59,14 +46,10 @@ function loadData() {
     </svg>
                 <div id="detail" role="tooltip"
                     class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    ` +
-          i18n.t('action.detail') +
-          `
+                    ${i18n.t('action.detail')}
                     <div class="tooltip-arrow" data-popper-arrow></div>
             </button>
-            <button type="button" data-id=` +
-          index +
-          ` data-tooltip-target="update"
+            <button type="button" data-id=${index} data-tooltip-target="update"
                 class="editBtn flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                 <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -78,16 +61,12 @@ function loadData() {
                 </svg>
                 <div id="update" role="tooltip"
                     class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    ` +
-          i18n.t('action.edit') +
-          `
+                    ${i18n.t('action.edit')}
                     <div class="tooltip-arrow" data-popper-arrow></div>
             </button>
             <button type="button" data-tooltip-target="delete"
                 class="deleteBtn flex items-center p-2 text-gray-500 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                data-id=` +
-          index +
-          `>
+                data-id=${index}>
                 <svg class="w-5 h-5 text-gray-500 hover:text-gray-900 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white"
                     aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                     viewBox="0 0 18 20">
@@ -96,74 +75,60 @@ function loadData() {
                 </svg>
                 <div id="delete" role="tooltip"
                     class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                    ` +
-          i18n.t('action.delete') +
-          `
+                    ${i18n.t('action.delete')}
                     <div class="tooltip-arrow" data-popper-arrow></div>
             </button>
         </td>
         </tr>`;
       });
-      $('#course').html(str);
+      BkSecurity.setSafeHtml('#course', str);
       loadEditData();
       loadDetailData();
       deleteData();
     },
   });
-  var str = '';
+  let str = '';
 }
 function loadDetailData() {
   $('.detailBtn').click(function (e) {
     e.preventDefault();
-    var id = $(this).attr('data-id');
-    $('#nameCourse').html(courseData[id].name);
+    const id = $(this).attr('data-id');
+    BkSecurity.setText('#nameCourse', courseData[id].name);
     let str = '';
-    str +=
-      `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+    str += `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
       <td class="px-6 py-4">
-          ` +
-      courseData[id].imgintro +
-      `
+          ${courseData[id].imgintro}
       </td>
       <td class="px-6 py-4">
-      ` +
-      courseData[id].short +
-      `
+      ${courseData[id].short}
       </td>
       <td class="px-6 py-4">
-      ` +
-      courseData[id].img +
-      `
+      ${courseData[id].img}
       </td>
       <td class="px-6 py-4">
-      ` +
-      courseData[id].intro +
-      `
+      ${courseData[id].intro}
       </td>
       <td class="px-6 py-4">
-      ` +
-      courseData[id].description +
-      `
+      ${courseData[id].description}
       </td>
   </tr>`;
-    $('#detail1').html(str);
+    BkSecurity.setSafeHtml($('#detail1'), str);
   });
 }
 function loadAddData() {
   $('.addModal').click(function (e) {
     e.preventDefault();
     $('.addModal').addClass('hidden');
-    var str = '';
-    str +=
-      `
+    let str = '';
+    str += `
             <div class="mb-5 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <form id="addForm">
                 <div class="grid gap-6 mb-6 md:grid-cols-4">
                     <div>
                         <label for="courseName"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.class_name') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.class_name'
+                            )}</label>
                         <input type="text" id="courseName"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="IELTS"
@@ -171,54 +136,54 @@ function loadAddData() {
                     </div>
                     <div>
                         <label for="imgintro"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.intro_img') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.intro_img'
+                            )}</label>
                         <input type="text" id="imgintro"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="...." required>
                     </div>
                     <div>
                         <label for="short"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.short_desc') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.short_desc'
+                            )}</label>
                         <input type="text" id="short"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="...." required>
                     </div>
                     <div>
                         <label for="img"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.desc_img') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.desc_img'
+                            )}</label>
                         <input type="text" id="img"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="...." required>
                     </div>
                     <div>
                         <label for="intro"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.intro') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.intro'
+                            )}</label>
                         <input type="text" id="intro"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="...." required>
                     </div>
                     <div>
                         <label for="description"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.description') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.description'
+                            )}</label>
                         <input type="text" id="description"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="...." required>
                     </div>
                     <div>
                         <label for="fee"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.tuition') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.tuition'
+                            )}</label>
                         <input type="text" id="fee"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="1000000"
@@ -226,18 +191,18 @@ function loadAddData() {
                     </div>
                     <div>
                         <label for="prizeStudent"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.scholarship') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.scholarship'
+                            )}</label>
                         <input type="text" id="prizeStudent"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="1000000" required>
                     </div>
                     <div>
                         <label for="salary"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.salary') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.salary'
+                            )}</label>
                         <input type="text" id="salary"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="1000000"
@@ -245,18 +210,18 @@ function loadAddData() {
                     </div>
                     <div>
                         <label for="prizeTeacher"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.bonus') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.bonus'
+                            )}</label>
                         <input type="text" id="prizeTeacher"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="1000000" required>
                     </div>
                     <div>
                         <label for="time"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.duration') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.duration'
+                            )}</label>
                         <input type="number" id="time"
                             class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" ${i18n.t('placeholder.duration')} required>
                     </div>
@@ -264,22 +229,18 @@ function loadAddData() {
         </form>
         <div style="margin-top: 4vh;">
             <div class="w-full flex justify-between">
-            <button type="submit" 
+            <button type="submit"
                     class="closeBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
                     <span
                         class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        ` +
-      i18n.t('action.cancel') +
-      `
+                        ${i18n.t('action.cancel')}
                     </span>
                 </button>
                 <button form="addForm" type="submit"
                     class="submitAddBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800 hover:text-white">
                     <span
                         class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        ` +
-      i18n.t('action.add') +
-      `
+                        ${i18n.t('action.add')}
                     </span>
                 </button>
             </div>
@@ -287,20 +248,20 @@ function loadAddData() {
         </div>
         </div>
         `;
-    $('#addModal').html(str);
+    BkSecurity.setSafeHtml($('#addModal'), str);
     $('#addModal').removeClass('invisible opacity-0');
     $('#addModal').addClass('opacity-100');
     $('#editModal').addClass('invisible opacity-0');
     $('#editModal').removeClass('opacity-100');
     setTimeout(function () {
-      $('#editModal').html('');
+      $('#editModal').empty();
     }, 200);
     $('.closeBtn').click(function (e) {
       $('#addModal').removeClass('opacity-100');
       $('#addModal').addClass('invisible opacity-0');
       setTimeout(function () {
         $('.addModal').removeClass('hidden');
-        $('#addModal').html('');
+        $('#addModal').empty();
       }, 200);
     });
     addData();
@@ -309,17 +270,17 @@ function loadAddData() {
 function addData() {
   $('.submitAddBtn').click(function (e) {
     e.preventDefault();
-    var courseName = $('#courseName').val();
-    var intro = $('#intro').val();
-    var imgintro = $('#imgintro').val();
-    var img = $('#img').val();
-    var short = $('#short').val();
-    var description = $('#description').val();
-    var fee = $('#fee').val();
-    var salary = $('#salary').val();
-    var prizeStudent = $('#prizeStudent').val();
-    var prizeTeacher = $('#prizeTeacher').val();
-    var time = $('#time').val();
+    const courseName = $('#courseName').val();
+    const intro = $('#intro').val();
+    const imgintro = $('#imgintro').val();
+    const img = $('#img').val();
+    const short = $('#short').val();
+    const description = $('#description').val();
+    const fee = $('#fee').val();
+    const salary = $('#salary').val();
+    const prizeStudent = $('#prizeStudent').val();
+    const prizeTeacher = $('#prizeTeacher').val();
+    const time = $('#time').val();
     if (
       !courseName ||
       !fee ||
@@ -341,9 +302,9 @@ function addData() {
     }
     $.ajax({
       type: 'post',
-      url: API_URL + '/courses/course',
+      url: `${API_URL}/courses/course`,
       headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+        Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
       },
       data: {
         name: courseName,
@@ -368,7 +329,7 @@ function addData() {
           $('#addModal').addClass('invisible opacity-0');
           setTimeout(function () {
             $('.addModal').removeClass('hidden');
-            $('#addModal').html('');
+            $('#addModal').empty();
           }, 200);
           loadData();
         });
@@ -385,158 +346,151 @@ function addData() {
 function loadEditData() {
   $('.editBtn').click(function (e) {
     e.preventDefault();
-    var id = $(this).attr('data-id');
-    var str = '';
-    str +=
-      `
+    const id = $(this).attr('data-id');
+    let str = '';
+    str += `
       <div class="mb-5 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
       <form id="addForm">
           <div class="grid gap-6 mb-6 md:grid-cols-4">
               <div>
                   <label for="courseName"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.class_name') +
-      `</label>
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                        'label.class_name'
+                      )}</label>
                   <input type="text" id="courseName"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      courseData[id].name +
-      `" data-value="` +
-      courseData[id].name +
-      `"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                        courseData[id].name
+                      }" data-value="${courseData[id].name}"
                       placeholder="IELTS"
                       required>
               </div>
               <div>
                   <label for="imgintro"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.intro_img') +
-      `</label>
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                        'label.intro_img'
+                      )}</label>
                   <input type="text" id="imgintro"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      courseData[id].imgintro +
-      `"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                        courseData[id].imgintro
+                      }"
                       placeholder="...." required>
               </div>
               <div>
                   <label for="short"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.short_desc') +
-      `</label>
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                        'label.short_desc'
+                      )}</label>
                   <input type="text" id="short"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      courseData[id].short +
-      `"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                        courseData[id].short
+                      }"
                       placeholder="...." required>
               </div>
               <div>
                   <label for="img"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.desc_img') +
-      `</label>
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                        'label.desc_img'
+                      )}</label>
                   <input type="text" id="img"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      courseData[id].img +
-      `"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                        courseData[id].img
+                      }"
                       placeholder="...." required>
               </div>
               <div>
                   <label for="intro"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.intro') +
-      `</label>
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                        'label.intro'
+                      )}</label>
                   <input type="text" id="intro"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      courseData[id].intro +
-      `"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                        courseData[id].intro
+                      }"
                       placeholder="...." required>
               </div>
               <div>
                   <label for="description"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.description') +
-      `</label>
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                        'label.description'
+                      )}</label>
                   <textarea id="description"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      courseData[id].description +
-      `"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                        courseData[id].description
+                      }"
                        placeholder="...." required></textarea>
               </div>
               <div>
                   <label for="fee"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.tuition') +
-      `</label>
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                        'label.tuition'
+                      )}</label>
                   <input type="text" id="fee"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      courseData[id].paidStudent +
-      `"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                        courseData[id].paidStudent
+                      }"
                       placeholder="1000000"
                       required>
               </div>
               <div>
                   <label for="prizeStudent"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.scholarship') +
-      `</label>
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                        'label.scholarship'
+                      )}</label>
                   <input type="text" id="prizeStudent"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      courseData[id].prizeStudent +
-      `"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                        courseData[id].prizeStudent
+                      }"
                       placeholder="1000000" required>
               </div>
               <div>
                   <label for="salary"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.salary') +
-      `</label>
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                        'label.salary'
+                      )}</label>
                   <input type="text" id="salary"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      courseData[id].paidTeacher +
-      `"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                        courseData[id].paidTeacher
+                      }"
                       placeholder="1000000"
                       required>
               </div>
               <div>
                   <label for="prizeTeacher"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.bonus') +
-      `</label>
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                        'label.bonus'
+                      )}</label>
                   <input type="text" id="prizeTeacher"
-                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      courseData[id].prizeTeacher +
-      `"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                        courseData[id].prizeTeacher
+                      }"
                       placeholder="1000000" required>
               </div>
               <div>
                   <label for="time"
-                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.duration') +
-      `</label>
+                      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                        'label.duration'
+                      )}</label>
                   <input type="number" id="time"
-                      class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      courseData[id].maxAttendDate +
-      `" ${i18n.t('placeholder.duration')} required>
+                      class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                        courseData[id].maxAttendDate
+                      }" ${i18n.t('placeholder.duration')} required>
               </div>
           </div>
   </form>
   <div style="margin-top: 4vh;">
       <div class="w-full flex justify-between">
-      <button type="submit" 
+      <button type="submit"
               class="closeBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
               <span
                   class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                  ` +
-      i18n.t('action.cancel') +
-      `
+                  ${i18n.t('action.cancel')}
               </span>
           </button>
           <button form="addForm" type="submit"
               class="submitEditBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800 hover:text-white">
               <span
                   class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                  ` +
-      i18n.t('action.change') +
-      `
+                  ${i18n.t('action.change')}
               </span>
           </button>
       </div>
@@ -544,20 +498,20 @@ function loadEditData() {
   </div>
   </div>
         `;
-    $('#editModal').html(str);
+    BkSecurity.setSafeHtml($('#editModal'), str);
     $('#editModal').removeClass('invisible opacity-0');
     $('#editModal').addClass('opacity-100');
     $('#addModal').addClass('invisible opacity-0');
     $('#addModal').removeClass('opacity-100');
     setTimeout(function () {
-      $('#addModal').html('');
+      $('#addModal').empty();
     }, 200);
     $('.closeBtn').click(function (e) {
       $('#editModal').removeClass('opacity-100');
       $('#editModal').addClass('invisible opacity-0');
       setTimeout(function () {
         $('.addModal').removeClass('hidden');
-        $('#editModal').html('');
+        $('#editModal').empty();
       }, 200);
     });
     editData(id);
@@ -566,18 +520,18 @@ function loadEditData() {
 function editData(id) {
   $('.submitEditBtn').click(function (e) {
     e.preventDefault();
-    var oldName = $('#courseName').attr('data-value');
-    var courseName = $('#courseName').val();
-    var intro = $('#intro').val();
-    var imgintro = $('#imgintro').val();
-    var img = $('#img').val();
-    var short = $('#short').val();
-    var description = $('#description').val();
-    var fee = $('#fee').val();
-    var salary = $('#salary').val();
-    var prizeStudent = $('#prizeStudent').val();
-    var prizeTeacher = $('#prizeTeacher').val();
-    var time = $('#time').val();
+    const oldName = $('#courseName').attr('data-value');
+    const courseName = $('#courseName').val();
+    const intro = $('#intro').val();
+    const imgintro = $('#imgintro').val();
+    const img = $('#img').val();
+    const short = $('#short').val();
+    const description = $('#description').val();
+    const fee = $('#fee').val();
+    const salary = $('#salary').val();
+    const prizeStudent = $('#prizeStudent').val();
+    const prizeTeacher = $('#prizeTeacher').val();
+    const time = $('#time').val();
     if (
       !courseName ||
       !fee ||
@@ -609,9 +563,9 @@ function editData(id) {
       if (result.isConfirmed) {
         $.ajax({
           type: 'patch',
-          url: API_URL + '/courses/course',
+          url: `${API_URL}/courses/course`,
           headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+            Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
           },
           data: {
             oldname: oldName,
@@ -637,7 +591,7 @@ function editData(id) {
               $('#editModal').addClass('invisible opacity-0');
               setTimeout(function () {
                 $('.addModal').removeClass('hidden');
-                $('#editModal').html('');
+                $('#editModal').empty();
               }, 200);
               loadData();
             });
@@ -663,7 +617,7 @@ function formatDate(date) {
 function deleteData() {
   $('.deleteBtn').click(function (e) {
     e.preventDefault();
-    var id = $(this).attr('data-id');
+    const id = $(this).attr('data-id');
     Swal.fire({
       title: i18n.t('confirm.title'),
       text: i18n.t('confirm.deleting', { name: courseData[id]['name'] }),
@@ -676,9 +630,9 @@ function deleteData() {
       if (result.isConfirmed) {
         $.ajax({
           type: 'delete',
-          url: API_URL + '/courses/course?name=' + courseData[id]['name'],
+          url: `${API_URL}/courses/course?name=${courseData[id]['name']}`,
           headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+            Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
           },
           dataType: 'JSON',
           success: function (res) {

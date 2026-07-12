@@ -1,4 +1,4 @@
-var courses = [
+const courses = [
   {
     title: 'Course TOEIC 4 Skills',
     intro: `<h2>KHÓA HỌC TOEIC 4 KỸ NĂNG</h2><p>Khóa học Luyện thi TOEIC 4 kỹ năng sẽ trang bị cho bạn những kiến thức và kỹ năng cần thiết để chinh phục kỳ thi TOEIC. Với đội ngũ giáo viên giỏi chuyên TOEIC cùng phương pháp giảng dạy hiệu quả, khóa học sẽ giúp bạn nâng cao toàn diện trình độ tiếng Anh và tự tin chinh phục kỳ thi TOEIC.</p>`,
@@ -153,33 +153,30 @@ $(document).ready(function () {
   loadData();
 });
 function loadData() {
-  var url = new URLSearchParams(window.location.search);
-  var id = url.get('id');
+  const url = new URLSearchParams(window.location.search);
+  const id = url.get('id');
   $.ajax({
     type: 'get',
-    url: API_URL + '/courses/all',
+    url: `${API_URL}/courses/all`,
     headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
     },
     dataType: 'JSON',
     success: function (res) {
-      $('#title').html(res.data[id].name);
-      $('.text-intro').html(res.data[id].intro);
+      BkSecurity.setText('#title', res.data[id].name);
+      BkSecurity.setSafeHtml('.text-intro', res.data[id].intro);
       $('.first-pic').attr('src', res.data[id].img);
-      $('.course-list').html(res.data[id].description);
+      BkSecurity.setSafeHtml('.course-list', res.data[id].description);
     },
   });
 }
 
 card = [1, 2, 3, 4];
 function load() {
-  var str = '';
+  let str = '';
   card.forEach((el) => {
-    str +=
-      `<li class="course">
-        <h3>` +
-      el +
-      `</h3>
+    str += `<li class="course">
+        <h3>${el}</h3>
         <p>Khóa học Luyện thi TOEIC 4 kỹ năng sẽ trang bị cho bạn những kiến thức và kỹ năng cần thiết để chinh phục
             kỳ thi TOEIC. Với đội ngũ giáo viên giỏi chuyên TOEIC cùng phương pháp giảng dạy hiệu quả, khóa học sẽ
             giúp bạn nâng cao toàn diện trình độ tiếng Anh và tự tin chinh phục kỳ thi TOEIC.</p>

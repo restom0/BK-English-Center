@@ -2,13 +2,13 @@ $(document).ready(function () {
   $('.course-list').empty();
   $.ajax({
     type: 'get',
-    url: API_URL + '/courses/all',
+    url: `${API_URL}/courses/all`,
     headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
     },
     dataType: 'JSON',
     success: function (res) {
-      var str = '';
+      let str = '';
       (res?.data ?? []).forEach(function (el, index) {
         str += `
                     <li class="course">
@@ -24,7 +24,7 @@ $(document).ready(function () {
                             </div>
                         </div>
                     </li>`;
-        $('.course-list').html(str);
+        BkSecurity.setSafeHtml($('.course-list'), str);
       });
     },
     error: function (jqXHR, textStatus, errorThrown) {

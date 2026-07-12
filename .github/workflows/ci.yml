@@ -3,7 +3,7 @@
 # Runs on every push and pull request to main / develop.
 #
 # Jobs:
-#   lint-backend  — Prettier format check on server/src/**
+#   lint-backend  — Prettier + ESLint checks on server code
 #   build-css     — Compile SCSS → CSS and verify output
 #   docker-build  — Validate both Dockerfiles compile cleanly
 # ============================================================
@@ -27,7 +27,7 @@ permissions:
 jobs:
   # ── 1. Backend linting ────────────────────────────────────────
   lint-backend:
-    name: Lint backend (Prettier)
+    name: Lint backend (Prettier + ESLint)
     runs-on: ubuntu-latest
 
     defaults:
@@ -49,7 +49,10 @@ jobs:
         run: npm ci --prefer-offline
 
       - name: Check formatting (Prettier)
-        run: npx prettier --check 'src/**/*.{js,json}'
+        run: npm run format:check
+
+      - name: Check code quality (ESLint)
+        run: npm run eslint
 
   # ── 2. CSS build ─────────────────────────────────────────────
   build-css:
@@ -184,5 +187,16 @@ jobs:
             -connectRetries=10 \
             migrate
 
-      - name: Run tests (unit + API + integration)
-        run: npm test
+      - name: Run server quality gate (format + ESLint + Jest coverage)
+        run: npm run quality
+
+      - name: Run Bruno API smoke collection
+        run: npm run test:bruno
+
+      - name: Upload Bruno API reports
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: bruno-api-reports
+          path: server/bruno/reports/
+          retention-days: 7

@@ -14,11 +14,11 @@ $(document).ready(function () {
 function loadLog() {
   apiRequest({ type: 'get', url: '/logs' })
     .then(function (res) {
-      var str = (res?.data ?? [])
+      const str = (res?.data ?? [])
         .map(function (el) {
-          var statusHtml = el.status
-            ? '<b style="color:green">' + i18n.t('status.success') + '</b>'
-            : '<b style="color:red">' + i18n.t('status.failed') + '</b>';
+          const statusHtml = el.status
+            ? `<b style="color:green">${i18n.t('status.success')}</b>`
+            : `<b style="color:red">${i18n.t('status.failed')}</b>`;
           return `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
           <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${el.username}</th>
           <td class="px-6 py-4">${el.role}</td>
@@ -28,7 +28,7 @@ function loadLog() {
         </tr>`;
         })
         .join('');
-      $('#access-list').html(str);
+      BkSecurity.setSafeHtml($('#access-list'), str);
     })
     .fail(function (jqXHR) {
       toastError(getErrorMsg(jqXHR));
@@ -39,7 +39,7 @@ function loadLog() {
 function loadRegisterLog() {
   apiRequest({ type: 'get', url: '/register-logs' })
     .then(function (res) {
-      var str = (res?.data ?? [])
+      const str = (res?.data ?? [])
         .map(function (el) {
           return `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
           <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">${el.username}</th>
@@ -49,7 +49,7 @@ function loadRegisterLog() {
         </tr>`;
         })
         .join('');
-      $('#register-list').html(str);
+      BkSecurity.setSafeHtml($('#register-list'), str);
     })
     .fail(function (jqXHR) {
       toastError(getErrorMsg(jqXHR));
@@ -57,13 +57,13 @@ function loadRegisterLog() {
 }
 
 /* ── Danh sách email được phép ───────────────────────────────────── */
-var temp = [];
+let temp = [];
 
 function loadEmailLog() {
   apiRequest({ type: 'get', url: '/emails' })
     .then(function (res) {
       temp = res.data;
-      var str = (res?.data ?? [])
+      const str = (res?.data ?? [])
         .map(function (el, index) {
           return `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
           <td class="px-6 py-4">${el.email}</td>
@@ -84,7 +84,7 @@ function loadEmailLog() {
         </tr>`;
         })
         .join('');
-      $('#email-list').html(str);
+      BkSecurity.setSafeHtml($('#email-list'), str);
       loadAddData();
       loadEditData();
       deleteData();
@@ -98,7 +98,7 @@ function loadEmailLog() {
 function closeModal() {
   $('#modal').removeClass('opacity-100').addClass('invisible opacity-0');
   setTimeout(function () {
-    $('#modal').html('');
+    $('#modal').empty();
     $('.add').removeClass('hidden');
   }, 200);
 }
@@ -107,7 +107,8 @@ function closeModal() {
 function loadAddData() {
   $('.add').on('click', function (e) {
     e.preventDefault();
-    $('#modal').html(
+    BkSecurity.setSafeHtml(
+      $('#modal'),
       `
       <div class="mb-5 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <form id="addForm">
@@ -117,20 +118,20 @@ function loadAddData() {
               <input type="text" id="emailInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="nguyenvana@gmail.com" required>
             </div>
             <div>
-              <label for="roleInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-        i18n.t('label.role') +
-        `</label>
+              <label for="roleInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                'label.role'
+              )}</label>
               <input type="text" id="roleInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white" placeholder="staff" required>
             </div>
           </div>
         </form>
         <div class="w-full flex justify-between mt-4">
-          <button class="closeBtn inline-flex items-center px-5 py-2.5 text-sm font-medium text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100">` +
-        i18n.t('action.cancel') +
-        `</button>
-          <button form="addForm" type="submit" class="submitAddBtn inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">` +
-        i18n.t('action.add') +
-        `</button>
+          <button class="closeBtn inline-flex items-center px-5 py-2.5 text-sm font-medium text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100">${i18n.t(
+            'action.cancel'
+          )}</button>
+          <button form="addForm" type="submit" class="submitAddBtn inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">${i18n.t(
+            'action.add'
+          )}</button>
         </div>
       </div>
     `
@@ -146,8 +147,8 @@ function loadAddData() {
 function addData() {
   $('.submitAddBtn').on('click', function (e) {
     e.preventDefault();
-    var email = $('#emailInput').val().trim();
-    var role = $('#roleInput').val().trim();
+    const email = $('#emailInput').val().trim();
+    const role = $('#roleInput').val().trim();
     if (!email || !role) {
       toastError(i18n.t('toast.fill_all'));
       return;
@@ -170,8 +171,9 @@ function loadEditData() {
   $('.editBtn').on('click', function (e) {
     e.preventDefault();
     $('.add').addClass('hidden');
-    var id = $(this).attr('data-id');
-    $('#modal').html(
+    const id = $(this).attr('data-id');
+    BkSecurity.setSafeHtml(
+      $('#modal'),
       `
       <div class="mt-5 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <form id="editForm">
@@ -181,20 +183,20 @@ function loadEditData() {
               <input type="text" id="editEmailInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white" value="${temp[id]['email']}" required>
             </div>
             <div>
-              <label for="editRoleInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-        i18n.t('label.role') +
-        `</label>
+              <label for="editRoleInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                'label.role'
+              )}</label>
               <input type="text" id="editRoleInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white" value="${temp[id]['role']}" required>
             </div>
           </div>
         </form>
         <div class="w-full flex justify-between mt-4">
-          <button class="closeBtn inline-flex items-center px-5 py-2.5 text-sm font-medium text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100">` +
-        i18n.t('action.cancel') +
-        `</button>
-          <button form="editForm" type="submit" class="submitEditBtn inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">` +
-        i18n.t('action.change') +
-        `</button>
+          <button class="closeBtn inline-flex items-center px-5 py-2.5 text-sm font-medium text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100">${i18n.t(
+            'action.cancel'
+          )}</button>
+          <button form="editForm" type="submit" class="submitEditBtn inline-flex items-center px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">${i18n.t(
+            'action.change'
+          )}</button>
         </div>
       </div>
     `
@@ -208,8 +210,8 @@ function loadEditData() {
 function editData(id) {
   $('.submitEditBtn').on('click', function (e) {
     e.preventDefault();
-    var email = $('#editEmailInput').val().trim();
-    var role = $('#editRoleInput').val().trim();
+    const email = $('#editEmailInput').val().trim();
+    const role = $('#editRoleInput').val().trim();
     if (!email || !role) {
       toastError(i18n.t('toast.fill_all'));
       return;
@@ -243,7 +245,7 @@ function editData(id) {
 function deleteData() {
   $('.deleteBtn').on('click', function (e) {
     e.preventDefault();
-    var id = $(this).attr('data-id');
+    const id = $(this).attr('data-id');
     Swal.fire({
       title: i18n.t('confirm.title'),
       text: i18n.t('confirm.deleting', { name: temp[id]['email'] }),
@@ -255,7 +257,7 @@ function deleteData() {
       cancelButtonText: i18n.t('action.cancel'),
     }).then(function (result) {
       if (!result.isConfirmed) return;
-      apiRequest({ type: 'delete', url: '/emails/email?id=' + temp[id]['id'] })
+      apiRequest({ type: 'delete', url: `/emails/email?id=${temp[id]['id']}` })
         .then(function () {
           toastSuccess(i18n.t('toast.delete_ok')).then(function () {
             loadEmailLog();

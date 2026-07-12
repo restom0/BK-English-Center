@@ -114,9 +114,9 @@ DB_HOST=localhost
 DB_PORT=3306
 DB_NAME=bk_english
 DB_USER=root
-DB_PASS=secret
+DB_PASS=replace_me
 
-JWT_SECRET=change_this_secret_in_production
+JWT_SECRET=replace_with_32_plus_random_bytes
 CORS_ORIGIN=http://localhost:5500
 
 MAIL_USER=your@gmail.com

@@ -1,6 +1,6 @@
 function readBody(req) {
   return new Promise(function (resolve, reject) {
-    var chunks = [];
+    const chunks = [];
     req.on('data', function (chunk) {
       chunks.push(chunk);
     });
@@ -12,44 +12,48 @@ function readBody(req) {
 }
 
 function getBackendUrl() {
-  var url = process.env.BACKEND_URL || process.env.API_URL || '';
+  const url = process.env.BACKEND_URL || process.env.API_URL || '';
   return url.replace(/\/+$/, '');
 }
 
 module.exports = async function handler(req, res) {
-  var backendUrl = getBackendUrl();
+  const backendUrl = getBackendUrl();
   if (!backendUrl) {
     res.status(500).json({ msg: 'BACKEND_URL is not configured in Vercel.' });
     return;
   }
 
-  var path = Array.isArray(req.query.path) ? req.query.path.join('/') : req.query.path || '';
-  var target = new URL('/' + path, backendUrl + '/');
-  var incomingUrl = new URL(req.url, 'http://' + req.headers.host);
+  const path = Array.isArray(req.query.path) ? req.query.path.join('/') : req.query.path || '';
+  const target = new URL(`/${path}`, `${backendUrl}/`);
+  const incomingUrl = new URL(req.url, `http://${req.headers.host}`);
   incomingUrl.searchParams.forEach(function (value, key) {
     target.searchParams.append(key, value);
   });
 
-  var headers = Object.assign({}, req.headers);
+  const headers = Object.assign({}, req.headers);
   delete headers.host;
   delete headers['content-length'];
 
-  var method = req.method || 'GET';
-  var options = { method: method, headers: headers };
+  const method = req.method || 'GET';
+  const options = { method: method, headers: headers };
   if (method !== 'GET' && method !== 'HEAD') {
     options.body = await readBody(req);
   }
 
   try {
-    var upstream = await fetch(target, options);
+    const upstream = await fetch(target, options);
     upstream.headers.forEach(function (value, key) {
-      var lower = key.toLowerCase();
-      if (lower !== 'content-encoding' && lower !== 'transfer-encoding' && lower !== 'content-length') {
+      const lower = key.toLowerCase();
+      if (
+        lower !== 'content-encoding' &&
+        lower !== 'transfer-encoding' &&
+        lower !== 'content-length'
+      ) {
         res.setHeader(key, value);
       }
     });
 
-    var body = Buffer.from(await upstream.arrayBuffer());
+    const body = Buffer.from(await upstream.arrayBuffer());
     res.status(upstream.status).send(body);
   } catch (error) {
     res.status(502).json({ msg: 'Backend request failed.', error: error.message });

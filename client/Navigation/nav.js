@@ -3,19 +3,25 @@ $(document).ready(function () {
 });
 
 function loadNav() {
-  const role = localStorage.getItem("role");
-  if (role === "student") {
-    $("#nav__login").remove();
-    $("#my-class-link").html("Khoá học của tôi");
+  const role = localStorage.getItem('role');
+  if (role === 'student') {
+    $('#nav__login').remove();
+    BkSecurity.setSafeHtml($('#my-class-link'), 'Khoá học của tôi');
 
-    $("#my-page-link").html("Trang của tôi");
-  } else if (role === "teacher") {
-    $("#nav__login").remove();
-    $("#my-class-link").html("Lớp học của tôi");
-    $("#my-page-link").html("Trang của tôi");
+    BkSecurity.setSafeHtml($('#my-page-link'), 'Trang của tôi');
+  } else if (role === 'teacher') {
+    $('#nav__login').remove();
+    BkSecurity.setSafeHtml($('#my-class-link'), 'Lớp học của tôi');
+    BkSecurity.setSafeHtml($('#my-page-link'), 'Trang của tôi');
   } else {
-    $("#nav__user").remove();
+    $('#nav__user').remove();
   }
-  $("#my-class-link").attr("href", typeof routeHref === "function" ? routeHref("my-courses") : "../MyCourses/myCourses.html");
-  $("#my-page-link").attr("href", typeof routeHref === "function" ? routeHref("my-page") : "../MyPage/myPage.html");
+  $('#my-class-link').attr(
+    'href',
+    typeof routeHref === 'function' ? routeHref('my-courses') : '../MyCourses/myCourses.html'
+  );
+  $('#my-page-link').attr(
+    'href',
+    typeof routeHref === 'function' ? routeHref('my-page') : '../MyPage/myPage.html'
+  );
 }

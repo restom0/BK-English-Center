@@ -1,17 +1,14 @@
 function toggleAuthenticationCode() {
-  if (
-    $("#floating_roles").val() === "staff" ||
-    $("#floating_roles").val() === "admin"
-  ) {
-    $("#authentication-code").removeClass("hidden");
+  if ($('#floating_roles').val() === 'staff' || $('#floating_roles').val() === 'admin') {
+    $('#authentication-code').removeClass('hidden');
   } else {
-    $("#authentication-code").addClass("hidden");
+    $('#authentication-code').addClass('hidden');
   }
 }
 
 const Toast = Swal.mixin({
   toast: true,
-  position: "top-end",
+  position: 'top-end',
   showConfirmButton: false,
   timer: 1500,
   timerProgressBar: true,
@@ -25,116 +22,116 @@ $(document).ready(function () {
   toggleAuthenticationCode();
 });
 function register() {
-  $("#sendMail").click(function (e) {
+  $('#sendMail').click(function (e) {
     e.preventDefault();
-    var email = $("#floating_email").val();
-    var role = $("#floating_roles").val();
+    const email = $('#floating_email').val();
+    const role = $('#floating_roles').val();
     if (!email) {
       Toast.fire({
-        icon: "error",
-        title: "Hãy nhập email",
+        icon: 'error',
+        title: 'Hãy nhập email',
       });
     } else if (!role) {
       Toast.fire({
-        icon: "error",
-        title: "Hãy nhập vai trò",
+        icon: 'error',
+        title: 'Hãy nhập vai trò',
       });
     } else {
       $.ajax({
-        type: "get",
-        url: API_URL + "/sendMail?to=" + email + "&role=" + role,
-        dataType: "JSON",
+        type: 'get',
+        url: `${API_URL}/sendMail?to=${email}&role=${role}`,
+        dataType: 'JSON',
         success: function (res) {
           if (res.check === true) {
             Toast.fire({
-              icon: "success",
-              title: "Hãy kiểm tra hộp email của bạn",
+              icon: 'success',
+              title: 'Hãy kiểm tra hộp email của bạn',
             });
           }
         },
         error: function (jqXHR, textStatus, errorThrown) {
           Toast.fire({
-            icon: "error",
+            icon: 'error',
             title: jqXHR.responseJSON.msg,
           });
         },
       });
     }
   });
-  $("#register-button").click(function (e) {
+  $('#register-button').click(function (e) {
     e.preventDefault();
-    var username = $("#floating_loginname").val();
-    var password = $("#floating_password").val();
-    var repeatPassword = $("#floating_repeat_password").val();
-    var name = $("#floating_name").val();
-    var birthday = $("#floating_birthday").val();
-    var gender = $("#gender").val();
-    var address = $("#floating_address").val();
-    var phone = $("#floating_phone").val();
-    var email = $("#floating_email").val();
-    var role = $("#floating_roles").val();
-    var key = $("#floating_identified").val();
-    if (!username || username == "") {
+    const username = $('#floating_loginname').val();
+    const password = $('#floating_password').val();
+    const repeatPassword = $('#floating_repeat_password').val();
+    const name = $('#floating_name').val();
+    const birthday = $('#floating_birthday').val();
+    const gender = $('#gender').val();
+    const address = $('#floating_address').val();
+    const phone = $('#floating_phone').val();
+    const email = $('#floating_email').val();
+    const role = $('#floating_roles').val();
+    const key = $('#floating_identified').val();
+    if (!username || username == '') {
       Toast.fire({
-        icon: "error",
-        title: "Hãy nhập tài khoản",
+        icon: 'error',
+        title: 'Hãy nhập tài khoản',
       });
-    } else if (!password || password == "") {
+    } else if (!password || password == '') {
       Toast.fire({
-        icon: "error",
-        title: "Hãy nhập mật khẩu",
+        icon: 'error',
+        title: 'Hãy nhập mật khẩu',
       });
-    } else if (!repeatPassword || repeatPassword == "") {
+    } else if (!repeatPassword || repeatPassword == '') {
       Toast.fire({
-        icon: "error",
-        title: "Hãy nhập mật khẩu lần 2",
+        icon: 'error',
+        title: 'Hãy nhập mật khẩu lần 2',
       });
-    } else if (!name || name == "") {
+    } else if (!name || name == '') {
       Toast.fire({
-        icon: "error",
-        title: "Hãy nhập tên bạn",
+        icon: 'error',
+        title: 'Hãy nhập tên bạn',
       });
-    } else if (!birthday || birthday == "") {
+    } else if (!birthday || birthday == '') {
       Toast.fire({
-        icon: "error",
-        title: "Hãy nhập ngày sinh",
+        icon: 'error',
+        title: 'Hãy nhập ngày sinh',
       });
-    } else if (!gender || gender == "") {
+    } else if (!gender || gender == '') {
       Toast.fire({
-        icon: "error",
-        title: "Hãy chọn giới tính",
+        icon: 'error',
+        title: 'Hãy chọn giới tính',
       });
-    } else if (!address || address == "") {
+    } else if (!address || address == '') {
       Toast.fire({
-        icon: "error",
-        title: "Hãy nhập địa chỉ",
+        icon: 'error',
+        title: 'Hãy nhập địa chỉ',
       });
-    } else if (!phone || phone == "") {
+    } else if (!phone || phone == '') {
       Toast.fire({
-        icon: "error",
-        title: "Hãy nhập số điện thoại",
+        icon: 'error',
+        title: 'Hãy nhập số điện thoại',
       });
-    } else if (!email || email == "") {
+    } else if (!email || email == '') {
       Toast.fire({
-        icon: "error",
-        title: "Hãy nhập địa chỉ email",
+        icon: 'error',
+        title: 'Hãy nhập địa chỉ email',
       });
-    } else if (!role || role == "") {
+    } else if (!role || role == '') {
       Toast.fire({
-        icon: "error",
-        title: "Hãy chọn vai trò",
+        icon: 'error',
+        title: 'Hãy chọn vai trò',
       });
     } else if (password !== repeatPassword) {
       Toast.fire({
-        icon: "error",
-        title: "Hai mật khẩu không giống nhau",
+        icon: 'error',
+        title: 'Hai mật khẩu không giống nhau',
       });
     } else {
       $.ajax({
-        type: "post",
-        url: API_URL + "/users/user",
+        type: 'post',
+        url: `${API_URL}/users/user`,
         headers: {
-          Authorization: "Bearer " + key,
+          Authorization: `Bearer ${key}`,
         },
         data: {
           username: username,
@@ -147,21 +144,21 @@ function register() {
           phone: phone,
           role: role,
         },
-        dataType: "JSON",
+        dataType: 'JSON',
         success: function (res) {
           console.log(res);
           if (res.check === true) {
             Toast.fire({
-              icon: "success",
-              title: "Đăng ký thành công",
+              icon: 'success',
+              title: 'Đăng ký thành công',
             }).then(() => {
-              window.location.replace("./Login.html");
+              window.location.replace('./Login.html');
             });
           }
         },
         error: function (jqXHR, textStatus, errorThrown) {
           Toast.fire({
-            icon: "error",
+            icon: 'error',
             title: jqXHR.responseJSON.msg,
           });
         },

@@ -4,7 +4,9 @@ $(document).ready(function () {
 });
 
 if (localStorage.getItem('role') === 'admin') {
-  $('#checkAdmin').html(`
+  BkSecurity.setSafeHtml(
+    $('#checkAdmin'),
+    `
     <button type="button"
       class="px-3 flex items-center w-full text-base text-gray-900 transition duration-75 rounded-lg
              group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700
@@ -18,7 +20,8 @@ if (localStorage.getItem('role') === 'admin') {
         </svg>
         <span class="ml-3"><a href="../Adminpage/Adminpage.html">VỀ TRANG CHỦ</a></span>
       </span>
-    </button>`);
+    </button>`
+  );
 }
 
 function loadData() {
@@ -26,9 +29,9 @@ function loadData() {
     type: 'get',
     url: '/staffs/stat',
     success: function (res) {
-      $('#teacher-number').html(res.data.countTeacher);
-      $('#student-number').html(res.data.countStudent);
-      $('#staff-number').html(res.data.countStaff);
+      BkSecurity.setSafeHtml($('#teacher-number'), res.data.countTeacher);
+      BkSecurity.setSafeHtml($('#student-number'), res.data.countStudent);
+      BkSecurity.setSafeHtml($('#staff-number'), res.data.countStaff);
     },
     error: function (jqXHR) {
       Toast.fire({ icon: 'error', title: jqXHR.responseJSON.msg });

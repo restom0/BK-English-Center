@@ -38,7 +38,7 @@ function toLocalDate(dateStr) {
  */
 function formatCurrency(amount) {
   if (amount == null || isNaN(amount)) return '0 đ';
-  return amount.toLocaleString('vi-VN') + ' đ';
+  return `${amount.toLocaleString('vi-VN')} đ`;
 }
 
 /**
@@ -48,7 +48,7 @@ function formatCurrency(amount) {
  */
 function formatCurrencyEN(amount) {
   if (amount == null || isNaN(amount)) return '0 đ';
-  return amount.toLocaleString('en-US') + ' đ';
+  return `${amount.toLocaleString('en-US')} đ`;
 }
 
 /**

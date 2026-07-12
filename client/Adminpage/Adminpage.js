@@ -8,10 +8,10 @@ function loadData() {
     type: 'get',
     url: '/admins/stat',
     success: function (res) {
-      $('#access-number').html(res.data.countAccess);
-      $('#teacher-number').html(res.data.countTeacher);
-      $('#student-number').html(res.data.countStudent);
-      $('#staff-number').html(res.data.countStaff);
+      BkSecurity.setSafeHtml($('#access-number'), res.data.countAccess);
+      BkSecurity.setSafeHtml($('#teacher-number'), res.data.countTeacher);
+      BkSecurity.setSafeHtml($('#student-number'), res.data.countStudent);
+      BkSecurity.setSafeHtml($('#staff-number'), res.data.countStaff);
     },
     error: function (jqXHR) {
       if (jqXHR.status === 403) {

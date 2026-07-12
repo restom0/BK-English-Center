@@ -1,11 +1,11 @@
-var tableData = [];
-var tempPay = [];
-var tempPrize = [];
+let tableData = [];
+let tempPay = [];
+let tempPrize = [];
 $.ajax({
   type: 'get',
-  url: API_URL + '/staffs/staff',
+  url: `${API_URL}/staffs/staff`,
   headers: {
-    Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+    Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
   },
   dataType: 'JSON',
   success: function (res) {
@@ -18,36 +18,23 @@ $(document).ready(function () {
 function morePay() {
   $('#morePay').click(function (e) {
     e.preventDefault();
-    if ($('#morePay').html() === i18n.t('action.view_more')) {
+    if ($('#morePay').text() === i18n.t('action.view_more')) {
       let str = '';
       tempPay.forEach((el, index) => {
-        str +=
-          `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
+        str += `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <span data-edit=` +
-          index +
-          ` data-id=` +
-          el['id'] +
-          ` class="studentModal">
-                            ` +
-          el['name'] +
-          `
+                        <span data-edit=${index} data-id=${el['id']} class="studentModal">
+                            ${el['name']}
                         </span>
                     </th>
                     <td class="px-6 py-4">
-                    ` +
-          el['month'] +
-          `
+                    ${el['month']}
                     </td>
                     <td class="px-6 py-4">
-                    ` +
-          el['year'] +
-          `
+                    ${el['year']}
                     </td>
                     <td class="px-6 py-4">
-                    ` +
-          BkCurrency.format(el['paid']) +
-          `
+                    ${BkCurrency.format(el['paid'])}
                     </td>
                     <td class="px-6 py-4">
                     `;
@@ -56,19 +43,15 @@ function morePay() {
         } else {
           str += i18n.t('status.received');
         }
-        str +=
-          `
+        str += `
                     </td>
                     <td class="px-6 py-4 flex justify-center">
-                        <button data-id=` +
-          el['id'] +
-          ` data-tooltip-target="notification"
+                        <button data-id=${el['id']} data-tooltip-target="notification"
                             class="payWarning flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" `;
         if (el['paidStatus'] === 1) {
           str += 'disabled';
         }
-        str +=
-          `>
+        str += `>
                             <svg class="w-6 h-6 text-gray-500 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                 viewBox="0 0 18 19">
@@ -76,17 +59,13 @@ function morePay() {
                                     d="M15 1.943v12.114a1 1 0 0 1-1.581.814L8 11V5l5.419-3.871A1 1 0 0 1 15 1.943ZM7 4H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2v5a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4ZM4 17v-5h1v5H4ZM16 5.183v5.634a2.984 2.984 0 0 0 0-5.634Z" />
                             </svg>
                             <div id="notification" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            ` +
-          i18n.t('action.notify_salary') +
-          `
+            ${i18n.t('action.notify_salary')}
             <div class="tooltip-arrow" data-popper-arrow></div>
                         </button>
                     <button type="button" data-tooltip-target="update"
-                        class="editPayBtn flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-edit=` +
-          index +
-          ` data-id="` +
-          el['id'] +
-          `">
+                        class="editPayBtn flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-edit=${
+                          index
+                        } data-id="${el['id']}">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 20 18">
@@ -96,29 +75,25 @@ function morePay() {
                                 d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z" />
                         </svg>
                         <div id="update" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            ` +
-          i18n.t('action.edit') +
-          `
+            ${i18n.t('action.edit')}
             <div class="tooltip-arrow" data-popper-arrow></div>
                     </button>
                     <button type="button" data-tooltip-target="delete"
-                        class="deletePayBtn flex items-center p-2 text-gray-500 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-id="` +
-          index +
-          `">
+                        class="deletePayBtn flex items-center p-2 text-gray-500 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-id="${
+                          index
+                        }">
                         <svg class="w-5 h-5 text-gray-500 hover:text-gray-900 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
             <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
           </svg>
           <div id="delete" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            ` +
-          i18n.t('action.delete') +
-          `
+            ${i18n.t('action.delete')}
             <div class="tooltip-arrow" data-popper-arrow></div>
                     </button>
                 </td >
                 </tr>`;
       });
-      $('#payData').html(str);
-      $('#morePay').html(i18n.t('action.collapse'));
+      BkSecurity.setSafeHtml($('#payData'), str);
+      BkSecurity.setSafeHtml($('#morePay'), i18n.t('action.collapse'));
       loadStudentModal();
       addPayModal();
       addPrizeModal();
@@ -129,38 +104,25 @@ function morePay() {
       deletePrize();
       return;
     }
-    if ($('#morePay').html() === i18n.t('action.collapse')) {
+    if ($('#morePay').text() === i18n.t('action.collapse')) {
       let str = '';
-      $('#morePay').html(i18n.t('action.view_more'));
+      BkSecurity.setSafeHtml($('#morePay'), i18n.t('action.view_more'));
       tempPay.forEach((el, index) => {
         if (index < 4) {
-          str +=
-            `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
+          str += `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <span data-edit=` +
-            index +
-            ` data-id=` +
-            el['id'] +
-            ` class="studentModal">
-                            ` +
-            el['name'] +
-            `
+                        <span data-edit=${index} data-id=${el['id']} class="studentModal">
+                            ${el['name']}
                         </span>
                     </th>
                     <td class="px-6 py-4">
-                    ` +
-            el['month'] +
-            `
+                    ${el['month']}
                     </td>
                     <td class="px-6 py-4">
-                    ` +
-            el['year'] +
-            `
+                    ${el['year']}
                     </td>
                     <td class="px-6 py-4">
-                    ` +
-            BkCurrency.format(el['paid']) +
-            `
+                    ${BkCurrency.format(el['paid'])}
                     </td>
                     <td class="px-6 py-4">
                     `;
@@ -169,19 +131,15 @@ function morePay() {
           } else {
             str += i18n.t('status.received');
           }
-          str +=
-            `
+          str += `
                     </td>
                     <td class="px-6 py-4 flex justify-center">
-                        <button data-id=` +
-            el['id'] +
-            ` data-tooltip-target="notification"
+                        <button data-id=${el['id']} data-tooltip-target="notification"
                             class="payWarning flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" `;
           if (el['paidStatus'] == 1) {
             str += 'disabled';
           }
-          str +=
-            `>
+          str += `>
                             <svg class="w-6 h-6 text-gray-500 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                 viewBox="0 0 18 19">
@@ -189,17 +147,13 @@ function morePay() {
                                     d="M15 1.943v12.114a1 1 0 0 1-1.581.814L8 11V5l5.419-3.871A1 1 0 0 1 15 1.943ZM7 4H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2v5a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4ZM4 17v-5h1v5H4ZM16 5.183v5.634a2.984 2.984 0 0 0 0-5.634Z" />
                             </svg>
                             <div id="notification" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            ` +
-            i18n.t('action.notify_salary') +
-            `
+            ${i18n.t('action.notify_salary')}
             <div class="tooltip-arrow" data-popper-arrow></div>
                         </button>
                     <button type="button" data-tooltip-target="update"
-                        class="editPayBtn flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-edit=` +
-            index +
-            ` data-id="` +
-            el['id'] +
-            `">
+                        class="editPayBtn flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-edit=${
+                          index
+                        } data-id="${el['id']}">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 20 18">
@@ -209,29 +163,25 @@ function morePay() {
                                 d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z" />
                         </svg>
                         <div id="update" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            ` +
-            i18n.t('action.edit') +
-            `
+            ${i18n.t('action.edit')}
             <div class="tooltip-arrow" data-popper-arrow></div>
                     </button>
                     <button type="button" data-tooltip-target="delete"
-                        class="deletePayBtn flex items-center p-2 text-gray-500 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-id="` +
-            index +
-            `">
+                        class="deletePayBtn flex items-center p-2 text-gray-500 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-id="${
+                          index
+                        }">
                         <svg class="w-5 h-5 text-gray-500 hover:text-gray-900 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
             <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
           </svg>
           <div id="delete" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            ` +
-            i18n.t('action.delete') +
-            `
+            ${i18n.t('action.delete')}
             <div class="tooltip-arrow" data-popper-arrow></div>
                     </button>
                 </td >
                 </tr>`;
         }
       });
-      $('#payData').html(str);
+      BkSecurity.setSafeHtml($('#payData'), str);
       loadStudentModal();
       addPayModal();
       addPrizeModal();
@@ -246,36 +196,23 @@ function morePay() {
 }
 function morePrize() {
   $('#morePrize').click(function (e) {
-    if ($('#morePrize').html() === i18n.t('action.view_more')) {
+    if ($('#morePrize').text() === i18n.t('action.view_more')) {
       let str = '';
       tempPrize.forEach((el, index) => {
-        str +=
-          `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
+        str += `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <span data-edit=` +
-          index +
-          ` data-id=` +
-          el['id'] +
-          ` class="studentModal">
-                            ` +
-          el['name'] +
-          `
+                        <span data-edit=${index} data-id=${el['id']} class="studentModal">
+                            ${el['name']}
                         </span>
                     </th>
                     <td class="px-6 py-4">
-                    ` +
-          el['month'] +
-          `
+                    ${el['month']}
                     </td>
                     <td class="px-6 py-4">
-                    ` +
-          el['year'] +
-          `
+                    ${el['year']}
                     </td>
                     <td class="px-6 py-4">
-                    ` +
-          BkCurrency.format(el['prize']) +
-          `
+                    ${BkCurrency.format(el['prize'])}
                     </td>
                     <td class="px-6 py-4">
                     `;
@@ -284,19 +221,15 @@ function morePrize() {
         } else {
           str += i18n.t('status.received');
         }
-        str +=
-          `
+        str += `
                     </td>
                     <td class="px-6 py-4 flex justify-center">
-                        <button data-id=` +
-          el['id'] +
-          ` data-tooltip-target="notification"
+                        <button data-id=${el['id']} data-tooltip-target="notification"
                             class="prizeWarning flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" `;
         if (el['prizeStatus'] === 1) {
           str += 'disabled';
         }
-        str +=
-          `>
+        str += `>
                             <svg class="w-6 h-6 text-gray-500 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                 viewBox="0 0 18 19">
@@ -304,17 +237,13 @@ function morePrize() {
                                     d="M15 1.943v12.114a1 1 0 0 1-1.581.814L8 11V5l5.419-3.871A1 1 0 0 1 15 1.943ZM7 4H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2v5a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4ZM4 17v-5h1v5H4ZM16 5.183v5.634a2.984 2.984 0 0 0 0-5.634Z" />
                             </svg>
                             <div id="notification" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            ` +
-          i18n.t('action.notify_salary') +
-          `
+            ${i18n.t('action.notify_salary')}
             <div class="tooltip-arrow" data-popper-arrow></div>
                         </button>
                     <button type="button" data-tooltip-target="update"
-                        class="editPrizeBtn flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-edit=` +
-          index +
-          ` data-id="` +
-          el['id'] +
-          `">
+                        class="editPrizeBtn flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-edit=${
+                          index
+                        } data-id="${el['id']}">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 20 18">
@@ -324,29 +253,25 @@ function morePrize() {
                                 d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z" />
                         </svg>
                         <div id="update" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            ` +
-          i18n.t('action.edit') +
-          `
+            ${i18n.t('action.edit')}
             <div class="tooltip-arrow" data-popper-arrow></div>
                     </button>
                     <button type="button" data-tooltip-target="delete"
-                        class="deletePrizeBtn flex items-center p-2 text-gray-500 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-id="` +
-          index +
-          `">
+                        class="deletePrizeBtn flex items-center p-2 text-gray-500 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-id="${
+                          index
+                        }">
                         <svg class="w-5 h-5 text-gray-500 hover:text-gray-900 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
             <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
           </svg>
           <div id="delete" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            ` +
-          i18n.t('action.delete') +
-          `
+            ${i18n.t('action.delete')}
             <div class="tooltip-arrow" data-popper-arrow></div>
                     </button>
                 </td >
                 </tr>`;
       });
-      $('#prizeData').html(str);
-      $('#morePrize').html(i18n.t('action.collapse'));
+      BkSecurity.setSafeHtml($('#prizeData'), str);
+      BkSecurity.setSafeHtml($('#morePrize'), i18n.t('action.collapse'));
       loadStudentModal();
       addPayModal();
       addPrizeModal();
@@ -357,38 +282,25 @@ function morePrize() {
       deletePrize();
       return;
     }
-    if ($('#morePrize').html() === i18n.t('action.collapse')) {
+    if ($('#morePrize').text() === i18n.t('action.collapse')) {
       let str = '';
-      $('#morePrize').html(i18n.t('action.view_more'));
+      BkSecurity.setSafeHtml($('#morePrize'), i18n.t('action.view_more'));
       tempPrize.forEach((el, index) => {
         if (index < 4) {
-          str +=
-            `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
+          str += `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                        <span data-edit=` +
-            index +
-            ` data-id=` +
-            el['id'] +
-            ` class="studentModal">
-                            ` +
-            el['name'] +
-            `
+                        <span data-edit=${index} data-id=${el['id']} class="studentModal">
+                            ${el['name']}
                         </span>
                     </th>
                     <td class="px-6 py-4">
-                    ` +
-            el['month'] +
-            `
+                    ${el['month']}
                     </td>
                     <td class="px-6 py-4">
-                    ` +
-            el['year'] +
-            `
+                    ${el['year']}
                     </td>
                     <td class="px-6 py-4">
-                    ` +
-            BkCurrency.format(el['prize']) +
-            `
+                    ${BkCurrency.format(el['prize'])}
                     </td>
                     <td class="px-6 py-4">
                     `;
@@ -397,19 +309,15 @@ function morePrize() {
           } else {
             str += i18n.t('status.received');
           }
-          str +=
-            `
+          str += `
                     </td>
                     <td class="px-6 py-4 flex justify-center">
-                        <button data-id=` +
-            el['id'] +
-            ` data-tooltip-target="notification"
+                        <button data-id=${el['id']} data-tooltip-target="notification"
                             class="prizeWarning flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" `;
           if (el['paidStatus'] == 1) {
             str += 'disabled';
           }
-          str +=
-            `>
+          str += `>
                             <svg class="w-6 h-6 text-gray-500 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white"
                                 aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                                 viewBox="0 0 18 19">
@@ -417,17 +325,13 @@ function morePrize() {
                                     d="M15 1.943v12.114a1 1 0 0 1-1.581.814L8 11V5l5.419-3.871A1 1 0 0 1 15 1.943ZM7 4H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2v5a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4ZM4 17v-5h1v5H4ZM16 5.183v5.634a2.984 2.984 0 0 0 0-5.634Z" />
                             </svg>
                             <div id="notification" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            ` +
-            i18n.t('action.notify_salary') +
-            `
+            ${i18n.t('action.notify_salary')}
             <div class="tooltip-arrow" data-popper-arrow></div>
                         </button>
                     <button type="button" data-tooltip-target="update"
-                        class="editPrizeBtn flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-edit=` +
-            index +
-            ` data-id="` +
-            el['id'] +
-            `">
+                        class="editPrizeBtn flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-edit=${
+                          index
+                        } data-id="${el['id']}">
                         <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 20 18">
@@ -437,29 +341,25 @@ function morePrize() {
                                 d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z" />
                         </svg>
                         <div id="update" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            ` +
-            i18n.t('action.edit') +
-            `
+            ${i18n.t('action.edit')}
             <div class="tooltip-arrow" data-popper-arrow></div>
                     </button>
                     <button type="button" data-tooltip-target="delete"
-                        class="deletePrizeBtn flex items-center p-2 text-gray-500 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-id="` +
-            index +
-            `">
+                        class="deletePrizeBtn flex items-center p-2 text-gray-500 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-id="${
+                          index
+                        }">
                         <svg class="w-5 h-5 text-gray-500 hover:text-gray-900 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
             <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
           </svg>
           <div id="delete" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-            ` +
-            i18n.t('action.delete') +
-            `
+            ${i18n.t('action.delete')}
             <div class="tooltip-arrow" data-popper-arrow></div>
                     </button>
                 </td >
                 </tr>`;
         }
       });
-      $('#prizeData').html(str);
+      BkSecurity.setSafeHtml($('#prizeData'), str);
       loadStudentModal();
       addPayModal();
       addPrizeModal();
@@ -474,12 +374,12 @@ function morePrize() {
 }
 function loadData() {
   let payStr = '';
-  var prizeStr = '';
+  let prizeStr = '';
   $.ajax({
     type: 'get',
-    url: API_URL + '/staffs/salary',
+    url: `${API_URL}/staffs/salary`,
     headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
     },
     dataType: 'JSON',
     success: function (res) {
@@ -490,33 +390,20 @@ function loadData() {
       }
       (res?.data ?? []).forEach((el, index) => {
         if (index < 4) {
-          payStr +=
-            `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
+          payStr += `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <span data-edit=` +
-            index +
-            ` data-id=` +
-            el['id'] +
-            ` class="studentModal">
-                        ` +
-            el['name'] +
-            `
+                    <span data-edit=${index} data-id=${el['id']} class="studentModal">
+                        ${el['name']}
                     </span>
                 </th>
                 <td class="px-6 py-4">
-                ` +
-            el['month'] +
-            `
+                ${el['month']}
                 </td>
                 <td class="px-6 py-4">
-                ` +
-            el['year'] +
-            `
+                ${el['year']}
                 </td>
                 <td class="px-6 py-4">
-                ` +
-            BkCurrency.format(el['paid']) +
-            `
+                ${BkCurrency.format(el['paid'])}
                 </td>
                 <td class="px-6 py-4">
                 `;
@@ -525,19 +412,15 @@ function loadData() {
           } else {
             payStr += i18n.t('status.received');
           }
-          payStr +=
-            `
+          payStr += `
                 </td>
                 <td class="px-6 py-4 flex justify-center">
-                    <button data-id=` +
-            el['id'] +
-            ` data-tooltip-target="notification"
+                    <button data-id=${el['id']} data-tooltip-target="notification"
                         class="payWarning flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" `;
           if (el['payStatus'] == 1) {
             payStr += 'disabled';
           }
-          payStr +=
-            `>
+          payStr += `>
                         <svg class="w-6 h-6 text-gray-500 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 18 19">
@@ -545,17 +428,13 @@ function loadData() {
                                 d="M15 1.943v12.114a1 1 0 0 1-1.581.814L8 11V5l5.419-3.871A1 1 0 0 1 15 1.943ZM7 4H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2v5a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4ZM4 17v-5h1v5H4ZM16 5.183v5.634a2.984 2.984 0 0 0 0-5.634Z" />
                         </svg>
                         <div id="notification" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-        ` +
-            i18n.t('action.notify_salary') +
-            `
+        ${i18n.t('action.notify_salary')}
         <div class="tooltip-arrow" data-popper-arrow></div>
                     </button>
                 <button type="button" data-tooltip-target="update"
-                    class="editPayBtn flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-edit=` +
-            index +
-            ` data-id="` +
-            el['id'] +
-            `">
+                    class="editPayBtn flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-edit=${
+                      index
+                    } data-id="${el['id']}">
                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                         viewBox="0 0 20 18">
@@ -565,29 +444,25 @@ function loadData() {
                             d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z" />
                     </svg>
                     <div id="update" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-        ` +
-            i18n.t('action.edit') +
-            `
+        ${i18n.t('action.edit')}
         <div class="tooltip-arrow" data-popper-arrow></div>
                 </button>
                 <button type="button" data-tooltip-target="delete"
-                    class="deletePayBtn flex items-center p-2 text-gray-500 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-id="` +
-            index +
-            `">
+                    class="deletePayBtn flex items-center p-2 text-gray-500 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-id="${
+                      index
+                    }">
                     <svg class="w-5 h-5 text-gray-500 hover:text-gray-900 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
         <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
       </svg>
       <div id="delete" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-        ` +
-            i18n.t('action.delete') +
-            `
+        ${i18n.t('action.delete')}
         <div class="tooltip-arrow" data-popper-arrow></div>
                 </button>
             </td >
             </tr>`;
         }
       });
-      $('#payData').html(payStr);
+      BkSecurity.setSafeHtml('#payData', payStr);
       morePay();
       loadStudentModal();
       addPayModal();
@@ -601,9 +476,9 @@ function loadData() {
   });
   $.ajax({
     type: 'get',
-    url: API_URL + '/staffs/prize',
+    url: `${API_URL}/staffs/prize`,
     headers: {
-      Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
     },
     dataType: 'JSON',
     success: function (res) {
@@ -611,31 +486,20 @@ function loadData() {
       if (res.data.length <= 4) $('#morePrize').addClass('hidden');
       (res?.data ?? []).forEach((el, index) => {
         if (index < 4) {
-          prizeStr +=
-            `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
+          prizeStr += `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
                 <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                    <span data-id=` +
-            el['id'] +
-            ` class="studentModal">
-                        ` +
-            el['name'] +
-            `
+                    <span data-id=${el['id']} class="studentModal">
+                        ${el['name']}
                     </span>
                 </th>
                 <td class="px-6 py-4">
-                ` +
-            el['month'] +
-            `
+                ${el['month']}
                 </td>
                 <td class="px-6 py-4">
-                ` +
-            el['year'] +
-            `
+                ${el['year']}
                 </td>
                 <td class="px-6 py-4">
-                ` +
-            BkCurrency.format(el['prize']) +
-            `
+                ${BkCurrency.format(el['prize'])}
                 </td>
                 <td class="px-6 py-4">
                 `;
@@ -644,19 +508,15 @@ function loadData() {
           } else {
             prizeStr += i18n.t('status.received');
           }
-          prizeStr +=
-            `
+          prizeStr += `
                 </td>
                 <td class="px-6 py-4 flex justify-center">
-                    <button data-id=` +
-            el['id'] +
-            ` data-tooltip-target="notification1"
+                    <button data-id=${el['id']} data-tooltip-target="notification1"
                         class="prizeWarning flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"`;
           if (el['prizeStatus'] == 1) {
             prizeStr += 'disabled';
           }
-          prizeStr +=
-            `>
+          prizeStr += `>
                         <svg class="w-6 h-6 text-gray-500 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white"
                             aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
                             viewBox="0 0 18 19">
@@ -664,16 +524,12 @@ function loadData() {
                                 d="M15 1.943v12.114a1 1 0 0 1-1.581.814L8 11V5l5.419-3.871A1 1 0 0 1 15 1.943ZM7 4H2a2 2 0 0 0-2 2v4a2 2 0 0 0 2 2v5a2 2 0 0 0 2 2h1a2 2 0 0 0 2-2V4ZM4 17v-5h1v5H4ZM16 5.183v5.634a2.984 2.984 0 0 0 0-5.634Z" />
                         </svg>
                         <div id="notification1" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-        ` +
-            i18n.t('action.notify_bonus') +
-            `
+        ${i18n.t('action.notify_bonus')}
         <div class="tooltip-arrow" data-popper-arrow></div>
                     </button>
-                    <button type="button" data-edit=` +
-            index +
-            ` data-id=` +
-            el['id'] +
-            ` data-tooltip-target="update1"
+                    <button type="button" data-edit=${index} data-id=${
+                      el['id']
+                    } data-tooltip-target="update1"
                     class="editPrizeBtn flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                     <svg class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                         aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor"
@@ -684,22 +540,18 @@ function loadData() {
                             d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z" />
                     </svg>
                     <div id="update1" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-        ` +
-            i18n.t('action.edit') +
-            `
+        ${i18n.t('action.edit')}
         <div class="tooltip-arrow" data-popper-arrow></div>
                 </button>
                 <button type="button" data-tooltip-target="delete1"
-                    class="deletePrizeBtn flex items-center p-2 text-gray-500 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-id="` +
-            index +
-            `">
+                    class="deletePrizeBtn flex items-center p-2 text-gray-500 hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group" data-id="${
+                      index
+                    }">
                     <svg class="w-5 h-5 text-gray-500 hover:text-gray-900 dark:text-white group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 18 20">
         <path d="M17 4h-4V2a2 2 0 0 0-2-2H7a2 2 0 0 0-2 2v2H1a1 1 0 0 0 0 2h1v12a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V6h1a1 1 0 1 0 0-2ZM7 2h4v2H7V2Zm1 14a1 1 0 1 1-2 0V8a1 1 0 0 1 2 0v8Zm4 0a1 1 0 0 1-2 0V8a1 1 0 0 1 2 0v8Z"/>
       </svg>
       <div id="delete1" role="tooltip" class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-        ` +
-            i18n.t('action.delete') +
-            `
+        ${i18n.t('action.delete')}
         <div class="tooltip-arrow" data-popper-arrow></div>
                 </button>
                 </td>
@@ -707,7 +559,7 @@ function loadData() {
         }
       });
       morePrize();
-      $('#prizeData').html(prizeStr);
+      BkSecurity.setSafeHtml('#prizeData', prizeStr);
       loadStudentModal();
       addPayModal();
       addPrizeModal();
@@ -722,55 +574,51 @@ function loadData() {
 function loadStudentModal() {
   $('.studentModal').click(function (e) {
     e.preventDefault();
-    var str = '';
-    var id = $(this).attr('data-id');
-    var char;
+    let str = '';
+    const id = $(this).attr('data-id');
+    let char;
     tableData.forEach((el) => {
       if (Number(el.id) === Number(id)) {
         char = el;
-        let dob = new Date(char.dateofbirth);
+        const dob = new Date(char.dateofbirth);
         dob.setMinutes(dob.getMinutes() - dob.getTimezoneOffset());
         char.dateofbirth = dob;
       }
     });
-    str +=
-      `
+    str += `
         <div class="mb-5 grid grid-cols-3 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <div class="col-span-2" id="modal1">
         <form>
             <div>
                 <div class="gap-6 mb-6">
                     <label for="full_name"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.full_name') +
-      `</label>
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                          'label.full_name'
+                        )}</label>
                     <input disabled type="text" id="full_name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder=\"${i18n.t('placeholder.person_name')}\" value="` +
-      char['name'] +
-      `" required>
+                        placeholder=\"${i18n.t('placeholder.person_name')}\" value="${
+                          char['name']
+                        }" required>
                 </div>
             </div>
             <div class="grid gap-6 mb-6 md:grid-cols-2">
                 <div>
-                    <label for="dob" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.dob') +
-      `</label>
+                    <label for="dob" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                      'label.dob'
+                    )}</label>
                     <input disabled type="date" id="dob"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        value=` +
-      char.dateofbirth.toISOString().split('T')[0] +
-      `     required>
+                        value=${char.dateofbirth.toISOString().split('T')[0]}     required>
                 </div>
                 <div>
                     <label for="gender"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.gender') +
-      `</label>
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                          'label.gender'
+                        )}</label>
                     <div class="flex">`;
     if (char['sex'] === 'M') {
-      str +=
-        `<div class="flex items-center mt-3 mr-4">
+      str += `<div class="flex items-center mt-3 mr-4">
                         <input disabled id="inline-radio" type="radio" value="Nam" name="inline-radio-group"
                             checked class="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="inline-radio"
@@ -780,13 +628,12 @@ function loadStudentModal() {
                         <input disabled id="inline-2-radio" type="radio" value="Nữ" name="inline-radio-group"
                             class="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="inline-2-radio"
-                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">` +
-        i18n.t('label.female') +
-        `</label>
+                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">${i18n.t(
+                              'label.female'
+                            )}</label>
                     </div>`;
     } else {
-      str +=
-        `<div class="flex items-center mt-3 mr-4">
+      str += `<div class="flex items-center mt-3 mr-4">
                         <input disabled id="inline-radio" type="radio" value="Nam" name="inline-radio-group"
                              class="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="inline-radio"
@@ -796,49 +643,44 @@ function loadStudentModal() {
                         <input disabled id="inline-2-radio" type="radio" value="Nữ" name="inline-radio-group"
                         checked class="w-6 h-6 text-blue-600 bg-gray-100 border-gray-300 focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600">
                         <label for="inline-2-radio"
-                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">` +
-        i18n.t('label.female') +
-        `</label>
+                            class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">${i18n.t(
+                              'label.female'
+                            )}</label>
                     </div>`;
     }
-    str +=
-      ` 
+    str += `
                     </div>
                 </div>
             </div>
             <div class="gap-6 mb-6">
                 <div>
                     <label for="address"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.address') +
-      `</label>
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                          'label.address'
+                        )}</label>
                     <input disabled type="text" id="address"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="" value="` +
-      char['address'] +
-      `"required>
+                        placeholder="" value="${char['address']}"required>
                 </div>
             </div>
             <div class="grid gap-6 mb-6 md:grid-cols-2">
                 <div>
-                    <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.phone') +
-      `</label>
+                    <label for="phone" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                      'label.phone'
+                    )}</label>
                     <input disabled type="tel" id="phone"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="0912345678" value="` +
-      char['phone'] +
-      `"pattern="[0-9]{10}" required>
+                        placeholder="0912345678" value="${
+                          char['phone']
+                        }"pattern="[0-9]{10}" required>
                 </div>
                 <div>
-                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.email') +
-      `</label>
+                    <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                      'label.email'
+                    )}</label>
                     <input disabled type="email" id="email"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="nguyenvana@company.com" value="` +
-      char['email'] +
-      `" required>
+                        placeholder="nguyenvana@company.com" value="${char['email']}" required>
                 </div>
             </div>
         </form>
@@ -847,7 +689,7 @@ function loadStudentModal() {
         <div>
                 <label for="dropzone-file"
                     class="flex flex-col items-center justify-center w-full h-64 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600">
-                    
+
                     <div class="flex flex-col items-center justify-center pt-5 pb-6"style="margin-top: 12vh;" >
                         <img src="https://th.bing.com/th/id/OIP.CVdkzge14K0HJZWZg5DiMQHaHn?pid=ImgDet&rs=1" alt="">
                     </div>
@@ -857,13 +699,11 @@ function loadStudentModal() {
                     class="w-full closeBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800" style="margin-top:20vh">
                     <span
                         class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        ` +
-      i18n.t('action.cancel') +
-      `
+                        ${i18n.t('action.cancel')}
                     </span>
                 </button>
             </div></div>`;
-    $('#studentModal').html(str);
+    BkSecurity.setSafeHtml($('#studentModal'), str);
     $('#studentModal').removeClass('invisible opacity-0');
     $('#studentModal').addClass('opacity-100');
     $('#payModal').removeClass('opacity-100');
@@ -873,14 +713,14 @@ function loadStudentModal() {
     setTimeout(function () {
       $('.payModal').removeClass('hidden');
       $('.prizeModal').removeClass('hidden');
-      $('#payModal').html('');
-      $('#prizeModal').html('');
+      $('#payModal').empty();
+      $('#prizeModal').empty();
     }, 200);
     $('.closeBtn').click(function (e) {
       $('#studentModal').removeClass('opacity-100');
       $('#studentModal').addClass('invisible opacity-0');
       setTimeout(function () {
-        $('#studentModal').html('');
+        $('#studentModal').empty();
       }, 200);
     });
   });
@@ -890,114 +730,94 @@ function addPayModal() {
     e.preventDefault();
     $.ajax({
       type: 'get',
-      url: API_URL + '/staffs/salary/null',
+      url: `${API_URL}/staffs/salary/null`,
       headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+        Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
       },
       dataType: 'JSON',
       success: function (res) {
         $('.payModal').addClass('hidden');
-        var str = '';
-        str +=
-          `
+        let str = '';
+        str += `
                 <div class="gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <form id="payForm">
                     <div class="grid gap-6 mb-6 md:grid-cols-2">
                         <div>
                             <label for="namePay"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-          i18n.t('label.full_name') +
-          `</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                                  'label.full_name'
+                                )}</label>
                                 <select id="namePay" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option selected>` +
-          i18n.t('select.staff') +
-          `</option>`;
+                                <option selected>${i18n.t('select.staff')}</option>`;
         (res?.data ?? []).forEach((el) => {
-          str += `<option value=` + el.id + `>` + el.name + `</option>`;
+          str += `<option value=${el.id}>${el.name}</option>`;
         });
-        str +=
-          `
-                                
+        str += `
+
                                 </select>
                         </div>
                         <div>
                             <label for="year"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-          i18n.t('label.year') +
-          `</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                                  'label.year'
+                                )}</label>
                                 <select id="year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option selected>` +
-          i18n.t('select.year') +
-          `</option>`;
+                                <option selected>${i18n.t('select.year')}</option>`;
         (res?.data ?? []).forEach((el) => {
-          str += `<option value=` + el.year + `>` + el.year + `</option>`;
+          str += `<option value=${el.year}>${el.year}</option>`;
         });
-        str +=
-          `
-                                
+        str += `
+
                                 </select>
                         </div>
                         <div>
                             <label for="month"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-          i18n.t('label.month') +
-          `</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                                  'label.month'
+                                )}</label>
                                 <select id="month" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option selected>` +
-          i18n.t('select.month') +
-          `</option>`;
+                                <option selected>${i18n.t('select.month')}</option>`;
         (res?.data ?? []).forEach((el) => {
-          str += `<option value=` + el.month + `>` + el.month + `</option>`;
+          str += `<option value=${el.month}>${el.month}</option>`;
         });
-        str +=
-          `
-                                
+        str += `
+
                                 </select>
                         </div>
                         <div>
                             <label for="pay"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-          i18n.t('label.received_amount') +
-          `</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                                  'label.received_amount'
+                                )}</label>
                             <input type="text" id="pay"
                                 class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                         </div>
                         <div>
-                        <label for="payStatus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-          i18n.t('label.status') +
-          `</label>
+                        <label for="payStatus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                          'label.status'
+                        )}</label>
                         <select id="payStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                          <option value="" selected>` +
-          i18n.t('select.status') +
-          `</option>
-                          <option value="0">` +
-          i18n.t('status.not_received') +
-          `</option>
-                          <option value="1">` +
-          i18n.t('status.received') +
-          `</option>
+                          <option value="" selected>${i18n.t('select.status')}</option>
+                          <option value="0">${i18n.t('status.not_received')}</option>
+                          <option value="1">${i18n.t('status.received')}</option>
                         </select>
                         </div>
                     </div>
             </form>
             <div style="margin-top: 4vh;">
                 <div class="w-full flex justify-between">
-                <button type="submit" 
+                <button type="submit"
                         class="closeBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
                         <span
                             class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                            ` +
-          i18n.t('action.cancel') +
-          `
+                            ${i18n.t('action.cancel')}
                         </span>
                     </button>
                     <button form="payForm" type="submit"
                         class="submitAddPayBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800 hover:text-white">
                         <span
                             class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                            ` +
-          i18n.t('action.add') +
-          `
+                            ${i18n.t('action.add')}
                         </span>
                     </button>
                 </div>
@@ -1005,20 +825,20 @@ function addPayModal() {
             </div>
             </div>
             `;
-        $('#payModal').html(str);
+        BkSecurity.setSafeHtml($('#payModal'), str);
         $('#payModal').removeClass('invisible opacity-0');
         $('#payModal').addClass('opacity-100');
         $('#studentModal').removeClass('opacity-100');
         $('#studentModal').addClass('invisible opacity-0');
         setTimeout(function () {
-          $('#studentModal').html('');
+          $('#studentModal').empty();
         }, 200);
         $('.closeBtn').click(function (e) {
           $('#payModal').removeClass('opacity-100');
           $('#payModal').addClass('invisible opacity-0');
           setTimeout(function () {
             $('.payModal').removeClass('hidden');
-            $('#payModal').html('');
+            $('#payModal').empty();
           }, 200);
         });
         addPay();
@@ -1032,114 +852,94 @@ function addPrizeModal() {
     $('.prizeModal').addClass('hidden');
     $.ajax({
       type: 'get',
-      url: API_URL + '/staffs/prize/null',
+      url: `${API_URL}/staffs/prize/null`,
       headers: {
-        Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+        Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
       },
       dataType: 'JSON',
       success: function (res) {
         $('.prizeModal').addClass('hidden');
-        var str = '';
-        str +=
-          `
+        let str = '';
+        str += `
                 <div class="gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <form id="prizeForm">
                     <div class="grid gap-6 mb-6 md:grid-cols-2">
                         <div>
                             <label for="namePrize"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-          i18n.t('label.full_name') +
-          `</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                                  'label.full_name'
+                                )}</label>
                                 <select id="namePrize" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option selected>` +
-          i18n.t('select.staff') +
-          `</option>`;
+                                <option selected>${i18n.t('select.staff')}</option>`;
         (res?.data ?? []).forEach((el) => {
-          str += `<option value=` + el.id + `>` + el.name + `</option>`;
+          str += `<option value=${el.id}>${el.name}</option>`;
         });
-        str +=
-          `
-                                
+        str += `
+
                                 </select>
                         </div>
                         <div>
                             <label for="year"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-          i18n.t('label.year') +
-          `</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                                  'label.year'
+                                )}</label>
                                 <select id="year" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option selected>` +
-          i18n.t('select.year') +
-          `</option>`;
+                                <option selected>${i18n.t('select.year')}</option>`;
         (res?.data ?? []).forEach((el) => {
-          str += `<option value=` + el.year + `>` + el.year + `</option>`;
+          str += `<option value=${el.year}>${el.year}</option>`;
         });
-        str +=
-          `
-                                
+        str += `
+
                                 </select>
                         </div>
                         <div>
                             <label for="month"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-          i18n.t('label.month') +
-          `</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                                  'label.month'
+                                )}</label>
                                 <select id="month" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                                <option selected>` +
-          i18n.t('select.month') +
-          `</option>`;
+                                <option selected>${i18n.t('select.month')}</option>`;
         (res?.data ?? []).forEach((el) => {
-          str += `<option value=` + el.month + `>` + el.month + `</option>`;
+          str += `<option value=${el.month}>${el.month}</option>`;
         });
-        str +=
-          `
-                                
+        str += `
+
                                 </select>
                         </div>
                         <div>
                             <label for="prize"
-                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-          i18n.t('label.received_amount') +
-          `</label>
+                                class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                                  'label.received_amount'
+                                )}</label>
                             <input type="text" id="prize"
                                 class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                         </div>
                         <div>
-                        <label for="prizeStatus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-          i18n.t('label.status') +
-          `</label>
+                        <label for="prizeStatus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                          'label.status'
+                        )}</label>
                         <select id="prizeStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                          <option value="" selected>` +
-          i18n.t('select.status') +
-          `</option>
-                          <option value="0">` +
-          i18n.t('status.not_received') +
-          `</option>
-                          <option value="1">` +
-          i18n.t('status.received') +
-          `</option>
+                          <option value="" selected>${i18n.t('select.status')}</option>
+                          <option value="0">${i18n.t('status.not_received')}</option>
+                          <option value="1">${i18n.t('status.received')}</option>
                         </select>
                         </div>
                     </div>
             </form>
             <div style="margin-top: 4vh;">
                 <div class="w-full flex justify-between">
-                <button type="submit" 
+                <button type="submit"
                         class="closeBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
                         <span
                             class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                            ` +
-          i18n.t('action.cancel') +
-          `
+                            ${i18n.t('action.cancel')}
                         </span>
                     </button>
                     <button form="prizeForm" type="submit"
                         class="submitAddPrizeBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800 hover:text-white">
                         <span
                             class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                            ` +
-          i18n.t('action.add') +
-          `
+                            ${i18n.t('action.add')}
                         </span>
                     </button>
                 </div>
@@ -1147,36 +947,35 @@ function addPrizeModal() {
             </div>
             </div>
             `;
-        $('#prizeModal').html(str);
+        BkSecurity.setSafeHtml($('#prizeModal'), str);
         $('#prizeModal').removeClass('invisible opacity-0');
         $('#prizeModal').addClass('opacity-100');
         $('#studentModal').removeClass('opacity-100');
         $('#studentModal').addClass('invisible opacity-0');
         setTimeout(function () {
-          $('#studentModal').html('');
+          $('#studentModal').empty();
         }, 200);
         $('.closeBtn').click(function (e) {
           $('#prizeModal').removeClass('opacity-100');
           $('#prizeModal').addClass('invisible opacity-0');
           setTimeout(function () {
             $('.prizeModal').removeClass('hidden');
-            $('#prizeModal').html('');
+            $('#prizeModal').empty();
           }, 200);
         });
         addPrize();
       },
     });
-    var str = '';
-    str +=
-      `
+    let str = '';
+    str += `
             <div class="gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <form id="prizeForm">
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
                         <label for="namePrize"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.full_name') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.full_name'
+                            )}</label>
                         <input type="text" id="namePrize"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 required:border-red-500 required:bg-red-500"
                             placeholder=\"${i18n.t('placeholder.person_name')}\"
@@ -1184,64 +983,54 @@ function addPrizeModal() {
                     </div>
                     <div>
                         <label for="year"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.year') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.year'
+                            )}</label>
                         <input type="text" id="year"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                             placeholder="2023" required>
                     </div>
                     <div>
                         <label for="month"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.month') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.month'
+                            )}</label>
                         <input type="text" id="month"
                             class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                     </div>
                     <div>
                         <label for="prize"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.bonus_amount') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.bonus_amount'
+                            )}</label>
                         <input type="text" id="prize"
                             class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                     </div>
                     <div>
-                    <label for="prizeStatus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.status') +
-      `</label>
+                    <label for="prizeStatus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                      'label.status'
+                    )}</label>
                     <select id="prizeStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                      <option value="" selected>` +
-      i18n.t('select.status') +
-      `</option>
-                      <option value="0">` +
-      i18n.t('status.not_received') +
-      `</option>
-                      <option value="1">` +
-      i18n.t('status.received') +
-      `</option>
+                      <option value="" selected>${i18n.t('select.status')}</option>
+                      <option value="0">${i18n.t('status.not_received')}</option>
+                      <option value="1">${i18n.t('status.received')}</option>
                     </select>
                     </div>
                 </div></form>
         <div style="margin-top: 4vh;">
             <div class="w-full flex justify-between">
-                <button type="submit" 
+                <button type="submit"
                     class="closeBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
                     <span
                         class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        ` +
-      i18n.t('action.cancel') +
-      `
+                        ${i18n.t('action.cancel')}
                     </span>
                 </button>
                 <button form="prizeForm" type="submit"
                     class="submitAddPrizeBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800 hover:text-white">
                     <span
                         class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        ` +
-      i18n.t('action.add') +
-      `
+                        ${i18n.t('action.add')}
                     </span>
                 </button>
             </div>
@@ -1254,11 +1043,11 @@ function addPrizeModal() {
 function addPay() {
   $('.submitAddPayBtn').click(function (e) {
     e.preventDefault();
-    var fullName = $('#namePay').val();
-    var month = $('#month').val();
-    var year = $('#year').val();
-    var payAmount = Number($('#pay').val());
-    var status = $('#payStatus').val();
+    const fullName = $('#namePay').val();
+    const month = $('#month').val();
+    const year = $('#year').val();
+    const payAmount = Number($('#pay').val());
+    const status = $('#payStatus').val();
     if (fullName == '') {
       Toast.fire({
         icon: 'error',
@@ -1285,7 +1074,7 @@ function addPay() {
         title: i18n.t('validate.select_status'),
       });
     } else {
-      var check = false;
+      let check = false;
       tempPay.forEach((el) => {
         if (
           Number(el.id) === Number(fullName) &&
@@ -1303,9 +1092,9 @@ function addPay() {
       } else {
         $.ajax({
           type: 'patch',
-          url: API_URL + '/staffs/salary',
+          url: `${API_URL}/staffs/salary`,
           headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+            Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
           },
           data: {
             id: fullName,
@@ -1324,7 +1113,7 @@ function addPay() {
               $('#payModal').addClass('invisible opacity-0');
               setTimeout(function () {
                 $('.payModal').removeClass('hidden');
-                $('#payModal').html('');
+                $('#payModal').empty();
               }, 200);
               loadData();
               window.location.reload();
@@ -1344,11 +1133,11 @@ function addPay() {
 function addPrize() {
   $('.submitAddPrizeBtn').click(function (e) {
     e.preventDefault();
-    var fullName = $('#namePrize').val();
-    var month = $('#month').val();
-    var year = $('#year').val();
-    var prizeAmount = Number($('#prize').val());
-    var status = $('#prizeStatus').val();
+    const fullName = $('#namePrize').val();
+    const month = $('#month').val();
+    const year = $('#year').val();
+    const prizeAmount = Number($('#prize').val());
+    const status = $('#prizeStatus').val();
     if (fullName == '') {
       Toast.fire({
         icon: 'error',
@@ -1375,7 +1164,7 @@ function addPrize() {
         title: i18n.t('validate.select_status'),
       });
     } else {
-      var check = false;
+      let check = false;
       tempPrize.forEach((el) => {
         if (
           Number(el.id) === Number(fullName) &&
@@ -1393,9 +1182,9 @@ function addPrize() {
       } else {
         $.ajax({
           type: 'patch',
-          url: API_URL + '/staffs/prize',
+          url: `${API_URL}/staffs/prize`,
           headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+            Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
           },
           data: {
             id: fullName,
@@ -1414,7 +1203,7 @@ function addPrize() {
               $('#prizeModal').addClass('invisible opacity-0');
               setTimeout(function () {
                 $('.prizeModal').removeClass('hidden');
-                $('#prizeModal').html('');
+                $('#prizeModal').empty();
               }, 200);
               loadData();
               window.location.reload();
@@ -1434,12 +1223,12 @@ function addPrize() {
 function addWarn() {
   $('.payWarning').click(function (e) {
     e.preventDefault();
-    var id = $(this).attr('data-id');
-    var char;
+    const id = $(this).attr('data-id');
+    let char;
     tableData.forEach((el) => {
       if (Number(el.id) === Number(id)) {
         char = el;
-        let dob = new Date(char.dateofbirth);
+        const dob = new Date(char.dateofbirth);
         dob.setMinutes(dob.getMinutes() - dob.getTimezoneOffset());
         char.dateofbirth = dob;
       }
@@ -1456,9 +1245,9 @@ function addWarn() {
       if (result.isConfirmed) {
         $.ajax({
           type: 'get',
-          url: API_URL + '/sendPrize',
+          url: `${API_URL}/sendPrize`,
           headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+            Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
           },
           data: {
             to: char['email'],
@@ -1482,12 +1271,12 @@ function addWarn() {
   });
   $('.prizeWarning').click(function (e) {
     e.preventDefault();
-    var id = $(this).attr('data-id');
-    var char;
+    const id = $(this).attr('data-id');
+    let char;
     tableData.forEach((el) => {
       if (Number(el.id) === Number(id)) {
         char = el;
-        let dob = new Date(char.dateofbirth);
+        const dob = new Date(char.dateofbirth);
         dob.setMinutes(dob.getMinutes() - dob.getTimezoneOffset());
         char.dateofbirth = dob;
       }
@@ -1504,9 +1293,9 @@ function addWarn() {
       if (result.isConfirmed) {
         $.ajax({
           type: 'get',
-          url: API_URL + '/sendPrize',
+          url: `${API_URL}/sendPrize`,
           headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+            Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
           },
           data: {
             to: char['email'],
@@ -1533,89 +1322,72 @@ function editPayModal() {
   $('.editPayBtn').click(function (e) {
     e.preventDefault();
     $('.payModal').addClass('hidden');
-    var id = $(this).attr('data-edit');
-    var idStaff = $(this).attr('data-id');
-    var str = '';
-    str +=
-      `
+    const id = $(this).attr('data-edit');
+    const idStaff = $(this).attr('data-id');
+    let str = '';
+    str += `
             <div class="gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <form id="payForm">
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
                         <label for="namePay"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.full_name') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.full_name'
+                            )}</label>
                             <select id="namePay" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">`;
     tableData.forEach((el) => {
-      str +=
-        `<option value=` +
-        el.id +
-        ` ` +
-        (Number(el.id) === Number(idStaff) ? 'selected' : ' ') +
-        ` >` +
-        el.name +
-        `</option>`;
+      str += `<option value=${el.id} ${Number(el.id) === Number(idStaff) ? 'selected' : ' '} >${
+        el.name
+      }</option>`;
     });
-    str +=
-      `         
+    str += `
         </select>
                     </div>
                     <div>
                     <label for="year"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.year') +
-      `</label>
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                          'label.year'
+                        )}</label>
                     <input type="text" id="year" disabled
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder="2023" value="` +
-      tempPay[id]['year'] +
-      `" required>
+                        placeholder="2023" value="${tempPay[id]['year']}" required>
                 </div>
                 <div>
                     <label for="month"
-                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.month') +
-      `</label>
+                        class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                          'label.month'
+                        )}</label>
                     <input type="text" id="month" disabled
-                        class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      tempPay[id]['month'] +
-      `" required>
+                        class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                          tempPay[id]['month']
+                        }" required>
                 </div>
                     <div>
                         <label for="pay"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.received_amount') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.received_amount'
+                            )}</label>
                         <input type="text" id="pay"
-                            class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      tempPay[id]['paid'] +
-      `" required>
+                            class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                              tempPay[id]['paid']
+                            }" required>
                     </div>
                     <div>
-                    <label for="payStatus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.status') +
-      `</label>
+                    <label for="payStatus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                      'label.status'
+                    )}</label>
                     <select id="payStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                      <option value="">` +
-      i18n.t('select.status') +
-      `</option>
+                      <option value="">${i18n.t('select.status')}</option>
                       <option value="0"`;
     if (tempPay[id]['paidStatus'] == 0) {
       str += 'selected';
     }
-    str +=
-      `>` +
-      i18n.t('status.not_received') +
-      `</option>
+    str += `>${i18n.t('status.not_received')}</option>
                       <option value="1"`;
     if (tempPay[id]['paidStatus'] == 1) {
       str += 'selected';
     }
-    str +=
-      `>` +
-      i18n.t('status.received') +
-      `</option>
+    str += `>${i18n.t('status.received')}</option>
                     </select>
                     </div>
                 </div>
@@ -1626,38 +1398,34 @@ function editPayModal() {
                     class="closeBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
                     <span
                         class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        ` +
-      i18n.t('action.cancel') +
-      `
+                        ${i18n.t('action.cancel')}
                     </span>
                 </button>
                 <button form="payForm" type="submit"
                     class="submitEditPayBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800 hover:text-white">
                     <span
                         class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        ` +
-      i18n.t('action.change') +
-      `
+                        ${i18n.t('action.change')}
                     </span>
                 </button>
             </div></div>
         </div>
         </div>
         `;
-    $('#payModal').html(str);
+    BkSecurity.setSafeHtml($('#payModal'), str);
     $('#payModal').removeClass('invisible opacity-0');
     $('#payModal').addClass('opacity-100');
     $('#studentModal').removeClass('opacity-100');
     $('#studentModal').addClass('invisible opacity-0');
     setTimeout(function () {
-      $('#studentModal').html('');
+      $('#studentModal').empty();
     }, 200);
     $('.closeBtn').click(function (e) {
       $('#payModal').removeClass('opacity-100');
       $('#payModal').addClass('invisible opacity-0');
       setTimeout(function () {
         $('.payModal').removeClass('hidden');
-        $('#payModal').html('');
+        $('#payModal').empty();
       }, 200);
     });
     editPay(idStaff, id);
@@ -1666,11 +1434,11 @@ function editPayModal() {
 function editPay(id, idArr) {
   $('.submitEditPayBtn').click(function (e) {
     e.preventDefault();
-    var fullName = $('#namePay').val();
-    var month = $('#month').val();
-    var year = $('#year').val();
-    var payAmount = Number($('#pay').val());
-    var status = $('#payStatus').val();
+    const fullName = $('#namePay').val();
+    const month = $('#month').val();
+    const year = $('#year').val();
+    const payAmount = Number($('#pay').val());
+    const status = $('#payStatus').val();
     if (fullName === '' || month === '' || year === '' || payAmount === '' || status === '') {
       Toast.fire({
         icon: 'error',
@@ -1693,9 +1461,9 @@ function editPay(id, idArr) {
         if (result.isConfirmed) {
           $.ajax({
             type: 'patch',
-            url: API_URL + '/staffs/salary',
+            url: `${API_URL}/staffs/salary`,
             headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+              Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
             },
             data: {
               id: id,
@@ -1714,7 +1482,7 @@ function editPay(id, idArr) {
                 $('#payModal').addClass('invisible opacity-0');
                 setTimeout(function () {
                   $('.payModal').removeClass('hidden');
-                  $('#payModal').html('');
+                  $('#payModal').empty();
                 }, 200);
                 loadData();
                 window.location.reload();
@@ -1735,7 +1503,7 @@ function editPay(id, idArr) {
 function deletePay() {
   $('.deletePayBtn').click(function (e) {
     e.preventDefault();
-    var id = $(this).attr('data-id');
+    const id = $(this).attr('data-id');
     Swal.fire({
       title: i18n.t('confirm.title'),
       text: i18n.t('confirm.deleting', { name: tempPay[id]['name'] }),
@@ -1748,9 +1516,9 @@ function deletePay() {
       if (result.isConfirmed) {
         $.ajax({
           type: 'delete',
-          url: API_URL + '/staffs/salary',
+          url: `${API_URL}/staffs/salary`,
           headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+            Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
           },
           data: {
             id: tempPay[id].id,
@@ -1782,90 +1550,73 @@ function editPrizeModal() {
   $('.editPrizeBtn').click(function (e) {
     e.preventDefault();
     $('.prizeModal').addClass('hidden');
-    var id = $(this).attr('data-edit');
-    var idStaff = $(this).attr('data-id');
-    var str = '';
-    str +=
-      `
+    const id = $(this).attr('data-edit');
+    const idStaff = $(this).attr('data-id');
+    let str = '';
+    str += `
             <div class="gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
             <form id="prizeForm">
                 <div class="grid gap-6 mb-6 md:grid-cols-2">
                     <div>
                     <label for="namePay"
-                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.full_name') +
-      `</label>
+                    class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                      'label.full_name'
+                    )}</label>
                     <select id="namePay" disabled class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">`;
     tableData.forEach((el) => {
-      str +=
-        `<option value=` +
-        el.id +
-        ` ` +
-        (Number(el.id) === Number(idStaff) ? 'selected' : ' ') +
-        ` >` +
-        el.name +
-        `</option>`;
+      str += `<option value=${el.id} ${Number(el.id) === Number(idStaff) ? 'selected' : ' '} >${
+        el.name
+      }</option>`;
     });
-    str +=
-      `
-                    
+    str += `
+
                     </select>
                     </div>
                     <div>
                         <label for="year"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.year') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.year'
+                            )}</label>
                         <input type="text" id="year" disabled
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="2023" value="` +
-      tempPrize[id]['year'] +
-      `" required>
+                            placeholder="2023" value="${tempPrize[id]['year']}" required>
                     </div>
                     <div>
                         <label for="month"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.month') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.month'
+                            )}</label>
                         <input type="text" id="month" disabled
-                            class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      tempPrize[id]['month'] +
-      `" required>
+                            class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                              tempPrize[id]['month']
+                            }" required>
                     </div>
                     <div>
                         <label for="prize"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.received_amount') +
-      `</label>
+                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                              'label.received_amount'
+                            )}</label>
                         <input type="text" id="prize"
-                            class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="` +
-      tempPrize[id]['prize'] +
-      `" required>
+                            class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" value="${
+                              tempPrize[id]['prize']
+                            }" required>
                     </div>
                     <div>
-                    <label for="prizeStatus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-      i18n.t('label.status') +
-      `</label>
+                    <label for="prizeStatus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                      'label.status'
+                    )}</label>
                     <select id="prizeStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                      <option value="">` +
-      i18n.t('select.status') +
-      `</option>
+                      <option value="">${i18n.t('select.status')}</option>
                       <option value="0"`;
     if (tempPrize[id]['prizeStatus'] == 0) {
       str += 'selected';
     }
-    str +=
-      `>` +
-      i18n.t('status.not_received') +
-      `</option>
+    str += `>${i18n.t('status.not_received')}</option>
                       <option value="1"`;
     if (tempPrize[id]['prizeStatus'] == 1) {
       str += 'selected';
     }
-    str +=
-      `>` +
-      i18n.t('status.received') +
-      `</option>
+    str += `>${i18n.t('status.received')}</option>
                     </select>
                     </div>
                 </div>
@@ -1876,39 +1627,35 @@ function editPrizeModal() {
                     class="closeBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
                     <span
                         class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        ` +
-      i18n.t('action.cancel') +
-      `
+                        ${i18n.t('action.cancel')}
                     </span>
                 </button>
                 <button form="prizeForm" type="button"
                     class="submitEditPrizeBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800 hover:text-white">
                     <span
                         class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        ` +
-      i18n.t('action.change') +
-      `
+                        ${i18n.t('action.change')}
                     </span>
                 </button>
             </div></div>
         </div>
         </div>
         `;
-    $('#prizeModal').html(str);
+    BkSecurity.setSafeHtml($('#prizeModal'), str);
     $('#prizeModal').removeClass('invisible opacity-0');
 
     $('#prizeModal').addClass('opacity-100');
     $('#studentModal').removeClass('opacity-100');
     $('#studentModal').addClass('invisible opacity-0');
     setTimeout(function () {
-      $('#studentModal').html('');
+      $('#studentModal').empty();
     }, 200);
     $('.closeBtn').click(function (e) {
       $('#prizeModal').removeClass('opacity-100');
       $('#prizeModal').addClass('invisible opacity-0');
       setTimeout(function () {
         $('.prizeModal').removeClass('hidden');
-        $('#prizeModal').html('');
+        $('#prizeModal').empty();
       }, 200);
     });
     editPrize($(this).attr('data-id'), id);
@@ -1917,11 +1664,11 @@ function editPrizeModal() {
 function editPrize(id, idArr) {
   $('.submitEditPrizeBtn').click(function (e) {
     e.preventDefault();
-    var fullName = $('#namePrize').val();
-    var month = $('#month').val();
-    var year = $('#year').val();
-    var prizeAmount = Number($('#prize').val());
-    var status = $('#prizeStatus').val();
+    const fullName = $('#namePrize').val();
+    const month = $('#month').val();
+    const year = $('#year').val();
+    const prizeAmount = Number($('#prize').val());
+    const status = $('#prizeStatus').val();
     tableData.forEach((el) => {
       if (el['name'] === fullName && el['month'] === Number(month) && el['year'] === Number(year)) {
         Swal.fire({
@@ -1944,7 +1691,7 @@ function editPrize(id, idArr) {
               $('#prizeModal').addClass('invisible opacity-0');
               setTimeout(function () {
                 $('.prizeModal').removeClass('hidden');
-                $('#prizeModal').html('');
+                $('#prizeModal').empty();
               }, 200);
               loadData();
             });
@@ -1974,9 +1721,9 @@ function editPrize(id, idArr) {
         if (result.isConfirmed) {
           $.ajax({
             type: 'patch',
-            url: API_URL + '/staffs/prize',
+            url: `${API_URL}/staffs/prize`,
             headers: {
-              Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+              Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
             },
             data: {
               id: id,
@@ -1995,7 +1742,7 @@ function editPrize(id, idArr) {
                 $('#prizeModal').addClass('invisible opacity-0');
                 setTimeout(function () {
                   $('.prizeModal').removeClass('hidden');
-                  $('#prizeModal').html('');
+                  $('#prizeModal').empty();
                 }, 200);
                 loadData();
                 window.location.reload();
@@ -2016,7 +1763,7 @@ function editPrize(id, idArr) {
 function deletePrize() {
   $('.deletePrizeBtn').click(function (e) {
     e.preventDefault();
-    var id = $(this).attr('data-id');
+    const id = $(this).attr('data-id');
     Swal.fire({
       title: i18n.t('confirm.title'),
       text: i18n.t('confirm.deleting', { name: tempPrize[id]['name'] }),
@@ -2029,9 +1776,9 @@ function deletePrize() {
       if (result.isConfirmed) {
         $.ajax({
           type: 'delete',
-          url: API_URL + '/staffs/prize',
+          url: `${API_URL}/staffs/prize`,
           headers: {
-            Authorization: 'Bearer ' + localStorage.getItem('apitoken'),
+            Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
           },
           data: {
             id: tempPrize[id].id,

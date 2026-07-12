@@ -1,0 +1,7 @@
+info:
+  name: BK English Center Server API
+  type: collection
+  version: 1
+
+settings:
+  encodeUrl: true

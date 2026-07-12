@@ -1,10 +1,16 @@
 require('dotenv').config();
 const jwt = require('jsonwebtoken');
 const nodemailer = require('nodemailer');
+const { randomBytes } = require('crypto');
 const User = require('../models/User');
 const Log = require('../models/Log');
 
-const JWT_SECRET = process.env.JWT_SECRET || 'change_this_secret_in_production';
+const JWT_SECRET =
+  process.env.JWT_SECRET ||
+  (process.env.NODE_ENV === 'production' ? '' : randomBytes(32).toString('hex'));
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET is required in production');
+}
 const JWT_EXPIRES_IN = 8 * 60 * 60; // 8 giờ (giây)
 
 // OTP counter - in-memory, reset khi restart server
@@ -30,7 +36,7 @@ const transporter = nodemailer.createTransport({
 });
 
 // Helper gửi mail và ghi log
-const dispatchMail = (mailData, logAction, userId, res) => {
+const dispatchMail = (mailData, logAction, userId, req, res) => {
   transporter.sendMail(mailData, async (error, info) => {
     await Log.addLog(userId, logAction, Date.now(), !error).catch(() => {});
     if (error) {
@@ -184,6 +190,7 @@ const sendCheer = (req, res) =>
     },
     req.t('mail.logCheer'),
     res.user.id,
+    req,
     res
   );
 
@@ -197,6 +204,7 @@ const sendPay = (req, res) =>
     },
     req.t('mail.logPay'),
     res.user.id,
+    req,
     res
   );
 
@@ -210,6 +218,7 @@ const sendSalary = (req, res) =>
     },
     req.t('mail.logSalary'),
     res.user.id,
+    req,
     res
   );
 
@@ -223,6 +232,7 @@ const sendPrize = (req, res) =>
     },
     req.t('mail.logPrize'),
     res.user.id,
+    req,
     res
   );
 
@@ -236,6 +246,7 @@ const sendWarning = (req, res) =>
     },
     req.t('mail.logWarning'),
     res.user.id,
+    req,
     res
   );
 
@@ -249,6 +260,7 @@ const sendFile = (req, res) =>
     },
     req.t('mail.logFile'),
     res.user.id,
+    req,
     res
   );
 

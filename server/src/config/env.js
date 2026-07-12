@@ -14,7 +14,7 @@ const env = {
   databaseUrl: process.env.DATABASE_URL || '',
 
   // JWT
-  jwtSecret: process.env.JWT_SECRET || 'change_this_secret_in_production',
+  jwtSecret: process.env.JWT_SECRET || '',
   jwtExpiresIn: parseInt(process.env.JWT_EXPIRES_IN || String(8 * 60 * 60), 10),
 
   // Redis

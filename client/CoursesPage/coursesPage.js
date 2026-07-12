@@ -1,27 +1,26 @@
 $(document).ready(function () {
-  $(".course-list").empty();
+  $('.course-list').empty();
   $.ajax({
-    type: "get",
-    url: API_URL + "/courses/all",
+    type: 'get',
+    url: `${API_URL}/courses/all`,
     headers: {
-      Authorization: "Bearer " + localStorage.getItem("apitoken"),
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
     },
-    dataType: "JSON",
+    dataType: 'JSON',
     success: function (res) {
-      var str = "";
+      let str = '';
       res.data.forEach(function (el, index) {
-        const detailHref = typeof routeHref === "function"
-          ? routeHref("course-detail", { id: index })
-          : `../CoursesPageDetail/CoursesPageDetail.html?id=${index}`;
+        const detailHref =
+          typeof routeHref === 'function'
+            ? routeHref('course-detail', { id: index })
+            : `../CoursesPageDetail/CoursesPageDetail.html?id=${index}`;
         str += `
                     <li class="course">
                         <h3>${index + 1}. ${el.name}</h3>
                         <p>${el.short}</p>
                         <div class="course__card">
                             <div class="card__left">
-                                <img src="${
-                                  el.imgintro
-                                }" alt="" class="course__image">
+                                <img src="${el.imgintro}" alt="" class="course__image">
                             </div>
                             <div class="card__right">
                                 <h2> Khoá học ${el.name}</h2>
@@ -29,12 +28,12 @@ $(document).ready(function () {
                             </div>
                         </div>
                     </li>`;
-        $(".course-list").html(str);
+        BkSecurity.setSafeHtml($('.course-list'), str);
       });
     },
     error: function (jqXHR, textStatus, errorThrown) {
       Toast.fire({
-        icon: "error",
+        icon: 'error',
         title: jqXHR.responseJSON.msg,
       });
     },

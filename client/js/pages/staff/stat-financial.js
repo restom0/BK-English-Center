@@ -4,8 +4,8 @@
  * Yêu cầu: config.js, utils/toast.js, utils/date.js loaded trước.
  */
 
-var data = [];
-var sponsorData = [];
+const data = [];
+let sponsorData = [];
 
 $(document).ready(function () {
   loadIncome();
@@ -16,13 +16,13 @@ $(document).ready(function () {
 
 /* ── Bảng tổng hợp (dùng chung data[]) ──────────────────────────── */
 function loadData() {
-  var total = 0;
-  var str = data
+  let total = 0;
+  const str = data
     .map(function (el, index) {
-      var statusHtml =
+      const statusHtml =
         el.status === 1
-          ? '<b style="color:green">' + i18n.t('status.completed') + '</b>'
-          : '<b style="color:red">' + i18n.t('status.not_completed') + '</b>';
+          ? `<b style="color:green">${i18n.t('status.completed')}</b>`
+          : `<b style="color:red">${i18n.t('status.not_completed')}</b>`;
       if (el.status === 1) {
         total += el.type === 'Chi trả' ? -el.amount : el.amount;
       }
@@ -35,31 +35,30 @@ function loadData() {
     </tr>`;
     })
     .join('');
-  $('#listAll').html(str);
-  $('#total').html(BkCurrency.format(total));
+  BkSecurity.setSafeHtml($('#listAll'), str);
+  BkSecurity.setSafeHtml($('#total'), BkCurrency.format(total));
 }
 
 /* ── Doanh thu ───────────────────────────────────────────────────── */
 function loadIncome() {
   apiRequest({ type: 'get', url: '/admins/income' }).then(function (res) {
-    var total = 0;
-    var str = (res?.data ?? [])
+    let total = 0;
+    const str = (res?.data ?? [])
       .map(function (el, index) {
         data.push({
-          name:
-            el.name +
-            ' ' +
-            i18n.t('outcome.in_class', { class: el.className }).replace('{class}', el.className),
+          name: `${el.name} ${i18n
+            .t('outcome.in_class', { class: el.className })
+            .replace('{class}', el.className)}`,
           type: 'Doanh thu',
           amount: el.pay,
           status: el.status,
         });
         if (el.status === 1) total += el.pay;
 
-        var statusHtml =
+        const statusHtml =
           el.status === 1
-            ? '<b style="color:green">' + i18n.t('status.completed') + '</b>'
-            : '<b style="color:red">' + i18n.t('status.not_completed') + '</b>';
+            ? `<b style="color:green">${i18n.t('status.completed')}</b>`
+            : `<b style="color:red">${i18n.t('status.not_completed')}</b>`;
         return `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
           <td class="px-6 py-4">${index + 1}</td>
           <td class="px-6 py-4">${el.name}</td>
@@ -69,8 +68,8 @@ function loadIncome() {
         </tr>`;
       })
       .join('');
-    $('#income').html(str);
-    $('#totalIncome').html(BkCurrency.format(total));
+    BkSecurity.setSafeHtml($('#income'), str);
+    BkSecurity.setSafeHtml($('#totalIncome'), BkCurrency.format(total));
     loadData();
   });
 }
@@ -78,23 +77,23 @@ function loadIncome() {
 /* ── Chi trả ─────────────────────────────────────────────────────── */
 function loadOutcome() {
   apiRequest({ type: 'get', url: '/admins/outcome' }).then(function (res) {
-    var total = 0;
-    var str = (res?.data ?? [])
+    let total = 0;
+    const str = (res?.data ?? [])
       .map(function (el, index) {
-        var label =
+        const label =
           el.className === '0'
             ? el.name
-            : el.name +
-              ' ' +
-              i18n.t('outcome.in_class', { class: el.className }).replace('{class}', el.className);
+            : `${el.name} ${i18n
+                .t('outcome.in_class', { class: el.className })
+                .replace('{class}', el.className)}`;
         data.push({ name: label, type: 'Chi trả', amount: el.prize, status: el.status });
         if (el.status === '0') total += el.prize; // note: original comparison kept as-is
 
-        var statusHtml =
+        const statusHtml =
           el.status === 1
-            ? '<b style="color:green">' + i18n.t('status.completed') + '</b>'
-            : '<b style="color:red">' + i18n.t('status.not_completed') + '</b>';
-        var classDisplay = el.className === '0' ? i18n.t('label.staff') : el.className;
+            ? `<b style="color:green">${i18n.t('status.completed')}</b>`
+            : `<b style="color:red">${i18n.t('status.not_completed')}</b>`;
+        const classDisplay = el.className === '0' ? i18n.t('label.staff') : el.className;
         return `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
           <td class="px-6 py-4">${index + 1}</td>
           <td class="px-6 py-4">${el.name}</td>
@@ -104,8 +103,8 @@ function loadOutcome() {
         </tr>`;
       })
       .join('');
-    $('#outcome').html(str);
-    $('#totalOutcome').html(BkCurrency.format(total));
+    BkSecurity.setSafeHtml($('#outcome'), str);
+    BkSecurity.setSafeHtml($('#totalOutcome'), BkCurrency.format(total));
     loadData();
   });
 }
@@ -113,17 +112,17 @@ function loadOutcome() {
 /* ── Tài trợ ─────────────────────────────────────────────────────── */
 function loadSponsor() {
   apiRequest({ type: 'get', url: '/sponsors' }).then(function (res) {
-    var total = 0;
+    let total = 0;
     sponsorData = res.data;
-    var str = (res?.data ?? [])
+    const str = (res?.data ?? [])
       .map(function (el, index) {
         data.push({ name: el.name, type: 'Tài trợ', amount: el.amount, status: el.status });
         if (el.status === 1) total += el.amount;
 
-        var statusHtml =
+        const statusHtml =
           el.status === 1
-            ? '<b style="color:green">' + i18n.t('status.completed') + '</b>'
-            : '<b style="color:red">' + i18n.t('status.not_completed') + '</b>';
+            ? `<b style="color:green">${i18n.t('status.completed')}</b>`
+            : `<b style="color:red">${i18n.t('status.not_completed')}</b>`;
         return `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
           <td class="px-6 py-4">${index + 1}</td>
           <td class="px-6 py-4">${el.name}</td>
@@ -147,8 +146,8 @@ function loadSponsor() {
         </tr>`;
       })
       .join('');
-    $('#sponsor').html(str);
-    $('#totalSponsor').html(BkCurrency.format(total));
+    BkSecurity.setSafeHtml($('#sponsor'), str);
+    BkSecurity.setSafeHtml($('#totalSponsor'), BkCurrency.format(total));
     loadData();
     loadEditData();
     deleteData();
@@ -159,7 +158,7 @@ function loadSponsor() {
 function closeModal() {
   $('#modal').removeClass('opacity-100').addClass('invisible opacity-0');
   setTimeout(function () {
-    $('#modal').html('');
+    $('#modal').empty();
     $('.add').removeClass('hidden');
   }, 200);
 }
@@ -168,48 +167,43 @@ function closeModal() {
 function loadAddData() {
   $('.add').on('click', function (e) {
     e.preventDefault();
-    $('#modal').html(
+    BkSecurity.setSafeHtml(
+      $('#modal'),
       `
       <div class="mb-5 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <form id="addForm">
           <div class="grid gap-6 mb-6 md:grid-cols-3">
             <div>
-              <label for="sponsorInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-        i18n.t('label.sponsor') +
-        `</label>
+              <label for="sponsorInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                'label.sponsor'
+              )}</label>
               <input type="text" id="sponsorInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white" placeholder="IELTS" required>
             </div>
             <div>
-              <label for="amountInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-        i18n.t('label.amount') +
-        `</label>
+              <label for="amountInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                'label.amount'
+              )}</label>
               <input type="text" id="amountInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white" placeholder="1000000" required>
             </div>
             <div>
-              <label for="statusInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-        i18n.t('label.status') +
-        `</label>
+              <label for="statusInput" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                'label.status'
+              )}</label>
               <select id="statusInput" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white" required>
-                <option value="">` +
-        i18n.t('select.status') +
-        `</option>
-                <option value="0">` +
-        i18n.t('status.not_completed') +
-        `</option>
-                <option value="1">` +
-        i18n.t('status.completed') +
-        `</option>
+                <option value="">${i18n.t('select.status')}</option>
+                <option value="0">${i18n.t('status.not_completed')}</option>
+                <option value="1">${i18n.t('status.completed')}</option>
               </select>
             </div>
           </div>
         </form>
         <div class="w-full flex justify-between mt-4">
-          <button class="closeBtn px-5 py-2.5 text-sm font-medium text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100">` +
-        i18n.t('action.cancel') +
-        `</button>
-          <button form="addForm" type="submit" class="submitAddBtn px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">` +
-        i18n.t('action.add') +
-        `</button>
+          <button class="closeBtn px-5 py-2.5 text-sm font-medium text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100">${i18n.t(
+            'action.cancel'
+          )}</button>
+          <button form="addForm" type="submit" class="submitAddBtn px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">${i18n.t(
+            'action.add'
+          )}</button>
         </div>
       </div>
     `
@@ -224,9 +218,9 @@ function loadAddData() {
 function addData() {
   $('.submitAddBtn').on('click', function (e) {
     e.preventDefault();
-    var name = $('#sponsorInput').val().trim();
-    var amount = Number($('#amountInput').val());
-    var status = Number($('#statusInput').val());
+    const name = $('#sponsorInput').val().trim();
+    const amount = Number($('#amountInput').val());
+    const status = Number($('#statusInput').val());
     if (!name || !amount || $('#statusInput').val() === '') {
       toastError(i18n.t('toast.fill_all'));
       return;
@@ -249,51 +243,50 @@ function loadEditData() {
   $('.editBtn').on('click', function (e) {
     e.preventDefault();
     $('.add').addClass('hidden');
-    var id = $(this).attr('data-id');
-    var sponsorid = $(this).attr('data-value');
-    var sp = sponsorData[id];
-    $('#modal').html(
+    const id = $(this).attr('data-id');
+    const sponsorid = $(this).attr('data-value');
+    const sp = sponsorData[id];
+    BkSecurity.setSafeHtml(
+      $('#modal'),
       `
       <div class="mt-5 gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
         <form id="editForm">
           <div class="grid gap-6 mb-6 md:grid-cols-3">
             <div>
-              <label for="editName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-        i18n.t('label.sponsor') +
-        `</label>
+              <label for="editName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                'label.sponsor'
+              )}</label>
               <input type="text" id="editName" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white" value="${sp.name}" required>
             </div>
             <div>
-              <label for="editAmount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-        i18n.t('label.amount') +
-        `</label>
+              <label for="editAmount" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                'label.amount'
+              )}</label>
               <input type="text" id="editAmount" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white" value="${sp.amount}" required>
             </div>
             <div>
-              <label for="editStatus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">` +
-        i18n.t('label.status') +
-        `</label>
+              <label for="editStatus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
+                'label.status'
+              )}</label>
               <select id="editStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5 dark:bg-gray-700 dark:text-white" required>
-                <option value="">` +
-        i18n.t('select.status') +
-        `</option>
-                <option value="0" ${sp.status === 0 ? 'selected' : ''}>` +
-        i18n.t('status.not_completed') +
-        `</option>
-                <option value="1" ${sp.status === 1 ? 'selected' : ''}>` +
-        i18n.t('status.completed') +
-        `</option>
+                <option value="">${i18n.t('select.status')}</option>
+                <option value="0" ${sp.status === 0 ? 'selected' : ''}>${i18n.t(
+                  'status.not_completed'
+                )}</option>
+                <option value="1" ${sp.status === 1 ? 'selected' : ''}>${i18n.t(
+                  'status.completed'
+                )}</option>
               </select>
             </div>
           </div>
         </form>
         <div class="w-full flex justify-between mt-4">
-          <button class="closeBtn px-5 py-2.5 text-sm font-medium text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100">` +
-        i18n.t('action.cancel') +
-        `</button>
-          <button form="editForm" type="submit" class="submitEditBtn px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">` +
-        i18n.t('action.change') +
-        `</button>
+          <button class="closeBtn px-5 py-2.5 text-sm font-medium text-gray-900 rounded-lg border border-gray-300 hover:bg-gray-100">${i18n.t(
+            'action.cancel'
+          )}</button>
+          <button form="editForm" type="submit" class="submitEditBtn px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700">${i18n.t(
+            'action.change'
+          )}</button>
         </div>
       </div>
     `
@@ -307,9 +300,9 @@ function loadEditData() {
 function editData(id, sponsorid) {
   $('.submitEditBtn').on('click', function (e) {
     e.preventDefault();
-    var name = $('#editName').val().trim();
-    var amount = Number($('#editAmount').val());
-    var status = Number($('#editStatus').val());
+    const name = $('#editName').val().trim();
+    const amount = Number($('#editAmount').val());
+    const status = Number($('#editStatus').val());
     if (!name || !amount || $('#editStatus').val() === '') {
       toastError(i18n.t('toast.fill_all'));
       return;
@@ -348,8 +341,8 @@ function editData(id, sponsorid) {
 function deleteData() {
   $('.deleteBtn').on('click', function (e) {
     e.preventDefault();
-    var id = $(this).attr('data-id');
-    var sponsorid = $(this).attr('data-value');
+    const id = $(this).attr('data-id');
+    const sponsorid = $(this).attr('data-value');
     Swal.fire({
       title: i18n.t('confirm.title'),
       text: i18n.t('confirm.deleting', { name: sponsorData[id]['name'] }),
@@ -361,7 +354,7 @@ function deleteData() {
       cancelButtonText: i18n.t('action.cancel'),
     }).then(function (result) {
       if (!result.isConfirmed) return;
-      apiRequest({ type: 'delete', url: '/sponsors/sponsor?id=' + sponsorid })
+      apiRequest({ type: 'delete', url: `/sponsors/sponsor?id=${sponsorid}` })
         .then(function () {
           toastSuccess(i18n.t('toast.delete_ok')).then(function () {
             loadSponsor();
