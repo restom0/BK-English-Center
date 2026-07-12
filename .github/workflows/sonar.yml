@@ -16,6 +16,8 @@ jobs:
   sonar:
     name: SonarCloud scan
     runs-on: ubuntu-latest
+    env:
+      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -36,7 +38,10 @@ jobs:
           npx prisma generate
           npm run test:cov || true # coverage is best-effort; don't block the scan
 
+      - name: Skip when SONAR_TOKEN is unavailable
+        if: ${{ env.SONAR_TOKEN == '' }}
+        run: echo "::notice::Skipping SonarCloud scan because SONAR_TOKEN is not configured."
+
       - name: SonarCloud scan
-        uses: SonarSource/sonarqube-scan-action@v4
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        if: ${{ env.SONAR_TOKEN != '' }}
+        uses: SonarSource/sonarqube-scan-action@v6
