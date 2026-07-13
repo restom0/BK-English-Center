@@ -32,7 +32,14 @@
     'English learners who think in English — not translate — progress twice as fast.',
   ];
 
-  const randomFact = () => FUN_FACTS[Math.floor(Math.random() * FUN_FACTS.length)];
+  function randomIndex(max) {
+    if (!window.crypto || typeof window.crypto.getRandomValues !== 'function') return 0;
+    const value = new Uint32Array(1);
+    window.crypto.getRandomValues(value);
+    return value[0] % max;
+  }
+
+  const randomFact = () => FUN_FACTS[randomIndex(FUN_FACTS.length)];
 
   // ── DOM helpers ───────────────────────────────────────────
 
