@@ -49,12 +49,12 @@ function studentPage() {
             <th scope="row">${index + 1}</th>
             <td>${element.className}</td>
             <td>${element.paid.toLocaleString('en-US')} đ</td>`;
-        if (element.paidStatus == 1)
+        if (element.paidStatus === 1)
           str +=
             `<td><button type="button" class="btn btn-success">` +
             'Đã thanh toán' +
             `</button></td> </tr>`;
-        else if (element.paidStatus == 0)
+        else if (element.paidStatus === 0)
           str +=
             `<td><button type="button" class="btn btn-warning">` +
             'Chưa thanh toán' +
@@ -78,12 +78,12 @@ function studentPage() {
             <th scope="row">${index + 1}</th>
             <td>${element.className}</td>
             <td>${element.prize.toLocaleString('en-US')} đ</td>`;
-        if (element.prizeStatus == 1)
+        if (element.prizeStatus === 1)
           str +=
             `<td><button type="button" class="btn btn-success">` +
             'Đã nhận' +
             `</button></td> </tr>`;
-        else if (element.prizeStatus == 0)
+        else if (element.prizeStatus === 0)
           str +=
             `<td><button type="button" class="btn btn-warning">` +
             'Chưa nhận' +
@@ -124,12 +124,12 @@ function teacherPage() {
             <th scope="row">${index + 1}</th>
             <td>${element.className}</td>
             <td>${element.paid.toLocaleString('en-US')} đ</td>`;
-        if (element.paidStatus == 1)
+        if (element.paidStatus === 1)
           str +=
             `<td><button type="button" class="btn btn-success">` +
             'Đã nhận' +
             `</button></td> </tr>`;
-        else if (element.paidStatus == 0)
+        else if (element.paidStatus === 0)
           str +=
             `<td><button type="button" class="btn btn-warning">` +
             'Chưa nhận' +
@@ -165,12 +165,12 @@ function teacherPage() {
             <th scope="row">${index + 1}</th>
             <td>${element.className}</td>
             <td>${element.prize.toLocaleString('en-US')} đ</td>`;
-        if (element.prizeStatus == 1)
+        if (element.prizeStatus === 1)
           str +=
             `<td><button type="button" class="btn btn-success">` +
             'Đã nhận' +
             `</button></td> </tr>`;
-        else if (element.prizeStatus == 0)
+        else if (element.prizeStatus === 0)
           str +=
             `<td><button type="button" class="btn btn-warning">` +
             'Chưa nhận' +
