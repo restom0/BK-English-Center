@@ -108,10 +108,23 @@ function bkSplitHref(href) {
 }
 
 function bkCleanRoutePath(path) {
-  let clean = String(path || '/').replace(/\\/g, '/');
-  clean = clean.replace(/^(\.\/|\.\.\/)+/, '');
-  if (clean.length > 1) clean = clean.replace(/\/+$/, '');
+  let clean = String(path || '/').replaceAll('\\', '/');
+  while (clean.startsWith('./')) clean = clean.slice(2);
+  while (clean.startsWith('../')) clean = clean.slice(3);
+  while (clean.length > 1 && clean.endsWith('/')) clean = clean.slice(0, -1);
   return clean || '/';
+}
+
+function bkStripLeadingSlashes(path) {
+  let clean = String(path || '');
+  while (clean.startsWith('/')) clean = clean.slice(1);
+  return clean;
+}
+
+function bkEnsureTrailingSlash(path) {
+  let clean = String(path || '/');
+  while (clean.length > 1 && clean.endsWith('/')) clean = clean.slice(0, -1);
+  return clean.endsWith('/') ? clean : `${clean}/`;
 }
 
 function bkFindRouteTarget(route) {
@@ -120,7 +133,7 @@ function bkFindRouteTarget(route) {
   const direct = BK_ROUTES[key] || BK_ROUTES[key.toLowerCase()];
   if (direct) return direct;
 
-  const clean = key.replace(/^\/+/, '');
+  const clean = bkStripLeadingSlashes(key);
   const lower = clean.toLowerCase();
   const routeValues = Object.keys(BK_ROUTES).map(function (routeKey) {
     return BK_ROUTES[routeKey];
@@ -139,14 +152,14 @@ function bkIsRoutableHref(href) {
   const key = bkCleanRoutePath(parts.path);
   if (BK_ROUTES[key] || BK_ROUTES[key.toLowerCase()]) return true;
 
-  const clean = key.replace(/^\/+/, '').toLowerCase();
+  const clean = bkStripLeadingSlashes(key).toLowerCase();
   return Object.keys(BK_ROUTES).some(function (routeKey) {
     return BK_ROUTES[routeKey].toLowerCase() === clean;
   });
 }
 
 function bkClientBasePath() {
-  const path = window.location.pathname.replace(/\\/g, '/');
+  const path = window.location.pathname.replaceAll('\\', '/');
   const lower = path.toLowerCase();
   const marker = '/client/';
   const markerIndex = lower.indexOf(marker);
@@ -173,8 +186,8 @@ function routeHref(route, params) {
   }
 
   const parts = bkSplitHref(raw);
-  const target = bkFindRouteTarget(parts.path).replace(/^\/+/, '');
-  const base = bkClientBasePath().replace(/\/?$/, '/');
+  const target = bkStripLeadingSlashes(bkFindRouteTarget(parts.path));
+  const base = bkEnsureTrailingSlash(bkClientBasePath());
   const extraQuery = bkBuildQuery(params);
   let query = parts.query;
   if (extraQuery) query += query ? `&${extraQuery}` : `?${extraQuery}`;
@@ -298,11 +311,11 @@ const BkSecurity = (function () {
 
   function escapeHtml(value) {
     return String(value ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#39;');
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#39;');
   }
 
   function isAllowedAttr(name) {

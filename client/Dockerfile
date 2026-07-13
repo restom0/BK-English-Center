@@ -61,16 +61,18 @@ FROM nginx:1.27-alpine AS runner
 
 # Remove default nginx page
 RUN rm -f /usr/share/nginx/html/* \
-  && chown -R nginx:nginx /usr/share/nginx/html /var/cache/nginx /var/run /var/log/nginx
+  && chown -R nginx:nginx /var/cache/nginx /var/run /var/log/nginx
 
 # Copy built frontend files
-COPY --chown=nginx:nginx --from=builder /build /usr/share/nginx/html
+COPY --from=builder /build /usr/share/nginx/html
 
 # Copy custom nginx config
-COPY --chown=nginx:nginx nginx.conf /etc/nginx/conf.d/default.conf
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
 # Validate config at build time
-RUN nginx -t
+RUN chown -R root:root /usr/share/nginx/html /etc/nginx/conf.d/default.conf \
+  && chmod -R go-w /usr/share/nginx/html /etc/nginx/conf.d/default.conf \
+  && nginx -t
 
 USER nginx
 

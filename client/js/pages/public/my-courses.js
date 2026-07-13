@@ -79,7 +79,7 @@ if (!localStorage.getItem('role')) {
         for (let i = el['rating']; i < 5; i++) {
           str += `<i class='bx bxs-star'></i>`;
         }
-        `</td>
+        str += `</td>
 
     </tr>`;
       });

@@ -402,7 +402,7 @@ const i18n = (function () {
     let text = entry[_lang] || entry[FALLBACK] || key;
     if (vars) {
       Object.keys(vars).forEach(function (k) {
-        text = text.replace(new RegExp(`\\{${  k  }\\}`, 'g'), vars[k]);
+        text = text.replaceAll(`{${k}}`, vars[k]);
       });
     }
     return text;
@@ -437,11 +437,11 @@ const i18n = (function () {
 
   function escapeHtml(value) {
     return String(value)
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;')
-      .replace(/'/g, '&#039;');
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
   }
 
   function buildLanguageSwitcher(fixed) {

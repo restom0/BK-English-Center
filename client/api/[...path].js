@@ -13,7 +13,9 @@ function readBody(req) {
 
 function getBackendUrl() {
   const url = process.env.BACKEND_URL || process.env.API_URL || '';
-  return url.replace(/\/+$/, '');
+  let cleanUrl = String(url);
+  while (cleanUrl.endsWith('/')) cleanUrl = cleanUrl.slice(0, -1);
+  return cleanUrl;
 }
 
 module.exports = async function handler(req, res) {
