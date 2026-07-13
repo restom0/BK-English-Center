@@ -15,10 +15,10 @@ function studentPage() {
     $('#bill-col'),
     `
     <tr>
-        <th class="col-md-3">#</th>
-        <th class="col-md-3">Khoá học</th>
-        <th class="col-md-3">Học phí</th>
-        <th class="col-md-3">Trạng thái</th>
+        <th scope="col" class="col-md-3">#</th>
+        <th scope="col" class="col-md-3">Khoá học</th>
+        <th scope="col" class="col-md-3">Học phí</th>
+        <th scope="col" class="col-md-3">Trạng thái</th>
     </tr>`
   );
 

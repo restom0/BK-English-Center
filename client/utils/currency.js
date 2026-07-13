@@ -70,8 +70,8 @@ const BkCurrency = (function () {
 
   // ── Format a VND amount as a locale-aware currency string ──────────
   function format(vndAmount) {
-    const num = parseFloat(vndAmount);
-    if (isNaN(num)) return '';
+    const num = Number.parseFloat(vndAmount);
+    if (Number.isNaN(num)) return '';
 
     const cfg = LANG_CONFIG[_lang] || LANG_CONFIG['vi'];
 
@@ -99,8 +99,8 @@ const BkCurrency = (function () {
   // ── Re-render all [data-vnd] elements in DOM ───────────────────────
   function _applyAll() {
     document.querySelectorAll('[data-vnd]').forEach(function (el) {
-      const raw = parseFloat(el.getAttribute('data-vnd'));
-      if (!isNaN(raw)) el.textContent = format(raw);
+      const raw = Number.parseFloat(el.getAttribute('data-vnd'));
+      if (!Number.isNaN(raw)) el.textContent = format(raw);
     });
   }
 

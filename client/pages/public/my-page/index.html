@@ -65,10 +65,10 @@
 
                 <!-- for student and teacher -->
                 <li class="nav-item">
-                    <a class="nav-link" href="#" id="my-class-link"></a>
+                    <a class="nav-link" href="#" id="my-class-link">My courses</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" id="my-page-link"></a>
+                    <a class="nav-link" href="#" id="my-page-link">My page</a>
                 </li>
 
             </ul>
@@ -87,16 +87,19 @@
             </div> -->
             <ul class="nav nav-pills nav__user-area" id="nav__user">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-bell-o icon--dark" aria-hidden="true"></i></a>
+                    <a class="nav-link" href="#" aria-label="Notifications"><i class="fa fa-bell-o icon--dark"
+                            aria-hidden="true"></i><span class="sr-only">Notifications</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-comment-o icon--dark" aria-hidden="true"></i></a>
+                    <a class="nav-link" href="#" aria-label="Messages"><i class="fa fa-comment-o icon--dark"
+                            aria-hidden="true"></i><span class="sr-only">Messages</span></a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                    <button class="nav-link dropdown-toggle btn btn-link" data-toggle="dropdown" type="button"
                         aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-user-circle-o icon--dark" aria-hidden="true"></i>
-                    </a>
+                        <span class="sr-only">Account menu</span>
+                    </button>
                     <div class="dropdown-menu dropdown-menu-right">
                         <p class="dropdown-item">
                             <span id="title-name">
@@ -117,8 +120,8 @@
 
             <!-- for guest  -->
             <div class="nav__user-area" id="nav__login">
-                <a class="btn btn-outline-secondary" href="../../../pages/auth/login/index.html" role="button">Đăng nhập</a>
-                <a class="btn btn-outline-secondary" href="../../../pages/auth/signup/index.html" role="button">Đăng ký</a>
+                <a class="btn btn-outline-secondary" href="../../../pages/auth/login/index.html">Đăng nhập</a>
+                <a class="btn btn-outline-secondary" href="../../../pages/auth/signup/index.html">Đăng ký</a>
             </div>
         </div>
     </nav>
@@ -261,26 +264,26 @@
                                     </h2>
 
                                     <div class="mb-4">
-                                        <label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Event
+                                        <label for="event-title" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Event
                                             title</label>
                                         <input
                                             class="bg-gray-200 appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-                                            type="text" x-model="event_title">
+                                            id="event-title" type="text" x-model="event_title">
                                     </div>
 
                                     <div class="mb-4">
-                                        <label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Event
+                                        <label for="event-date" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Event
                                             date</label>
                                         <input
                                             class="bg-gray-200 appearance-none border-2 border-gray-200 rounded-lg w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-blue-500"
-                                            type="text" x-model="event_date" readonly>
+                                            id="event-date" type="text" x-model="event_date" readonly>
                                     </div>
 
                                     <div class="inline-block w-64 mb-4">
-                                        <label class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Select a
+                                        <label for="event-theme" class="text-gray-800 block mb-1 font-bold text-sm tracking-wide">Select a
                                             theme</label>
                                         <div class="relative">
-                                            <select @change="event_theme = $event.target.value;" x-model="event_theme"
+                                            <select id="event-theme" @change="event_theme = $event.target.value;" x-model="event_theme"
                                                 class="block appearance-none w-full bg-gray-200 border-2 border-gray-200 hover:border-gray-500 px-4 py-2 pr-8 rounded-lg leading-tight focus:outline-none focus:bg-white focus:border-blue-500 text-gray-700">
                                                 <template x-for="(theme, index) in themes">
                                                     <option :value="theme.value" x-text="theme.label"></option>
@@ -318,19 +321,31 @@
                 </div>
             </div>
         </div>
-        <h2 id="bill-intro"></h2>
+        <h2 id="bill-intro">Payments</h2>
         <div class="my-bill m-3 text-center">
             <table class="table table-hover table-bordered table-md">
                 <thead id="bill-col">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Class</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Status</th>
+                    </tr>
                 </thead>
                 <tbody id="bill-row">
                 </tbody>
             </table>
         </div>
-        <h2 id="prize-intro"></h2>
+        <h2 id="prize-intro">Rewards</h2>
         <div class="my-prize m-3 text-center">
             <table class="table table-hover table-bordered table-md">
                 <thead id="prize-col">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Class</th>
+                        <th scope="col">Amount</th>
+                        <th scope="col">Status</th>
+                    </tr>
                 </thead>
                 <tbody id="prize-row">
                 </tbody>
@@ -361,4 +376,4 @@
     <script src="../../../js/pages/public/my-page.js"></script>
 </body>
 
-</html>                        
+</html>

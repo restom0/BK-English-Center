@@ -321,32 +321,35 @@ function loadStudentModal() {
 function editData(id) {
   $('.submitEditBtn').click(function (e) {
     e.preventDefault();
-    const listening = Number($('#listening').val());
-    const speaking = Number($('#speaking').val());
-    const reading = Number($('#reading').val());
-    const writing = Number($('#writing').val());
-    console.log(listening, speaking, reading, writing);
-    if (listening === '') {
+    const listeningValue = ($('#listening').val() || '').trim();
+    const speakingValue = ($('#speaking').val() || '').trim();
+    const readingValue = ($('#reading').val() || '').trim();
+    const writingValue = ($('#writing').val() || '').trim();
+    if (!listeningValue) {
       Toast.fire({
         icon: 'error',
         title: i18n.t('validate.enter_listening'),
       });
-    } else if (speaking === '') {
+    } else if (!speakingValue) {
       Toast.fire({
         icon: 'error',
         title: i18n.t('validate.enter_speaking'),
       });
-    } else if (reading === '') {
+    } else if (!readingValue) {
       Toast.fire({
         icon: 'error',
         title: i18n.t('validate.enter_reading'),
       });
-    } else if (writing === '') {
+    } else if (!writingValue) {
       Toast.fire({
         icon: 'error',
         title: i18n.t('validate.enter_writing'),
       });
     } else {
+      const listening = Number(listeningValue);
+      const speaking = Number(speakingValue);
+      const reading = Number(readingValue);
+      const writing = Number(writingValue);
       Swal.fire({
         title: i18n.t('confirm.title'),
         text: i18n.t('outcome.score_editing', {

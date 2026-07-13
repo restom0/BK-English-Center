@@ -15,7 +15,7 @@
 @mixin focus-ring($color: $color-primary) {
   outline: 2px solid transparent;
   outline-offset: 2px;
-  &:focus-visible { outline: 2px solid $color; }
+  @at-root #{&}:focus-visible { outline: 2px solid $color; }
 }
 
 // ── Buttons ──────────────────────────────────────────────────
@@ -340,7 +340,7 @@
     cursor: pointer;
     color: $color-text;
 
-    &:focus-visible { outline: 2px solid $color-primary; }
+    @at-root #{&}:focus-visible { outline: 2px solid $color-primary; }
   }
 }
 

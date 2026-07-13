@@ -143,7 +143,7 @@ function addData() {
       name: $('#className').val(),
       idCourse: $('#courseName').val(),
       schedule: $('#schedule').val(),
-      maxStudent: parseInt($('#maxStudent').val()),
+      maxStudent: Number.parseInt($('#maxStudent').val(), 10),
       startDate: new Date($('#startDate').val()),
       endDate: new Date($('#endDate').val()),
       address: $('#address').val(),
@@ -176,7 +176,7 @@ function addData() {
 function loadEditData() {
   $('.editBtn').click(function (e) {
     e.preventDefault();
-    const id = parseInt($(this).attr('data-id'));
+    const id = Number.parseInt($(this).attr('data-id'), 10);
     const cls = classData[id];
     const startdate = toLocalDate(cls.startDate);
     const enddate = toLocalDate(cls.endDate);
@@ -256,7 +256,7 @@ function editData(id) {
           name: $('#className').val(),
           idCourse: $('#courseName').val(),
           schedule: $('#schedule').val(),
-          maxStudent: parseInt($('#maxStudent').val()),
+          maxStudent: Number.parseInt($('#maxStudent').val(), 10),
           startDate: $('#startDate').val(),
           endDate: $('#endDate').val(),
           address: $('#address').val(),
@@ -279,7 +279,7 @@ function editData(id) {
 function deleteData() {
   $('.deleteBtn').click(function (e) {
     e.preventDefault();
-    const id = parseInt($(this).attr('data-id'));
+    const id = Number.parseInt($(this).attr('data-id'), 10);
     const cls = classData[id];
     Swal.fire({
       title: i18n.t('confirm.title'),

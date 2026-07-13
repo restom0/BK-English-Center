@@ -11,7 +11,7 @@
  */
 function formatDate(date) {
   const d = new Date(date);
-  if (isNaN(d)) return '—';
+  if (Number.isNaN(d.getTime())) return '—';
   const day = String(d.getDate()).padStart(2, '0');
   const month = String(d.getMonth() + 1).padStart(2, '0');
   const year = d.getFullYear();
@@ -26,7 +26,7 @@ function formatDate(date) {
  */
 function toLocalDate(dateStr) {
   const d = new Date(dateStr);
-  if (isNaN(d)) return '';
+  if (Number.isNaN(d.getTime())) return '';
   d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
   return d.toISOString().split('T')[0];
 }
@@ -37,8 +37,9 @@ function toLocalDate(dateStr) {
  * @returns {string}
  */
 function formatCurrency(amount) {
-  if (amount == null || isNaN(amount)) return '0 đ';
-  return `${amount.toLocaleString('vi-VN')} đ`;
+  const numericAmount = Number(amount);
+  if (amount == null || Number.isNaN(numericAmount)) return '0 đ';
+  return `${numericAmount.toLocaleString('vi-VN')} đ`;
 }
 
 /**
@@ -47,8 +48,9 @@ function formatCurrency(amount) {
  * @returns {string}
  */
 function formatCurrencyEN(amount) {
-  if (amount == null || isNaN(amount)) return '0 đ';
-  return `${amount.toLocaleString('en-US')} đ`;
+  const numericAmount = Number(amount);
+  if (amount == null || Number.isNaN(numericAmount)) return '0 đ';
+  return `${numericAmount.toLocaleString('en-US')} đ`;
 }
 
 /**

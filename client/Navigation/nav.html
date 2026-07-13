@@ -54,10 +54,10 @@
 
                 <!-- for student and teacher -->
                 <li class="nav-item">
-                    <a class="nav-link" href="../MyCourses/myCourses.html" id="my-class-link"></a>
+                    <a class="nav-link" href="../MyCourses/myCourses.html" id="my-class-link">My courses</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../MyPage/myPage.html" id="my-page-link"></a>
+                    <a class="nav-link" href="../MyPage/myPage.html" id="my-page-link">My page</a>
                 </li>
 
             </ul>
@@ -79,16 +79,19 @@
             </div> -->
             <ul class="nav nav-pills nav__user-area" id="nav__user">
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-bell-o icon--dark" aria-hidden="true"></i></a>
+                    <a class="nav-link" href="#" aria-label="Notifications"><i class="fa fa-bell-o icon--dark"
+                            aria-hidden="true"></i><span class="sr-only">Notifications</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#"><i class="fa fa-comment-o icon--dark" aria-hidden="true"></i></a>
+                    <a class="nav-link" href="#" aria-label="Messages"><i class="fa fa-comment-o icon--dark"
+                            aria-hidden="true"></i><span class="sr-only">Messages</span></a>
                 </li>
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#" role="button"
+                    <button class="nav-link dropdown-toggle btn btn-link" data-toggle="dropdown" type="button"
                         aria-haspopup="true" aria-expanded="false">
                         <i class="fa fa-user-circle-o icon--dark" aria-hidden="true"></i>
-                    </a>
+                        <span class="sr-only">Account menu</span>
+                    </button>
                     <div class="dropdown-menu dropdown-menu-right">
                         <p class="dropdown-item">
                             Thông Thượng Hà
@@ -105,8 +108,8 @@
 
             <!-- for guest  -->
             <div class="nav__user-area" id="nav__login">
-                <a class="btn btn-outline-secondary" href="../Loginpage/Login.html" role="button" data-i18n="nav.login">Đăng nhập</a>
-                <a class="btn btn-outline-secondary" href="../Loginpage/Signup.html" role="button" data-i18n="nav.signup">Đăng ký</a>
+                <a class="btn btn-outline-secondary" href="../Loginpage/Login.html" data-i18n="nav.login">Đăng nhập</a>
+                <a class="btn btn-outline-secondary" href="../Loginpage/Signup.html" data-i18n="nav.signup">Đăng ký</a>
             </div>
         </div>
     </nav>
