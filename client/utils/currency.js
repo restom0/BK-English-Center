@@ -11,7 +11,7 @@
  * Usage in HTML templates:
  *   `<span data-vnd="${amount}">${BkCurrency.format(amount)}</span>`
  */
-const BkCurrency = (function () {
+let BkCurrency = (function () {
   'use strict';
 
   // ── Language → currency config ─────────────────────────────────────
@@ -46,7 +46,7 @@ const BkCurrency = (function () {
         return r.json();
       })
       .then(function (data) {
-        if (data && data.rates) {
+        if (data?.rates) {
           _rates = data.rates;
           _fetched = true;
         }
@@ -139,7 +139,7 @@ window.BkCurrency = BkCurrency;
 
 // ── Auto-hook into i18n language changes ─────────────────────────────
 document.addEventListener('i18n:changed', function (e) {
-  if (e.detail && e.detail.lang) {
+  if (e.detail?.lang) {
     BkCurrency.setLang(e.detail.lang);
   }
 });
