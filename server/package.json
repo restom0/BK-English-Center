@@ -51,7 +51,7 @@
   "devDependencies": {
     "@eslint/js": "^9.39.4",
     "@usebruno/cli": "^3.4.2",
-    "eslint": "^9.39.4",
+    "eslint": "^10.7.0",
     "husky": "^9.0.11",
     "jest": "^30.4.2",
     "lint-staged": "^15.2.5",
