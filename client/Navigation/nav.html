@@ -43,7 +43,7 @@
                     <a class="nav-link" href="../HomePage/homePage.html" data-i18n="nav.home">Trang chủ</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" data-i18n="nav.about">Giới thiệu</a>
+                    <a class="nav-link" href="../HomePage/homePage.html#about" data-i18n="nav.about">Giới thiệu</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="../CoursesPage/coursesPage.html" data-i18n="nav.courses">Khoá học</a>
@@ -54,10 +54,10 @@
 
                 <!-- for student and teacher -->
                 <li class="nav-item">
-                    <a class="nav-link" href="../MyCourses/myCourses.html" id="my-class-link">My courses</a>
+                    <a class="nav-link" href="../MyCourses/myCourses.html" id="my-class-link" data-i18n="nav.my_courses">Khóa học của tôi</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="../MyPage/myPage.html" id="my-page-link">My page</a>
+                    <a class="nav-link" href="../MyPage/myPage.html" id="my-page-link" data-i18n="nav.my_page">Trang của tôi</a>
                 </li>
 
             </ul>
@@ -69,21 +69,13 @@
             </form>
 
             <!-- for student and teacher -->
-            <!-- <div data-nav-user="legacy">
-                <a class="nav__icon-link" href="#"><i class="fa fa-bell-o icon--dark" aria-hidden="true"></i></a>
-                <a class="nav__icon-link" href="#"><i class="fa fa-comment-o icon--dark" aria-hidden="true"></i></a>
-            <div class="nav__user-area" data-nav-user="legacy">
-                <a class="nav__icon-link" href="#"><i class="fa fa-bell-o icon--dark" aria-hidden="true"></i></a>
-                <a class="nav__icon-link" href="#"><i class="fa fa-comment-o icon--dark" aria-hidden="true"></i></a>
-                <a href="#"><i class="fa fa-user-circle-o icon--dark" aria-hidden="true"></i></a>
-            </div> -->
             <ul class="nav nav-pills nav__user-area" id="nav__user">
                 <li class="nav-item">
-                    <a class="nav-link" href="#" aria-label="Notifications"><i class="fa fa-bell-o icon--dark"
+                    <a class="nav-link" href="#notifications" aria-label="Notifications"><i class="fa fa-bell-o icon--dark"
                             aria-hidden="true"></i><span class="sr-only">Notifications</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#" aria-label="Messages"><i class="fa fa-comment-o icon--dark"
+                    <a class="nav-link" href="#messages" aria-label="Messages"><i class="fa fa-comment-o icon--dark"
                             aria-hidden="true"></i><span class="sr-only">Messages</span></a>
                 </li>
                 <li class="nav-item dropdown">
@@ -92,14 +84,14 @@
                         <i class="fa fa-user-circle-o icon--dark" aria-hidden="true"></i>
                         <span class="sr-only">Account menu</span>
                     </button>
-                    <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-menu dropdown-menu-right" id="account-menu">
                         <p class="dropdown-item">
                             Thông Thượng Hà
                             <br>
                             neil.sims@flowbite.com
                         </p>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item btn btn-primary" href="#" id="userinfo" data-toggle="modal"
+                        <a class="dropdown-item btn btn-primary" href="#exampleModal" id="userinfo" data-toggle="modal"
                             data-target="#exampleModal" data-i18n="auth.account_info">Thông tin tài khoản</a>
                         <a class="dropdown-item" href="../HomePage/homePage.html" id="signout" data-i18n="nav.logout">Sign out</a>
                     </div>

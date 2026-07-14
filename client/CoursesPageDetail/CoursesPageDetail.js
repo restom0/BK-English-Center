@@ -171,7 +171,7 @@ function loadData() {
   });
 }
 
-card = [1, 2, 3, 4];
+const card = [1, 2, 3, 4];
 function load() {
   let str = "";
   card.forEach((el) => {

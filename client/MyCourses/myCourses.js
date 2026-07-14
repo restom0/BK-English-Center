@@ -1,7 +1,6 @@
 if (!localStorage.getItem('role')) {
   window.location.replace('../Loginpage/Login.html');
 } else if (localStorage.getItem('role') === 'student') {
-  let str = '';
   $.ajax({
     type: 'get',
     url: `${API_URL}/studentjoinclasses/student`,
@@ -13,7 +12,7 @@ if (!localStorage.getItem('role')) {
       $(document).ready(function () {
         loadCourses(res.data);
       });
-      str = `<h2>Điểm số</h2>
+      let str = `<h2>Điểm số</h2>
   <table class="table table-hover table-bordered">
       <thead id="table-head">
           <tr>
@@ -57,7 +56,7 @@ if (!localStorage.getItem('role')) {
       $(document).ready(function () {
         loadCourses(res.data);
       });
-      str = `<h2>Đánh giá</h2>
+      let str = `<h2>Đánh giá</h2>
   <table class="table table-hover table-bordered">
       <thead id="table-head">
           <tr>
