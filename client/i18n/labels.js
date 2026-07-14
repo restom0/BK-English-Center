@@ -515,15 +515,15 @@ const i18n = (function () {
 
   function applySharedStaticLabels() {
     document.querySelectorAll('.navbar .form-inline input[type="search"]').forEach(function (input) {
-      if (!input.hasAttribute('data-i18n-placeholder')) input.placeholder = t('nav.search');
-      if (!input.hasAttribute('data-i18n-aria-label')) input.setAttribute('aria-label', t('nav.search'));
+      if (!input.dataset.i18nPlaceholder) input.placeholder = t('nav.search');
+      if (!input.dataset.i18nAriaLabel) input.setAttribute('aria-label', t('nav.search'));
     });
     document.querySelectorAll('.navbar .form-inline button[type="submit"]').forEach(function (button) {
-      if (!button.hasAttribute('data-i18n-aria-label')) button.setAttribute('aria-label', t('nav.search'));
-      if (!button.hasAttribute('data-i18n-title')) button.title = t('nav.search');
+      if (!button.dataset.i18nAriaLabel) button.setAttribute('aria-label', t('nav.search'));
+      if (!button.dataset.i18nTitle) button.title = t('nav.search');
     });
     document.querySelectorAll('.footer p').forEach(function (footer) {
-      if (!footer.hasAttribute('data-i18n')) setMultilineHtml(footer, 'footer.copyright');
+      if (!footer.dataset.i18n) setMultilineHtml(footer, 'footer.copyright');
     });
   }
 
@@ -533,19 +533,19 @@ const i18n = (function () {
    */
   function applyAll() {
     document.querySelectorAll('[data-i18n]').forEach(function (el) {
-      const key = el.getAttribute('data-i18n');
+      const key = el.dataset.i18n;
       el.textContent = t(key);
     });
     document.querySelectorAll('[data-i18n-placeholder]').forEach(function (el) {
-      const key = el.getAttribute('data-i18n-placeholder');
+      const key = el.dataset.i18nPlaceholder;
       el.placeholder = t(key);
     });
     document.querySelectorAll('[data-i18n-title]').forEach(function (el) {
-      const key = el.getAttribute('data-i18n-title');
+      const key = el.dataset.i18nTitle;
       el.title = t(key);
     });
     document.querySelectorAll('[data-i18n-aria-label]').forEach(function (el) {
-      const key = el.getAttribute('data-i18n-aria-label');
+      const key = el.dataset.i18nAriaLabel;
       el.setAttribute('aria-label', t(key));
     });
     applySharedStaticLabels();

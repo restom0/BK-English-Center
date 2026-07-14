@@ -99,7 +99,7 @@ const BkCurrency = (function () {
   // ── Re-render all [data-vnd] elements in DOM ───────────────────────
   function _applyAll() {
     document.querySelectorAll('[data-vnd]').forEach(function (el) {
-      const raw = Number.parseFloat(el.getAttribute('data-vnd'));
+      const raw = Number.parseFloat(el.dataset.vnd);
       if (!Number.isNaN(raw)) el.textContent = format(raw);
     });
   }

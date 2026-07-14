@@ -13,7 +13,7 @@
   // ── Apply a theme ──────────────────────────────────────────
 
   function apply(theme) {
-    document.documentElement.setAttribute('data-theme', theme);
+    document.documentElement.dataset.theme = theme;
     localStorage.setItem(STORAGE_KEY, theme);
 
     // Sync all switcher buttons on the page
@@ -39,7 +39,7 @@
   // ── Toggle ─────────────────────────────────────────────────
 
   function toggle() {
-    const current = document.documentElement.getAttribute('data-theme') || 'light';
+    const current = document.documentElement.dataset.theme || 'light';
     apply(current === 'dark' ? 'light' : 'dark');
   }
 

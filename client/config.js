@@ -202,7 +202,7 @@ function goToRoute(route, params) {
 function bindRouteLinks(root) {
   const scope = root || document;
   scope.querySelectorAll('a[href], a[data-route]').forEach(function (link) {
-    const route = link.getAttribute('data-route') || link.getAttribute('href');
+    const route = link.dataset.route || link.getAttribute('href');
     if (bkIsRoutableHref(route)) {
       link.setAttribute('href', routeHref(route));
     }

@@ -2,6 +2,21 @@ $(document).ready(function () {
   loadData();
 });
 let tableData = [];
+
+function handleStaffProfileEditSuccess() {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.edit_ok'),
+  }).then(() => {
+    $('#modal').removeClass('opacity-100');
+    $('#modal').addClass('invisible opacity-0');
+    setTimeout(function () {
+      $('#modal').empty();
+    }, 200);
+    loadData();
+  });
+}
+
 function editData() {
   $('.edit').click(function (e) {
     e.preventDefault();
@@ -190,19 +205,7 @@ function editData() {
               email: email,
             },
             dataType: 'JSON',
-            success: function (res) {
-              Toast.fire({
-                icon: 'success',
-                title: i18n.t('toast.edit_ok'),
-              }).then(() => {
-                $('#modal').removeClass('opacity-100');
-                $('#modal').addClass('invisible opacity-0');
-                setTimeout(function () {
-                  $('#modal').empty();
-                }, 200);
-                loadData();
-              });
-            },
+            success: handleStaffProfileEditSuccess,
             error: function (jqXHR, textStatus, errorThrown) {
               Toast.fire({
                 icon: 'error',

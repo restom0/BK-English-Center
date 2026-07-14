@@ -15,6 +15,24 @@ $.ajax({
 $(document).ready(function () {
   loadData();
 });
+
+function handlePrizeEditModalSuccess(entry, prizeAmount, status) {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.edit_ok'),
+  }).then(() => {
+    entry['prizeCash'] = prizeAmount;
+    entry['prizeStatus'] = status;
+    $('#prizeModal').removeClass('opacity-100');
+    $('#prizeModal').addClass('invisible opacity-0');
+    setTimeout(function () {
+      $('.prizeModal').removeClass('hidden');
+      $('#prizeModal').empty();
+    }, 200);
+    loadData();
+  });
+}
+
 function morePay() {
   $('#morePay').click(function (e) {
     e.preventDefault();
@@ -1690,20 +1708,7 @@ function editPrize(id, idArr) {
           confirmButtonText: i18n.t('action.confirm'),
         }).then((result) => {
           if (result.isConfirmed) {
-            Toast.fire({
-              icon: 'success',
-              title: i18n.t('toast.edit_ok'),
-            }).then(() => {
-              el['prizeCash'] = prizeAmount;
-              el['prizeStatus'] = status;
-              $('#prizeModal').removeClass('opacity-100');
-              $('#prizeModal').addClass('invisible opacity-0');
-              setTimeout(function () {
-                $('.prizeModal').removeClass('hidden');
-                $('#prizeModal').empty();
-              }, 200);
-              loadData();
-            });
+            handlePrizeEditModalSuccess(el, prizeAmount, status);
           }
         });
       }
