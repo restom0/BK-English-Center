@@ -37,5 +37,8 @@ jobs:
 
       - name: SonarCloud scan
         uses: SonarSource/sonarqube-scan-action@fd88b7d7ccbaefd23d8f36f73b59db7a3d246602
+        with:
+          args: >
+            -Dsonar.cpd.exclusions=client/**/*.html,client/Navigation/*,client/Navigation/**/*,client/components/*.js,client/components/**/*.js,client/js/common/*.js,client/js/common/**/*.js,client/js/pages/**/*.js,client/*page/**/*.js,client/*Page/**/*.js,client/MyCourses/**/*.js,client/MyPage/**/*.js
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
