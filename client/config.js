@@ -138,8 +138,8 @@ function bkFindRouteTarget(route) {
   const routeValues = Object.keys(BK_ROUTES).map(function (routeKey) {
     return BK_ROUTES[routeKey];
   });
-  for (let i = 0; i < routeValues.length; i += 1) {
-    if (routeValues[i].toLowerCase() === lower) return routeValues[i];
+  for (const routeValue of routeValues) {
+    if (routeValue.toLowerCase() === lower) return routeValue;
   }
   return clean;
 }
@@ -320,9 +320,9 @@ const BkSecurity = (function () {
 
   function isAllowedAttr(name) {
     const cleanName = String(name || '').toLowerCase();
-    if (cleanName.indexOf('on') === 0) return false;
-    if (cleanName.indexOf('data-') === 0) return true;
-    if (cleanName.indexOf('aria-') === 0) return true;
+    if (cleanName.startsWith('on')) return false;
+    if (cleanName.startsWith('data-')) return true;
+    if (cleanName.startsWith('aria-')) return true;
     return Boolean(ALLOWED_ATTRS[cleanName]);
   }
 
@@ -410,7 +410,7 @@ const BkSecurity = (function () {
 
   function setSafeHtml(target, html) {
     targetsFor(target).forEach(function (element) {
-      while (element.firstChild) element.removeChild(element.firstChild);
+      while (element.firstChild) element.firstChild.remove();
       element.appendChild(sanitizeHtml(html));
     });
   }
@@ -453,7 +453,7 @@ function authHeader() {
 
 /** Read a non-HttpOnly cookie by name (used for the CSRF token). */
 function readCookie(name) {
-  const m = document.cookie.match(`(?:^|; )${name}=([^;]*)`);
+  const m = new RegExp(`(?:^|; )${name}=([^;]*)`).exec(document.cookie);
   return m ? decodeURIComponent(m[1]) : '';
 }
 

@@ -462,7 +462,7 @@ const i18n = (function () {
   function bindLanguageSwitcher() {
     if (_switcherBound) return;
     document.addEventListener('change', function (event) {
-      const select = event.target && event.target.closest ? event.target.closest('.bk-lang-select') : null;
+      const select = event.target?.closest ? event.target.closest('.bk-lang-select') : null;
       if (!select) return;
       setLang(select.value);
     });
@@ -477,9 +477,9 @@ const i18n = (function () {
       const userArea = document.querySelector('.navbar .navigation__login');
       const sidebar = document.querySelector('[data-drawer-target], .sidebar, aside');
 
-      if (form && form.parentNode) {
+      if (form?.parentNode) {
         form.parentNode.insertBefore(BkSecurity.sanitizeHtml(buildLanguageSwitcher(false)), form.nextSibling);
-      } else if (userArea && userArea.parentNode) {
+      } else if (userArea?.parentNode) {
         userArea.parentNode.insertBefore(BkSecurity.sanitizeHtml(buildLanguageSwitcher(false)), userArea);
       } else if (sidebar && document.body) {
         document.body.appendChild(BkSecurity.sanitizeHtml(buildLanguageSwitcher(true)));
