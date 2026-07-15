@@ -208,7 +208,7 @@ function morePay() {
       deletePay();
       editPrizeModal();
       deletePrize();
-      return;
+      
     }
   });
 }
@@ -386,7 +386,7 @@ function morePrize() {
       deletePay();
       editPrizeModal();
       deletePrize();
-      return;
+      
     }
   });
 }
@@ -615,7 +615,7 @@ function loadStudentModal() {
                         )}</label>
                     <input disabled type="text" id="full_name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder=\"${i18n.t('placeholder.person_name')}\" value="${
+                        placeholder="${i18n.t('placeholder.person_name')}" value="${
                           char['name']
                         }" required>
                 </div>
@@ -996,7 +996,7 @@ function addPrizeModal() {
                             )}</label>
                         <input type="text" id="namePrize"
                             class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 required:border-red-500 required:bg-red-500"
-                            placeholder=\"${i18n.t('placeholder.person_name')}\"
+                            placeholder="${i18n.t('placeholder.person_name')}"
                             required>
                     </div>
                     <div>

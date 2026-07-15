@@ -31,7 +31,7 @@ function loadScoreModal() {
                         )}</label>
                     <input disabled type="text" id="full_name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder=\"${i18n.t('placeholder.person_name')}\" value="${
+                        placeholder="${i18n.t('placeholder.person_name')}" value="${
                           temp[id]['name']
                         }" required>
                 </div>
@@ -128,7 +128,7 @@ function loadData() {
           if (item.id === el.idStudent) {
             x.email = item.email;
             x.id = y;
-            return;
+            
           }
         });
         str += `
@@ -206,7 +206,7 @@ function loadStudentModal() {
                         )}</label>
                     <input disabled type="text" id="full_name"
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                        placeholder=\"${i18n.t('placeholder.person_name')}\" value="${
+                        placeholder="${i18n.t('placeholder.person_name')}" value="${
                           tableData[id]['name']
                         }" required>
                 </div>

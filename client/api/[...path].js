@@ -32,7 +32,7 @@ module.exports = async function handler(req, res) {
     target.searchParams.append(key, value);
   });
 
-  const headers = Object.assign({}, req.headers);
+  const headers = { ...req.headers};
   delete headers.host;
   delete headers['content-length'];
 
