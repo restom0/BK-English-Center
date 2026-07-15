@@ -1,8 +1,7 @@
 # ============================================================
 # SonarCloud manual scan with coverage.
-# SonarCloud Automatic Analysis is enabled for this project, so push/PR scans
-# must not also run here. SonarCloud rejects duplicate automatic + CI analysis.
-# Disable Automatic Analysis in SonarCloud before re-enabling push/PR triggers.
+# Automatic Analysis reads .sonarcloud.properties; manual CI scan reads
+# sonar-project.properties and the args below.
 # Requires repo secret: SONAR_TOKEN.
 # ============================================================
 
