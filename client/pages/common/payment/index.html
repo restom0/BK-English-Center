@@ -12,8 +12,6 @@
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js" integrity="sha384-BK+DR+3+Wray76NfcyxdRbJ8NIWd7tbo7HKvTcXGsTFNyuxUuQjQIieKOVRCfZJR" crossorigin="anonymous"></script>
     <script src="https://code.jquery.com/jquery-3.7.0.min.js"
         integrity="sha256-2Pmvv0kuTBOenSvLm6bvfBSSHrUJ+3A7x6P5Ebd07/g=" crossorigin="anonymous"></script>
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
         <script src="../../../config.js"></script>
         <script src="../../../utils/toast.js"></script>
         <script src="../../../utils/date.js"></script>
@@ -25,7 +23,7 @@
     <script src="../../../Navigation/navigation.js"></script>
 </head>
 
-<body data-sidebar="admin">
+<body data-sidebar="staff">
     <div id="bk-sidebar"></div>
     <div id="bk-topbar"></div>
     <div class="p-8 sm:ml-64 mb-10 main-content--offset">
@@ -34,9 +32,7 @@
 
         <div class="relative overflow-x-auto">
             <div class="inline-flex w-full justify-between">
-                <h1 class="flex text-left text-2xl font-bold dark:text-white mb-5" data-i18n="finance.salary">Lương</h1>
-                <button type="button"
-                    class="payModal flex text-white rounded-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium text-sm px-5 py-2.5 text-center mr-2 mb-2 " data-i18n="action.add">Thêm</button>
+                <h1 class="flex text-left text-2xl font-bold dark:text-white mb-5" data-payment-label="pay" data-i18n="finance.salary">Lương</h1>
             </div>
             <div id="payModal" class="mb-5 transition transition-all duration-200 ease-in-out invisible opacity-0">
             </div>
@@ -46,13 +42,10 @@
                         <th scope="col" class="px-6 py-3" data-i18n="field.name">
                             Họ và tên
                         </th>
-                        <th scope="col" class="px-6 py-3" data-i18n="table.month">
-                            Tháng
+                        <th scope="col" class="px-6 py-3" data-i18n="class.title">
+                            Lớp
                         </th>
-                        <th scope="col" class="px-6 py-3" data-i18n="table.year">
-                            Năm
-                        </th>
-                        <th scope="col" class="px-6 py-3" data-i18n="finance.salary">
+                        <th scope="col" class="px-6 py-3" data-payment-label="pay" data-i18n="finance.salary">
                             Lương
                         </th>
                         <th scope="col" class="px-6 py-3" data-i18n="field.status">
@@ -81,7 +74,7 @@
         </div>
         <div class="relative overflow-x-auto mt-5">
             <div class="inline-flex w-full justify-between">
-                <h1 class="text-2xl font-bold dark:text-white mb-5" data-i18n="finance.bonus">Thưởng</h1>
+                <h1 class="text-2xl font-bold dark:text-white mb-5" data-payment-label="prize" data-i18n="finance.bonus">Thưởng</h1>
                 <button type="button"
                     class="prizeModal flex text-white rounded-full bg-gradient-to-r from-blue-500 via-blue-600 to-blue-700 hover:bg-gradient-to-br focus:ring-4 focus:outline-none focus:ring-blue-300 dark:focus:ring-blue-800 shadow-lg shadow-blue-500/50 dark:shadow-lg dark:shadow-blue-800/80 font-medium text-sm px-5 py-2.5 text-center mr-2 mb-2 " data-i18n="action.add">Thêm</button>
             </div>
@@ -93,13 +86,10 @@
                         <th scope="col" class="px-6 py-3" data-i18n="field.name">
                             Họ và tên
                         </th>
-                        <th scope="col" class="px-6 py-3" data-i18n="table.month">
-                            Tháng
+                        <th scope="col" class="px-6 py-3" data-i18n="class.title">
+                            Lớp
                         </th>
-                        <th scope="col" class="px-6 py-3" data-i18n="table.year">
-                            Năm
-                        </th>
-                        <th scope="col" class="px-6 py-3" data-i18n="finance.bonus">
+                        <th scope="col" class="px-6 py-3" data-payment-label="prize" data-i18n="finance.bonus">
                             Thưởng
                         </th>
                         <th scope="col" class="px-6 py-3" data-i18n="field.status">
@@ -127,7 +117,9 @@
             </table>
         </div>
     </div>
-    <script src="../../../js/pages/staff/payment.js"></script>
+    <script src="../../../js/common/page-script-loader.js"></script>
+    <script src="../../../js/common/payment-adapters.js"></script>
+    <script src="../../../js/pages/common/payment.js"></script>
 </body>
 
 </html>

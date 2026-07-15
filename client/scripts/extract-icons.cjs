@@ -3,9 +3,9 @@
  * Renders developer-icons React components to standalone SVG files.
  * Run: node scripts/extract-icons.cjs
  */
-const { createRequire } = require('module');
-const path  = require('path');
-const fs    = require('fs');
+const { createRequire } = require('node:module');
+const path  = require('node:path');
+const fs    = require('node:fs');
 
 // ── Patch: make developer-icons (ESM) loadable from CJS via dynamic import ──
 (async () => {

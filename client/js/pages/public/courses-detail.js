@@ -175,6 +175,7 @@ const card = [1, 2, 3, 4];
 function load() {
   let str = '';
   card.forEach((el) => {
+    const detailHref = typeof routeHref === 'function' ? routeHref('course-detail', { id: el }) : `./index.html?id=${el}`;
     str += `<li class="course">
         <h3>${el}</h3>
         <p>Khóa học Luyện thi TOEIC 4 kỹ năng sẽ trang bị cho bạn những kiến thức và kỹ năng cần thiết để chinh phục
@@ -186,7 +187,7 @@ function load() {
             </div>
             <div class="card__right">
                 <h2> Khoá học TOEIC 4 kỹ năng</h2>
-                <a class="more" href="../CoursesPageDetail/course1.html" role="button">Tìm hiểu thêm</a>
+                <a class="more" href="${detailHref}" role="button">Tìm hiểu thêm</a>
             </div>
         </div>
     </li>`;

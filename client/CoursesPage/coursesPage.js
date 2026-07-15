@@ -13,7 +13,7 @@ $(document).ready(function () {
         const detailHref =
           typeof routeHref === 'function'
             ? routeHref('course-detail', { id: index })
-            : `../CoursesPageDetail/CoursesPageDetail.html?id=${index}`;
+            : `../pages/public/courses-detail/index.html?id=${index}`;
         str += `
                     <li class="course">
                         <h3>${index + 1}. ${el.name}</h3>

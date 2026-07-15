@@ -72,12 +72,13 @@
 
   // ── Public API ────────────────────────────────────────────
 
+  function resolveTarget(target) {
+    if (!target) return document.body;
+    return typeof target === 'string' ? document.querySelector(target) : target;
+  }
+
   function show(target) {
-    const el = target
-      ? typeof target === 'string'
-        ? document.querySelector(target)
-        : target
-      : document.body;
+    const el = resolveTarget(target);
     if (!el) return;
 
     remove(); // prevent duplicates

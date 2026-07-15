@@ -11,7 +11,7 @@
  * Usage in HTML templates:
  *   `<span data-vnd="${amount}">${BkCurrency.format(amount)}</span>`
  */
-let BkCurrency = (function () {
+const BkCurrency = (function () {
   'use strict';
 
   // ── Language → currency config ─────────────────────────────────────
@@ -35,7 +35,7 @@ let BkCurrency = (function () {
     // Build unique currency codes (exclude VND itself)
     const targets = [];
     Object.values(LANG_CONFIG).forEach(function (cfg) {
-      if (cfg.code !== 'VND' && targets.indexOf(cfg.code) === -1) {
+      if (cfg.code !== 'VND' && !targets.includes(cfg.code)) {
         targets.push(cfg.code);
       }
     });
@@ -91,7 +91,8 @@ let BkCurrency = (function () {
         currency: cfg.code,
         maximumFractionDigits: 2,
       }).format(converted);
-    } catch (e) {
+    } catch (error) {
+      console.warn('[BkCurrency] Intl.NumberFormat failed; using fallback format.', error);
       return `${converted.toFixed(2)} ${cfg.code}`;
     }
   }

@@ -33,12 +33,6 @@
         <div class="relative overflow-x-auto">
             <form>
                 <div class="flex">
-                    <!-- <select id="countries"
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 blockp-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
-                        <option value="access" data-i18n="sidebar.stat_access">Thống kê truy cập</option>
-                        <option value="finance" selected data-i18n="sidebar.stat_financial">Thống kê tài chính</option>
-                        <option value="lesson" data-i18n="sidebar.stat">Thống kê lớp học</option>
-                    </select> -->
                     <label for="search-dropdown"
                         class="inline-flex items-center px-3 text-sm text-gray-900 bg-gray-200 border border-r-0 border-gray-300 rounded-l-md dark:bg-gray-600 dark:text-gray-400 dark:border-gray-600">
                         Search
@@ -63,18 +57,18 @@
             <div class="mb-4 border-b border-gray-200 dark:border-gray-700">
                 <ul class="flex flex-wrap -mb-px text-sm font-medium text-center" id="default-tab"
                     data-tabs-toggle="#default-tab-content">
-                    <li class="mr-2" role="presentation">
+                    <li class="mr-2">
                         <button class="inline-block p-4 border-b-2 rounded-t-lg" id="profile-tab"
                             data-tabs-target="#profile" type="button" role="tab" aria-controls="profile"
                             aria-selected="false" data-i18n="page.access_log">Lịch sử truy cập</button>
                     </li>
-                    <li class="mr-2" role="presentation">
+                    <li class="mr-2">
                         <button
                             class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                             id="dashboard-tab" data-tabs-target="#dashboard" type="button" role="tab"
                             aria-controls="dashboard" aria-selected="false" data-i18n="page.register_log">Đăng ký</button>
                     </li>
-                    <li class="mr-2" role="presentation">
+                    <li class="mr-2">
                         <button
                             class="inline-block p-4 border-b-2 rounded-t-lg hover:text-gray-600 hover:border-gray-300 dark:hover:text-gray-300"
                             id="email-reg-tab" data-tabs-target="#emailReg" type="button" role="tab"
@@ -138,35 +132,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="register-list">
-                                    <!-- <tr
-                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            Thái Ngọc Rạng
-                                        </th>
-                                        <td class="px-6 py-4">
-                                            Học viên
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            rangthai@gmail.com
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            10/10/2023
-                                        </td>
-                                        <td class="px-6 py-4 flex justify-center">
-                                            <button data-id=`+ index + ` data-tooltip-target="detail"
-                                                class="scoreModal flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                                <span
-                                                    class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
-                                                    quick_reference
-                                                </span>
-                                                <div data-tooltip-name="detail" role="tooltip"
-                                                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                                                    Chi tiết
-                                                    <div class="tooltip-arrow" data-popper-arrow></div>
-                                            </button>
-                                        </td>
-                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>
@@ -198,35 +163,6 @@
                                     </tr>
                                 </thead>
                                 <tbody id="email-list">
-                                    <!-- <tr
-                                        class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                                        <th scope="row"
-                                            class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                            Thái Ngọc Rạng
-                                        </th>
-                                        <td class="px-6 py-4">
-                                            Học viên
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            rangthai@gmail.com
-                                        </td>
-                                        <td class="px-6 py-4">
-                                            10/10/2023
-                                        </td>
-                                        <td class="px-6 py-4 flex justify-center">
-                                            <button data-id=`+ index + ` data-tooltip-target="detail"
-                                                class="scoreModal flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                                <span
-                                                    class="material-symbols-outlined flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white">
-                                                    quick_reference
-                                                </span>
-                                                <div data-tooltip-name="detail" role="tooltip"
-                                                    class="absolute z-10 invisible inline-block px-3 py-2 text-sm font-medium text-white transition-opacity duration-300 bg-gray-900 rounded-lg shadow-sm opacity-0 tooltip dark:bg-gray-700">
-                                                    Chi tiết
-                                                    <div class="tooltip-arrow" data-popper-arrow></div>
-                                            </button>
-                                        </td>
-                                    </tr> -->
                                 </tbody>
                             </table>
                         </div>

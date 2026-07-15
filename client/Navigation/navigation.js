@@ -46,7 +46,7 @@ function getNavInfo() {
     .fail(function () {
       localStorage.clear();
       window.location.replace(
-        typeof routeHref === 'function' ? routeHref('login') : '../Loginpage/Login.html'
+        typeof routeHref === 'function' ? routeHref('login') : '../pages/auth/login/index.html'
       );
     });
 }

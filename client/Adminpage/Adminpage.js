@@ -15,7 +15,7 @@ function loadData() {
     },
     error: function (jqXHR) {
       if (jqXHR.status === 403) {
-        window.location.replace('../HomePage/homePage.html');
+        window.location.replace('../pages/public/home/index.html');
       }
       Toast.fire({ icon: 'error', title: jqXHR.responseJSON.msg });
     },
