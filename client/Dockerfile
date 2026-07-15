@@ -79,6 +79,6 @@ USER nginx
 EXPOSE 8080
 
 HEALTHCHECK --interval=20s --timeout=5s --start-period=10s --retries=3 \
-  CMD wget -qO- http://localhost:8080/Loginpage/Login.html || exit 1
+  CMD wget -qO- http://localhost:8080/pages/auth/login/index.html || exit 1
 
 CMD ["nginx", "-g", "daemon off;"]

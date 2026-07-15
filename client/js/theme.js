@@ -8,7 +8,7 @@
   'use strict';
 
   const STORAGE_KEY = 'bkec-theme';
-  const THEMES = ['light', 'dark'];
+  const THEMES = new Set(['light', 'dark']);
 
   // ── Apply a theme ──────────────────────────────────────────
 
@@ -32,7 +32,7 @@
 
   function resolve() {
     const stored = localStorage.getItem(STORAGE_KEY);
-    if (stored && THEMES.includes(stored)) return stored;
+    if (stored && THEMES.has(stored)) return stored;
     return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
   }
 

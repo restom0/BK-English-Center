@@ -39,10 +39,10 @@ const ROLE_HOME = {
 };
 
 const ROLE_HOME_FALLBACK = {
-  student: '../MyCourses/myCourses.html',
-  teacher: '../MyCourses/myCourses.html',
-  staff: '../Staffpage/Staffpage.html',
-  admin: '../Adminpage/Adminpage.html',
+  student: '../pages/public/my-courses/index.html',
+  teacher: '../pages/public/my-courses/index.html',
+  staff: '../pages/staff/dashboard/index.html',
+  admin: '../pages/admin/dashboard/index.html',
 };
 
 function authRouteHref(route, fallback) {
@@ -60,7 +60,7 @@ function roleHomeHref(role) {
 function requireAuth() {
   const token = localStorage.getItem('role');
   if (!token) {
-    window.location.replace(authRouteHref('login', '../Loginpage/Login.html'));
+    window.location.replace(authRouteHref('login', '../pages/auth/login/index.html'));
   }
 }
 
@@ -72,7 +72,7 @@ function requireAuth() {
 function guardCurrentPage() {
   const page = window.location.pathname.split('/').pop();
   if (PROTECTED_PAGES.has(page) && !localStorage.getItem('role')) {
-    window.location.replace(authRouteHref('login', '../Loginpage/Login.html'));
+    window.location.replace(authRouteHref('login', '../pages/auth/login/index.html'));
   }
 }
 
@@ -97,7 +97,7 @@ function redirectAfterLogin(role) {
   if (dest) {
     window.location.replace(dest);
   } else {
-    window.location.replace(authRouteHref('home', '../HomePage/homePage.html'));
+    window.location.replace(authRouteHref('home', '../pages/public/home/index.html'));
   }
 }
 
@@ -135,5 +135,5 @@ function getCachedUser() {
  */
 function logout() {
   localStorage.clear();
-  window.location.replace(authRouteHref('home', '../HomePage/homePage.html'));
+  window.location.replace(authRouteHref('home', '../pages/public/home/index.html'));
 }

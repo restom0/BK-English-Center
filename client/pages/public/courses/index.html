@@ -3,22 +3,14 @@
 
 <head>
     <title>Course</title>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
-    <!-- jquery -->
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
-
-    <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.7.20/dist/sweetalert2.all.min.js" integrity="sha384-BK+DR+3+Wray76NfcyxdRbJ8NIWd7tbo7HKvTcXGsTFNyuxUuQjQIieKOVRCfZJR" crossorigin="anonymous"></script>
-
-    <!-- nav -->
     <script src="../../../Navigation/nav.js"></script>
         <script src="../../../config.js"></script>
         <script src="../../../utils/toast.js"></script>
@@ -55,8 +47,6 @@
                 <li class="nav-item">
                     <a class="nav-link" href="../../../pages/public/contact/index.html">Liên hệ</a>
                 </li>
-
-                <!-- for student and teacher -->
                 <li class="nav-item">
                     <a class="nav-link" href="../../../pages/public/my-courses/index.html" id="my-class-link" data-i18n="nav.my_courses">Khóa học của tôi</a>
                 </li>
@@ -71,8 +61,6 @@
                 <button class="btn btn-outline-dark my-2 my-sm-0" type="submit"><i class="fa fa-search icon--dark"
                         aria-hidden="true"></i></button>
             </form>
-
-            <!-- for student and teacher -->
             <ul class="nav nav-pills nav__user-area" id="nav__user">
                 <li class="nav-item">
                     <a class="nav-link" href="#notifications" aria-label="Thông báo"><i class="fa fa-bell-o icon--dark" aria-hidden="true"></i><span class="sr-only">Thông báo</span></a>
@@ -101,19 +89,15 @@
                     </div>
                 </li>
             </ul>
-
-            <!-- for guest  -->
             <div class="nav__user-area" id="nav__login">
                 <a class="btn btn-outline-secondary" href="../../../pages/auth/login/index.html">Đăng nhập</a>
                 <a class="btn btn-outline-secondary" href="../../../pages/auth/signup/index.html">Đăng ký</a>
             </div>
         </div>
     </nav>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
         aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+        <div class="modal-dialog modal-dialog-centered modal-lg">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">Thông tin tài khoản</h5>
@@ -123,10 +107,6 @@
                 </div>
                 <div class="modal-body" id="userModal1">
                 </div>
-                <!-- <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div> -->
             </div>
         </div>
     </div>
@@ -155,19 +135,12 @@
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 
     <script src="../../../js/pages/public/courses.js"></script>
-    <!-- Optional JavaScript -->
-    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    <!-- <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
-        crossorigin="anonymous"></script> -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
         integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
         crossorigin="anonymous"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
         integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
         crossorigin="anonymous"></script>
-
-    <!-- ── Tech Stack Section ─────────────────────────────────── -->
     <section class="tech-stack" aria-label="Technology stack">
       <p class="tech-stack__heading">Được xây dựng bằng</p>
       <div class="tech-stack__grid">

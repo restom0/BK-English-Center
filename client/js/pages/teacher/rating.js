@@ -15,7 +15,6 @@ $(document).ready(function () {
   loadData();
 });
 function loadData() {
-  const str = '';
   $.ajax({
     type: 'get',
     url: `${API_URL}/teacherjoinclasses`,
@@ -433,48 +432,52 @@ function editData(id) {
         icon: 'error',
         title: i18n.t('validate.invalid_rating'),
       });
-    } else {
-      Swal.fire({
-        title: i18n.t('confirm.title'),
-        text: i18n.t('outcome.rating_editing', {
-          name: temp[id]['name'],
-          class: temp[id]['className'],
-        }),
-        icon: 'warning',
-        showCancelButton: true,
-        confirmButtonColor: '#3085d6',
-        cancelButtonColor: '#d33',
-        confirmButtonText: i18n.t('action.confirm'),
-      }).then((result) => {
-        $.ajax({
-          type: 'patch',
-          url: `${API_URL}/teacherjoinclasses/rating`,
-          headers: {
-            Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
-          },
-          data: {
-            id: temp[id]['id'],
-            rating: rate,
-          },
-          dataType: 'JSON',
-          success: function (res) {
-            if (result.isConfirmed) {
-              Toast.fire({
-                icon: 'success',
-                title: i18n.t('toast.edit_ok'),
-              }).then(() => {
-                $('#rateModal').removeClass('opacity-100');
-                $('#rateModal').addClass('invisible opacity-0');
-                setTimeout(function () {
-                  $('.addRate').removeClass('hidden');
-                  $('#rateModal').empty();
-                }, 200);
-                loadData();
-              });
-            }
-          },
-        });
-      });
+      return;
     }
+    Swal.fire({
+      title: i18n.t('confirm.title'),
+      text: i18n.t('outcome.rating_editing', {
+        name: temp[id]['name'],
+        class: temp[id]['className'],
+      }),
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonColor: '#3085d6',
+      cancelButtonColor: '#d33',
+      confirmButtonText: i18n.t('action.confirm'),
+    }).then((result) => {
+      if (result.isConfirmed) updateRating(id, rate);
+    });
   });
+}
+
+function updateRating(id, rate) {
+  $.ajax({
+    type: 'patch',
+    url: `${API_URL}/teacherjoinclasses/rating`,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
+    },
+    data: {
+      id: temp[id]['id'],
+      rating: rate,
+    },
+    dataType: 'JSON',
+    success: function () {
+      Toast.fire({
+        icon: 'success',
+        title: i18n.t('toast.edit_ok'),
+      }).then(closeRateModalAfterEdit);
+    },
+  });
+}
+
+function closeRateModalAfterEdit() {
+  $('#rateModal').removeClass('opacity-100');
+  $('#rateModal').addClass('invisible opacity-0');
+  setTimeout(function () {
+    $('.addRate').removeClass('hidden');
+    $('#rateModal').empty();
+  }, 200);
+  loadData();
 }

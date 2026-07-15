@@ -18,10 +18,10 @@ function loadNav() {
   }
   $('#my-class-link').attr(
     'href',
-    typeof routeHref === 'function' ? routeHref('my-courses') : '../MyCourses/myCourses.html'
+    typeof routeHref === 'function' ? routeHref('my-courses') : '../pages/public/my-courses/index.html'
   );
   $('#my-page-link').attr(
     'href',
-    typeof routeHref === 'function' ? routeHref('my-page') : '../MyPage/myPage.html'
+    typeof routeHref === 'function' ? routeHref('my-page') : '../pages/public/my-page/index.html'
   );
 }
