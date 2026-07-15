@@ -44,7 +44,6 @@ function loadData() {
       nullClass = res.data;
     },
   });
-  const str = '';
   $.ajax({
     type: 'get',
     url: `${API_URL}/${bkAttendanceSettings.joinClassEndpoint}`,

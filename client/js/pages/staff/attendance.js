@@ -27,7 +27,6 @@ $(document).ready(function () {
 });
 
 function loadData() {
-  const str = '';
   $.ajax({
     type: 'get',
     url: `${API_URL}/staffs/showtimekeeping`,
@@ -274,7 +273,6 @@ function addCheck() {
   $('.addCheck').click(function (e) {
     e.preventDefault();
     const id = $(this).attr('data-id');
-    const now = new Date();
     Swal.fire({
       title: i18n.t('confirm.title'),
       text: i18n.t('confirm.marking', { name: temp[id]['name'] }),
