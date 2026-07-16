@@ -208,7 +208,6 @@ function morePay() {
       deletePay();
       editPrizeModal();
       deletePrize();
-      
     }
   });
 }
@@ -386,7 +385,6 @@ function morePrize() {
       deletePay();
       editPrizeModal();
       deletePrize();
-      
     }
   });
 }
@@ -984,78 +982,6 @@ function addPrizeModal() {
         addPrize();
       },
     });
-    let str = '';
-    str += `
-            <div class="gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-            <form id="prizeForm">
-                <div class="grid gap-6 mb-6 md:grid-cols-2">
-                    <div>
-                        <label for="namePrize"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
-                              'label.full_name'
-                            )}</label>
-                        <input type="text" id="namePrize"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 required:border-red-500 required:bg-red-500"
-                            placeholder="${i18n.t('placeholder.person_name')}"
-                            required>
-                    </div>
-                    <div>
-                        <label for="year"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
-                              'label.year'
-                            )}</label>
-                        <input type="text" id="year"
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="2023" required>
-                    </div>
-                    <div>
-                        <label for="month"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
-                              'label.month'
-                            )}</label>
-                        <input type="text" id="month"
-                            class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                    </div>
-                    <div>
-                        <label for="prize"
-                            class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
-                              'label.bonus_amount'
-                            )}</label>
-                        <input type="text" id="prize"
-                            class="disabled bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                    </div>
-                    <div>
-                    <label for="prizeStatus" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">${i18n.t(
-                      'label.status'
-                    )}</label>
-                    <select id="prizeStatus" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
-                      <option value="" selected>${i18n.t('select.status')}</option>
-                      <option value="0">${i18n.t('status.not_received')}</option>
-                      <option value="1">${i18n.t('status.received')}</option>
-                    </select>
-                    </div>
-                </div></form>
-        <div style="margin-top: 4vh;">
-            <div class="w-full flex justify-between">
-                <button type="submit"
-                    class="closeBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-pink-500 to-orange-400 group-hover:from-pink-500 group-hover:to-orange-400 hover:text-white dark:text-white focus:ring-4 focus:outline-none focus:ring-pink-200 dark:focus:ring-pink-800">
-                    <span
-                        class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        ${i18n.t('action.cancel')}
-                    </span>
-                </button>
-                <button form="prizeForm" type="submit"
-                    class="submitAddPrizeBtn inline-flex items-center justify-center p-0.5 mb-2 mr-2 overflow-hidden text-sm font-medium text-gray-900 rounded-lg group bg-gradient-to-br from-teal-300 to-lime-300 group-hover:from-teal-300 group-hover:to-lime-300 dark:text-white dark:hover:text-gray-900 focus:ring-4 focus:outline-none focus:ring-lime-200 dark:focus:ring-lime-800 hover:text-white">
-                    <span
-                        class="w-full px-5 py-2.5 transition-all ease-in duration-75 bg-white dark:bg-gray-900 rounded-md group-hover:bg-opacity-0">
-                        ${i18n.t('action.add')}
-                    </span>
-                </button>
-            </div>
-        </div>
-        </div>
-        </div>
-        `;
   });
 }
 function addPay() {
@@ -1079,7 +1005,7 @@ function addPay() {
     } else if (year == '') {
       Toast.fire({
         icon: 'error',
-        title: i18n.t('validate.enter_month'),
+        title: i18n.t('validate.enter_year'),
       });
     } else if (payAmount == '') {
       Toast.fire({

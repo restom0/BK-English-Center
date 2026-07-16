@@ -600,13 +600,11 @@ function addData() {
     const name = $('#name').val();
     const month = $('#month').val();
     const year = $('#year').val();
-    //let attendDate = $("#attendDate").val();
     if (name === '' || month === '' || year === '') {
       Toast.fire({
         icon: 'error',
         title: i18n.t('toast.fill_all'),
       });
-      //$(".add").removeClass("hidden");
     } else {
       $.ajax({
         type: 'post',

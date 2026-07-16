@@ -4,19 +4,15 @@
 }
 
 body {
-    /* width: 1440px; */
     margin: auto;
     margin-top: 100px;
     background-color: #edf2f7;
 }
 
-/* footer */
 .footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* width: 1440px; */
-    /* height: 177px; */
     background-color: #125380;
     text-align: center;
 
@@ -32,7 +28,7 @@ body {
     box-sizing: border-box;
     padding-right: 30px;
     height: 210px;
-    background-color: #249DE3;
+    background-color: #0b5f8f;
     color: #fff;
     display: flex;
     justify-content: flex-end;
@@ -66,7 +62,6 @@ body {
 }
 
 .my-courses {
-    /* height: 80vh; */
     margin: 8px auto;
     background-color: #fff;
     width: 80%;

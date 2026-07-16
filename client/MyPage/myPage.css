@@ -4,19 +4,15 @@
 }
 
 body {
-    /* width: 1440px; */
     margin: auto;
     margin-top: 100px;
     background-color: #edf2f7;
 }
 
-/* footer */
 .footer {
     display: flex;
     justify-content: center;
     align-items: center;
-    /* width: 1440px; */
-    /* height: 177px; */
     background-color: #125380;
     text-align: center;
 

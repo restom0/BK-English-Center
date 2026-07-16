@@ -466,7 +466,7 @@ if (window.jQuery) {
     xhrFields: { withCredentials: true },
     beforeSend: function (xhr, settings) {
       const method = (settings.type || 'GET').toUpperCase();
-      if (!SAFE_METHODS[method]) {
+      if (SAFE_METHODS[method] !== 1) {
         xhr.setRequestHeader('X-CSRF-Token', readCookie('csrfToken'));
       }
     },

@@ -91,6 +91,18 @@ if (!localStorage.getItem('role')) {
 }
 function loadCourses(courseList) {
   courseList.forEach((element, index) => {
+    const isStudent = localStorage.getItem('role') === 'student';
+    const learnedLabel = isStudent ? 'Đã học' : 'Đã dạy';
+    const activeLabel = isStudent ? 'Đang học' : 'Đang dạy';
+    const pendingLabel = isStudent ? 'Chưa học' : 'Chưa dạy';
+    let statusLabel = pendingLabel;
+
+    if (element.status === 1) {
+      statusLabel = learnedLabel;
+    } else if (element.status === 0) {
+      statusLabel = activeLabel;
+    }
+
     $('#course-list').append(
       `<tr>
                 <th scope="row" class="course-no">${index + 1}</th>
@@ -98,19 +110,7 @@ function loadCourses(courseList) {
                 <td class="course-date">${formatDate(element.startDate)}</td>
                 <td class="course-date">${formatDate(element.endDate)}</td>
         <td class="course-date">${element.attendDate}</td>
-                <td class="course-status">${
-                  localStorage.getItem('role') === 'student'
-                    ? element.status === 1
-                      ? 'Đã học'
-                      : element.status === 0
-                        ? 'Đang học'
-                        : 'Chưa học'
-                    : element.status === 1
-                      ? 'Đã dạy'
-                      : element.status === 0
-                        ? 'Đang dạy'
-                        : 'Chưa dạy'
-                }</td>
+                <td class="course-status">${statusLabel}</td>
             </tr>`
     );
   });

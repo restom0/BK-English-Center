@@ -44,7 +44,6 @@ function loadData() {
           if (item.id === el.idTeacher) {
             x.email = item.email;
             x.id = y;
-            
           }
         });
         str += `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
@@ -459,12 +458,7 @@ function addBook() {
         icon: 'error',
         title: i18n.t('validate.select_qty'),
       });
-    } else if (bookStatus == '') {
-      Toast.fire({
-        icon: 'error',
-        title: i18n.t('validate.select_status'),
-      });
-    } else if (name === bookClass) {
+    } else if (status === '' || name === bookClass) {
       Toast.fire({
         icon: 'error',
         title: i18n.t('validate.select_status'),

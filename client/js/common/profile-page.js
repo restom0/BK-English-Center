@@ -176,8 +176,8 @@ function editData() {
       }, 200);
     });
     const elements = document.getElementsByClassName('container1');
-    for (let i = 0; i < elements.length; i++) {
-      elements[i].classList.remove('hidden');
+    for (const element of elements) {
+      element.classList.remove('hidden');
     }
     $('#submitEditBtn').click(function (e) {
       e.preventDefault();

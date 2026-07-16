@@ -8,7 +8,7 @@ let nullClass = [];
 function bkInitAttendancePage(config) {
   bkAttendanceSettings = {
     extraPersonColumnField: null,
-    ...config
+    ...config,
   };
   tableData = [];
   temp = [];
@@ -60,7 +60,6 @@ function loadData() {
           if (item.id === el[bkAttendanceSettings.personIdField]) {
             x.email = item.email;
             x.id = y;
-            
           }
         });
         str += `
@@ -430,7 +429,6 @@ function addModal() {
   $('.add').click(function (e) {
     e.preventDefault();
     $('.add').addClass('hidden');
-    const id = $(this).attr('data-id');
     let str = '';
     str += `
         <div class="gap-4 p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
