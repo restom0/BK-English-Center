@@ -45,10 +45,12 @@ const ROLE_HOME_FALLBACK = {
   admin: '../pages/admin/dashboard/index.html',
 };
 
+/** Resolve auth route href with fallback. */
 function authRouteHref(route, fallback) {
   return typeof routeHref === 'function' ? routeHref(route) : fallback;
 }
 
+/** Resolve home route for user role. */
 function roleHomeHref(role) {
   return authRouteHref(ROLE_HOME[role], ROLE_HOME_FALLBACK[role]);
 }

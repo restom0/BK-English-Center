@@ -4,6 +4,7 @@
 // same-origin /api paths proxied by nginx or Vercel.
 // =============================================================
 
+/** Resolve API base URL for current runtime. */
 function bkResolveApiUrl() {
   const host = window.location.hostname;
   const port = window.location.port;
@@ -90,6 +91,7 @@ const BK_ROUTES = Object.freeze({
   'teacher-files': 'pages/teacher/files/index.html',
 });
 
+/** Split href into path, query, and hash parts. */
 function bkSplitHref(href) {
   let path = String(href || '/');
   let hash = '';
@@ -107,6 +109,7 @@ function bkSplitHref(href) {
   return { path: path, query: query, hash: hash };
 }
 
+/** Normalize route paths for route lookup. */
 function bkCleanRoutePath(path) {
   let clean = String(path || '/').replaceAll('\\', '/');
   while (clean.startsWith('./')) clean = clean.slice(2);
@@ -115,18 +118,21 @@ function bkCleanRoutePath(path) {
   return clean || '/';
 }
 
+/** Remove leading slashes from route paths. */
 function bkStripLeadingSlashes(path) {
   let clean = String(path || '');
   while (clean.startsWith('/')) clean = clean.slice(1);
   return clean;
 }
 
+/** Ensure route path has trailing slash. */
 function bkEnsureTrailingSlash(path) {
   let clean = String(path || '/');
   while (clean.length > 1 && clean.endsWith('/')) clean = clean.slice(0, -1);
   return clean.endsWith('/') ? clean : `${clean}/`;
 }
 
+/** Find configured route target from route key or path. */
 function bkFindRouteTarget(route) {
   const parts = bkSplitHref(route);
   const key = bkCleanRoutePath(parts.path);
@@ -144,6 +150,7 @@ function bkFindRouteTarget(route) {
   return clean;
 }
 
+/** Check whether href can be handled by client router. */
 function bkIsRoutableHref(href) {
   if (!href || href === '#') return false;
   if (/^(https?:|mailto:|tel:|javascript:|data:|\/\/)/i.test(href)) return false;
@@ -158,6 +165,7 @@ function bkIsRoutableHref(href) {
   });
 }
 
+/** Resolve static client base path. */
 function bkClientBasePath() {
   const path = window.location.pathname.replaceAll('\\', '/');
   const lower = path.toLowerCase();
@@ -169,6 +177,7 @@ function bkClientBasePath() {
   return '/';
 }
 
+/** Build query string from route params. */
 function bkBuildQuery(params) {
   if (!params) return '';
   const search = new URLSearchParams();
@@ -179,6 +188,7 @@ function bkBuildQuery(params) {
   return search.toString();
 }
 
+/** Build href for configured client route. */
 function routeHref(route, params) {
   const raw = String(route || '/');
   if (/^(https?:|mailto:|tel:|javascript:|data:|\/\/)/i.test(raw) || raw === '#') {
@@ -195,10 +205,12 @@ function routeHref(route, params) {
   return base + target + query + parts.hash;
 }
 
+/** Navigate to configured client route. */
 function goToRoute(route, params) {
   window.location.assign(routeHref(route, params));
 }
 
+/** Bind route links inside target root. */
 function bindRouteLinks(root) {
   const scope = root || document;
   scope.querySelectorAll('a[href], a[data-route]').forEach(function (link) {
@@ -309,6 +321,7 @@ const BkSecurity = (function () {
     'text-align': 1,
   };
 
+  /** Escape text for safe HTML output. */
   function escapeHtml(value) {
     return String(value ?? '')
       .replaceAll('&', '&amp;')
@@ -318,6 +331,7 @@ const BkSecurity = (function () {
       .replaceAll("'", '&#39;');
   }
 
+  /** Check whether HTML attribute is allowed. */
   function isAllowedAttr(name) {
     const cleanName = String(name || '').toLowerCase();
     if (cleanName.startsWith('on')) return false;
@@ -326,12 +340,14 @@ const BkSecurity = (function () {
     return Boolean(ALLOWED_ATTRS[cleanName]);
   }
 
+  /** Check whether URL is safe for sanitized HTML. */
   function isSafeUrl(value) {
     const clean = String(value || '').trim();
     if (!clean) return true;
     return /^(https?:|mailto:|tel:|\/|\.\/|\.\.\/|#)/i.test(clean);
   }
 
+  /** Sanitize inline CSS style text. */
   function sanitizeStyle(value) {
     const declarations = String(value || '').split(';');
     const safe = [];
@@ -347,11 +363,13 @@ const BkSecurity = (function () {
     return safe.join('; ');
   }
 
+  /** Create sanitized element for allowed tag. */
   function createCleanElement(tagName) {
     if (SVG_TAGS[tagName]) return document.createElementNS(SVG_NS, tagName);
     return document.createElement(tagName);
   }
 
+  /** Sanitize DOM node recursively. */
   function cleanNode(node) {
     if (node.nodeType === Node.TEXT_NODE) {
       return document.createTextNode(node.textContent || '');
@@ -388,6 +406,7 @@ const BkSecurity = (function () {
     return clean;
   }
 
+  /** Sanitize HTML string before insertion. */
   function sanitizeHtml(html) {
     const parser = new DOMParser();
     const parsed = parser.parseFromString(String(html ?? ''), 'text/html');
@@ -398,6 +417,7 @@ const BkSecurity = (function () {
     return fragment;
   }
 
+  /** Resolve DOM targets from selector or element. */
   function targetsFor(target) {
     if (!target) return [];
     if (target.jquery) return target.toArray();
@@ -408,6 +428,7 @@ const BkSecurity = (function () {
     return [];
   }
 
+  /** Set sanitized HTML on target elements. */
   function setSafeHtml(target, html) {
     targetsFor(target).forEach(function (element) {
       while (element.firstChild) element.firstChild.remove();
@@ -415,6 +436,7 @@ const BkSecurity = (function () {
     });
   }
 
+  /** Set text content on target elements. */
   function setText(target, value) {
     targetsFor(target).forEach(function (element) {
       element.textContent = String(value ?? '');

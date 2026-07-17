@@ -3,6 +3,7 @@ $(document).ready(function () {
   loadData();
 });
 
+/** Load page data from API. */
 function loadData() {
   apiRequest({
     type: 'get',

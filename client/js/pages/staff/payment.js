@@ -16,6 +16,7 @@ $(document).ready(function () {
   loadData();
 });
 
+/** Handle staff prize edit success UI. */
 function handlePrizeEditModalSuccess(entry, prizeAmount, status) {
   Toast.fire({
     icon: 'success',
@@ -33,6 +34,7 @@ function handlePrizeEditModalSuccess(entry, prizeAmount, status) {
   });
 }
 
+/** Render more payment rows. */
 function morePay() {
   $('#morePay').click(function (e) {
     e.preventDefault();
@@ -211,6 +213,7 @@ function morePay() {
     }
   });
 }
+/** Render more prize rows. */
 function morePrize() {
   $('#morePrize').click(function (e) {
     if ($('#morePrize').text() === i18n.t('action.view_more')) {
@@ -388,6 +391,7 @@ function morePrize() {
     }
   });
 }
+/** Load page data from API. */
 function loadData() {
   let payStr = '';
   let prizeStr = '';
@@ -587,6 +591,7 @@ function loadData() {
     },
   });
 }
+/** Open student detail modal. */
 function loadStudentModal() {
   $('.studentModal').click(function (e) {
     e.preventDefault();
@@ -741,6 +746,7 @@ function loadStudentModal() {
     });
   });
 }
+/** Open add pay modal. */
 function addPayModal() {
   $('.payModal').click(function (e) {
     e.preventDefault();
@@ -862,6 +868,7 @@ function addPayModal() {
     });
   });
 }
+/** Open add prize modal. */
 function addPrizeModal() {
   $('.prizeModal').click(function (e) {
     e.preventDefault();
@@ -984,6 +991,7 @@ function addPrizeModal() {
     });
   });
 }
+/** Submit new salary payment data. */
 function addPay() {
   $('.submitAddPayBtn').click(function (e) {
     e.preventDefault();
@@ -1074,6 +1082,7 @@ function addPay() {
     }
   });
 }
+/** Submit new prize payment data. */
 function addPrize() {
   $('.submitAddPrizeBtn').click(function (e) {
     e.preventDefault();
@@ -1164,6 +1173,7 @@ function addPrize() {
     }
   });
 }
+/** Send warning notification email. */
 function addWarn() {
   $('.payWarning').click(function (e) {
     e.preventDefault();
@@ -1262,6 +1272,7 @@ function addWarn() {
     });
   });
 }
+/** Open salary edit modal. */
 function editPayModal() {
   $('.editPayBtn').click(function (e) {
     e.preventDefault();
@@ -1375,6 +1386,7 @@ function editPayModal() {
     editPay(idStaff, id);
   });
 }
+/** Submit salary payment edit. */
 function editPay(id, idArr) {
   $('.submitEditPayBtn').click(function (e) {
     e.preventDefault();
@@ -1452,6 +1464,7 @@ function editPay(id, idArr) {
     }
   });
 }
+/** Clear selected salary payment. */
 function deletePay() {
   $('.deletePayBtn').click(function (e) {
     e.preventDefault();
@@ -1498,6 +1511,7 @@ function deletePay() {
     });
   });
 }
+/** Open prize edit modal. */
 function editPrizeModal() {
   $('.editPrizeBtn').click(function (e) {
     e.preventDefault();
@@ -1613,6 +1627,7 @@ function editPrizeModal() {
     editPrize($(this).attr('data-id'), id);
   });
 }
+/** Submit prize payment edit. */
 function editPrize(id, idArr) {
   $('.submitEditPrizeBtn').click(function (e) {
     e.preventDefault();
@@ -1707,6 +1722,7 @@ function editPrize(id, idArr) {
     }
   });
 }
+/** Clear selected prize payment. */
 function deletePrize() {
   $('.deletePrizeBtn').click(function (e) {
     e.preventDefault();

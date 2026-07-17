@@ -1,4 +1,5 @@
 (function (global) {
+  /** Resolve script URL from loader spec. */
   function resolveScriptUrl(scriptSpec) {
     if (typeof scriptSpec === 'string') {
       return new global.URL(scriptSpec, document.baseURI).href;
@@ -7,6 +8,7 @@
     return new global.URL(scriptSpec.src, scriptSpec.baseUrl || document.baseURI).href;
   }
 
+  /** Wait for script element to finish loading. */
   function waitForScript(scriptElement) {
     return new Promise(function (resolve, reject) {
       scriptElement.addEventListener(
@@ -20,6 +22,7 @@
     });
   }
 
+  /** Load script once per URL. */
   function loadScriptOnce(scriptSpec) {
     const scriptUrl = resolveScriptUrl(scriptSpec);
     const existingScript = Array.from(document.scripts).find(function (script) {
@@ -47,6 +50,7 @@
     return loadPromise;
   }
 
+  /** Load scripts in sequence. */
   function loadScripts(scriptSpecs) {
     return scriptSpecs.reduce(function (chain, scriptSpec) {
       return chain.then(function () {
@@ -55,6 +59,7 @@
     }, Promise.resolve());
   }
 
+  /** Run callback after window load. */
   function runWhenWindowReady(callback) {
     if (document.readyState === 'complete') {
       callback();
@@ -64,6 +69,7 @@
     global.addEventListener('load', callback, { once: true });
   }
 
+  /** Load scripts after window is ready. */
   function loadScriptsWhenWindowReady(scriptSpecs, callback) {
     runWhenWindowReady(function () {
       loadScripts(scriptSpecs)

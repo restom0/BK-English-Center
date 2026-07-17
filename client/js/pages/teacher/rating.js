@@ -14,6 +14,7 @@ $.ajax({
 $(document).ready(function () {
   loadData();
 });
+/** Load page data from API. */
 function loadData() {
   $.ajax({
     type: 'get',
@@ -31,7 +32,6 @@ function loadData() {
           if (item.id === el.idTeacher) {
             x.email = item.email;
             x.id = y;
-            
           }
         });
         str += `<tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 text-center">
@@ -113,6 +113,7 @@ function loadData() {
     },
   });
 }
+/** Send warning notification email. */
 function addWarn() {
   $('.addWarn').click(function (e) {
     e.preventDefault();
@@ -155,6 +156,7 @@ function addWarn() {
     });
   });
 }
+/** Send cheer notification email. */
 function addCheer() {
   $('.addCheer').click(function (e) {
     e.preventDefault();
@@ -197,6 +199,7 @@ function addCheer() {
     });
   });
 }
+/** Open teacher detail modal. */
 function loadTeacherModal() {
   $('.teacherModal').click(function (e) {
     e.preventDefault();
@@ -346,6 +349,7 @@ function loadTeacherModal() {
     });
   });
 }
+/** Open rating modal. */
 function loadRateModal() {
   $('.rateModal').click(function (e) {
     e.preventDefault();
@@ -423,6 +427,7 @@ function loadRateModal() {
     });
   });
 }
+/** Submit edited record data. */
 function editData(id) {
   $('.submitEditBtn').click(function (e) {
     e.preventDefault();
@@ -451,6 +456,7 @@ function editData(id) {
   });
 }
 
+/** Submit rating update. */
 function updateRating(id, rate) {
   $.ajax({
     type: 'patch',
@@ -472,6 +478,7 @@ function updateRating(id, rate) {
   });
 }
 
+/** Close rating modal after edit. */
 function closeRateModalAfterEdit() {
   $('#rateModal').removeClass('opacity-100');
   $('#rateModal').addClass('invisible opacity-0');

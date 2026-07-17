@@ -26,6 +26,7 @@ $(document).ready(function () {
   loadAddData();
 });
 
+/** Load page data from API. */
 function loadData() {
   $.ajax({
     type: 'get',
@@ -262,6 +263,7 @@ function loadData() {
     },
   });
 }
+/** Format date for display. */
 function formatDate(date) {
   const day = String(date.getDate()).padStart(2, '0');
   const month = String(date.getMonth() + 1).padStart(2, '0');
@@ -269,6 +271,7 @@ function formatDate(date) {
   return `${day} /${month}/${year} `;
 }
 
+/** Confirm and submit attendance check. */
 function addCheck() {
   $('.addCheck').click(function (e) {
     e.preventDefault();
@@ -315,6 +318,7 @@ function addCheck() {
     });
   });
 }
+/** Send warning notification email. */
 function addWarn() {
   $('.addWarn').click(function (e) {
     e.preventDefault();
@@ -357,6 +361,7 @@ function addWarn() {
     });
   });
 }
+/** Open edit modal. */
 function editModal() {
   $('.editBtn').click(function (e) {
     e.preventDefault();
@@ -448,6 +453,7 @@ function editModal() {
     editDate(id);
   });
 }
+/** Submit edited attendance date. */
 function editDate(id) {
   $('.submitEditBtn').click(function (e) {
     e.preventDefault();
@@ -513,6 +519,7 @@ function editDate(id) {
     }, 200);
   });
 }
+/** Open add modal and prepare data. */
 function loadAddData() {
   $('.add').click(function (e) {
     e.preventDefault();
@@ -593,6 +600,7 @@ function loadAddData() {
     });
   });
 }
+/** Submit new record data. */
 function addData() {
   $('.submitAddBtn').click(function (e) {
     e.preventDefault();

@@ -29,6 +29,7 @@ const Toast = Swal.mixin({
   },
 });
 
+/** Submit login form. */
 function login() {
   $('#login-button').click(function (e) {
     e.preventDefault();

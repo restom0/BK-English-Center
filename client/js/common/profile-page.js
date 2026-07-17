@@ -1,6 +1,7 @@
 let bkProfileSettings = {};
 let tableData = [];
 
+/** Handle shared profile edit success UI. */
 function handleProfileEditSuccess() {
   Toast.fire({
     icon: 'success',
@@ -16,6 +17,7 @@ function handleProfileEditSuccess() {
   });
 }
 
+/** Initialize shared profile page behavior. */
 function bkInitProfilePage(config) {
   bkProfileSettings = config;
   tableData = [];
@@ -25,6 +27,7 @@ function bkInitProfilePage(config) {
   });
 }
 
+/** Submit edited record data. */
 function editData() {
   $('.edit').click(function (e) {
     e.preventDefault();
@@ -226,6 +229,7 @@ function editData() {
     });
   });
 }
+/** Open add modal and prepare data. */
 function loadAddData() {
   $('.add').click(function (e) {
     e.preventDefault();
@@ -362,6 +366,7 @@ function loadAddData() {
     });
   });
 }
+/** Submit new record data. */
 function addData() {
   $('#submitAddBtn').click(function (e) {
     $('.add').addClass('hidden');
@@ -413,6 +418,7 @@ function addData() {
     }
   });
 }
+/** Load page data from API. */
 function loadData() {
   $.ajax({
     type: 'get',
@@ -469,6 +475,7 @@ ${i18n.t('action.edit')}
     },
   });
 }
+/** Format date for display. */
 function formatDate(date) {
   date = new Date(date);
   const day = String(date.getDate()).padStart(2, '0');

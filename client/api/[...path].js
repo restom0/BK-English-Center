@@ -1,3 +1,4 @@
+/** Read request body into a Buffer. */
 function readBody(req) {
   return new Promise(function (resolve, reject) {
     const chunks = [];
@@ -11,6 +12,7 @@ function readBody(req) {
   });
 }
 
+/** Resolve configured backend URL. */
 function getBackendUrl() {
   const url = process.env.BACKEND_URL || process.env.API_URL || '';
   let cleanUrl = String(url);
@@ -18,6 +20,7 @@ function getBackendUrl() {
   return cleanUrl;
 }
 
+/** Proxy Vercel API request to backend. */
 module.exports = async function handler(req, res) {
   const backendUrl = getBackendUrl();
   if (!backendUrl) {

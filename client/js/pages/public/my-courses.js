@@ -89,6 +89,7 @@ if (!localStorage.getItem('role')) {
     },
   });
 }
+/** Render course list data. */
 function loadCourses(courseList) {
   courseList.forEach((element, index) => {
     const isStudent = localStorage.getItem('role') === 'student';
@@ -115,6 +116,7 @@ function loadCourses(courseList) {
     );
   });
 }
+/** Format date for display. */
 function formatDate(date) {
   date = new Date(date);
   const day = String(date.getDate()).padStart(2, '0');

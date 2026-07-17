@@ -4,6 +4,7 @@
 // Displays a random English-learning fun fact during the wait.
 // =============================================================
 
+/** Skeleton loader. */
 (function SkeletonLoader() {
   'use strict';
 
@@ -32,6 +33,7 @@
     'English learners who think in English — not translate — progress twice as fast.',
   ];
 
+  /** Return random index within max size. */
   function randomIndex(max) {
     if (!window.crypto || typeof window.crypto.getRandomValues !== 'function') return 0;
     const value = new Uint32Array(1);
@@ -39,10 +41,12 @@
     return value[0] % max;
   }
 
+  /** Pick random loading fact. */
   const randomFact = () => FUN_FACTS[randomIndex(FUN_FACTS.length)];
 
   // ── DOM helpers ───────────────────────────────────────────
 
+  /** Create skeleton loading overlay. */
   function createOverlay() {
     const overlay = document.createElement('div');
     overlay.id = 'skeleton-overlay';
@@ -72,11 +76,13 @@
 
   // ── Public API ────────────────────────────────────────────
 
+  /** Resolve skeleton overlay target. */
   function resolveTarget(target) {
     if (!target) return document.body;
     return typeof target === 'string' ? document.querySelector(target) : target;
   }
 
+  /** Show skeleton loading overlay. */
   function show(target) {
     const el = resolveTarget(target);
     if (!el) return;
@@ -90,6 +96,7 @@
     overlay._autoRemove = setTimeout(() => remove(), 10_000);
   }
 
+  /** Remove skeleton loading overlay. */
   function remove() {
     const overlay = document.getElementById('skeleton-overlay');
     if (!overlay) return;

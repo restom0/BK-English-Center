@@ -3,6 +3,7 @@ $(document).ready(function () {
   loadData();
   loadAddData();
 });
+/** Load page data from API. */
 function loadData() {
   $.ajax({
     type: 'get',
@@ -89,6 +90,7 @@ function loadData() {
   });
   let str = '';
 }
+/** Open detail modal with selected data. */
 function loadDetailData() {
   $('.detailBtn').click(function (e) {
     e.preventDefault();
@@ -115,6 +117,7 @@ function loadDetailData() {
     BkSecurity.setSafeHtml($('#detail1'), str);
   });
 }
+/** Open add modal and prepare data. */
 function loadAddData() {
   $('.addModal').click(function (e) {
     e.preventDefault();
@@ -267,6 +270,7 @@ function loadAddData() {
     addData();
   });
 }
+/** Submit new record data. */
 function addData() {
   $('.submitAddBtn').click(function (e) {
     e.preventDefault();
@@ -343,6 +347,7 @@ function addData() {
     });
   });
 }
+/** Open edit modal and fill current data. */
 function loadEditData() {
   $('.editBtn').click(function (e) {
     e.preventDefault();
@@ -517,6 +522,7 @@ function loadEditData() {
     editData(id);
   });
 }
+/** Submit edited record data. */
 function editData(id) {
   $('.submitEditBtn').click(function (e) {
     e.preventDefault();
@@ -607,6 +613,7 @@ function editData(id) {
     });
   });
 }
+/** Format date for display. */
 function formatDate(date) {
   date = new Date(date);
   const day = String(date.getDate()).padStart(2, '0');
@@ -614,6 +621,7 @@ function formatDate(date) {
   const year = date.getFullYear();
   return `${day}/${month}/${year}`;
 }
+/** Delete selected record. */
 function deleteData() {
   $('.deleteBtn').click(function (e) {
     e.preventDefault();

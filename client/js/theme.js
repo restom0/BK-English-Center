@@ -4,6 +4,7 @@
 // Preference persisted to localStorage as 'bkec-theme'.
 // =============================================================
 
+/** Theme manager. */
 (function ThemeManager() {
   'use strict';
 
@@ -12,6 +13,7 @@
 
   // ── Apply a theme ──────────────────────────────────────────
 
+  /** Apply selected theme to document. */
   function apply(theme) {
     document.documentElement.dataset.theme = theme;
     localStorage.setItem(STORAGE_KEY, theme);
@@ -30,6 +32,7 @@
 
   // ── Read stored preference or system preference ────────────
 
+  /** Resolve saved or system theme. */
   function resolve() {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored && THEMES.has(stored)) return stored;
@@ -38,6 +41,7 @@
 
   // ── Toggle ─────────────────────────────────────────────────
 
+  /** Toggle between light and dark theme. */
   function toggle() {
     const current = document.documentElement.dataset.theme || 'light';
     apply(current === 'dark' ? 'light' : 'dark');
@@ -45,6 +49,7 @@
 
   // ── Wire up button clicks ──────────────────────────────────
 
+  /** Bind theme toggle buttons. */
   function bindButtons() {
     document.querySelectorAll('[data-theme-toggle]').forEach((btn) => {
       btn.addEventListener('click', toggle);
@@ -53,6 +58,7 @@
 
   // ── Init ───────────────────────────────────────────────────
 
+  /** Initialize component behavior. */
   function init() {
     apply(resolve());
     bindButtons();

@@ -9,6 +9,7 @@ $(document).ready(function () {
   }
 });
 
+/** Render student account page. */
 function studentPage() {
   BkSecurity.setSafeHtml($('#bill-intro'), 'Hoá đơn và thanh toán');
   BkSecurity.setSafeHtml(
@@ -94,6 +95,7 @@ function studentPage() {
   });
 }
 
+/** Render teacher account page. */
 function teacherPage() {
   BkSecurity.setSafeHtml($('#bill-intro'), 'Lương');
   BkSecurity.setSafeHtml(
@@ -198,6 +200,7 @@ const MONTH_NAMES = [
 ];
 const DAYS = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
 
+/** Create calendar app state. */
 function app() {
   return {
     month: '',
@@ -222,6 +225,7 @@ function app() {
     ],
     openEventModal: false,
 
+    /** Initialize calendar date state. */
     initDate() {
       const today = new Date();
       this.month = today.getMonth();
@@ -229,17 +233,20 @@ function app() {
       this.datepickerValue = new Date(this.year, this.month, today.getDate()).toDateString();
     },
 
+    /** Check whether date is today. */
     isToday(date) {
       const today = new Date();
       const d = new Date(this.year, this.month, date);
       return today.toDateString() === d.toDateString();
     },
 
+    /** Open event modal for selected date. */
     showEventModal(date) {
       this.openEventModal = true;
       this.event_date = new Date(this.year, this.month, date).toDateString();
     },
 
+    /** Add event to selected date. */
     addEvent() {
       if (!this.event_title) return;
       this.events.push({
@@ -253,6 +260,7 @@ function app() {
       this.openEventModal = false;
     },
 
+    /** Calculate number of visible calendar days. */
     getNoOfDays() {
       const daysInMonth = new Date(this.year, this.month + 1, 0).getDate();
       const dayOfWeek = new Date(this.year, this.month).getDay();

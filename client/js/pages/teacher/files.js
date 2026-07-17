@@ -27,6 +27,7 @@ $(document).ready(function () {
   loadData();
 });
 const count = 0;
+/** Load page data from API. */
 function loadData() {
   let str = '';
   $.ajax({
@@ -131,6 +132,7 @@ function loadData() {
     },
   });
 }
+/** Open student detail modal. */
 function loadStudentModal() {
   $('.studentModal').click(function (e) {
     e.preventDefault();
@@ -276,6 +278,7 @@ function loadStudentModal() {
     });
   });
 }
+/** Send warning notification email. */
 function addWarn() {
   $('.addWarn').click(function (e) {
     e.preventDefault();
@@ -311,6 +314,7 @@ function addWarn() {
     });
   });
 }
+/** Open add modal. */
 function addModal() {
   $('.addBtn').click(function (e) {
     e.preventDefault();
@@ -429,6 +433,7 @@ function addModal() {
     addBook();
   });
 }
+/** Submit new teaching file record. */
 function addBook() {
   $('.submitAddBtn').click(function (e) {
     e.preventDefault();
@@ -511,6 +516,7 @@ function addBook() {
     }, 200);
   });
 }
+/** Open edit modal. */
 function editModal() {
   $('.editBtn').click(function (e) {
     e.preventDefault();
@@ -637,6 +643,7 @@ function editModal() {
     editBook(id);
   });
 }
+/** Submit teaching file edit. */
 function editBook(id) {
   $('.submitEditBtn').click(function (e) {
     e.preventDefault();
@@ -701,6 +708,7 @@ function editBook(id) {
     }, 200);
   });
 }
+/** Open delete confirmation modal. */
 function deleteModal() {
   $('.deleteBtn').click(function (e) {
     e.preventDefault();

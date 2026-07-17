@@ -40,6 +40,7 @@ const BK_ICONS = {
 
 window.BK_ICONS = BK_ICONS;
 
+/** Resolve route href with fallback. */
 function _bkRouteHref(route, fallback) {
   return typeof routeHref === 'function' ? routeHref(route) : fallback;
 }

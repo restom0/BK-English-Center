@@ -215,6 +215,7 @@ function loadAddData() {
   });
 }
 
+/** Submit new record data. */
 function addData() {
   $('.submitAddBtn').on('click', function (e) {
     e.preventDefault();
@@ -297,6 +298,7 @@ function loadEditData() {
   });
 }
 
+/** Submit edited record data. */
 function editData(id, sponsorid) {
   $('.submitEditBtn').on('click', function (e) {
     e.preventDefault();

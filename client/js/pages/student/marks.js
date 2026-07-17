@@ -14,6 +14,7 @@ $.ajax({
 $(document).ready(function () {
   loadData();
 });
+/** Open score detail modal. */
 function loadScoreModal() {
   $('.scoreModal').click(function (e) {
     e.preventDefault();
@@ -111,6 +112,7 @@ function loadScoreModal() {
     editData(id);
   });
 }
+/** Load page data from API. */
 function loadData() {
   $.ajax({
     type: 'get',
@@ -128,7 +130,6 @@ function loadData() {
           if (item.id === el.idStudent) {
             x.email = item.email;
             x.id = y;
-            
           }
         });
         str += `
@@ -180,12 +181,14 @@ function loadData() {
     },
   });
 }
+/** Format date for display. */
 function formatDate(date) {
   const day = String(date.getDate()).padStart(2, '0');
   const month = String(date.getMonth() + 1).padStart(2, '0');
   const year = date.getFullYear();
   return `${day} /${month}/${year} `;
 }
+/** Open student detail modal. */
 function loadStudentModal() {
   $('.studentModal').click(function (e) {
     e.preventDefault();
@@ -340,6 +343,7 @@ function loadStudentModal() {
     });
   });
 }
+/** Submit edited record data. */
 function editData(id) {
   $('.submitEditBtn').click(function (e) {
     e.preventDefault();

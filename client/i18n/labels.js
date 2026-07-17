@@ -435,6 +435,7 @@ const i18n = (function () {
     return LANGUAGE_META[lang] || { flag: '🌐', code: String(lang || '').toUpperCase() };
   }
 
+  /** Escape text for safe HTML output. */
   function escapeHtml(value) {
     return String(value)
       .replaceAll('&', '&amp;')
@@ -444,6 +445,7 @@ const i18n = (function () {
       .replaceAll("'", '&#039;');
   }
 
+  /** Build language switcher HTML. */
   function buildLanguageSwitcher(fixed) {
     const options = Object.keys(LANGUAGES).map(function (lang) {
       const meta = getLanguageMeta(lang);
@@ -459,6 +461,7 @@ const i18n = (function () {
     </label>`;
   }
 
+  /** Bind language switcher events. */
   function bindLanguageSwitcher() {
     if (_switcherBound) return;
     document.addEventListener('change', function (event) {
@@ -469,6 +472,7 @@ const i18n = (function () {
     _switcherBound = true;
   }
 
+  /** Mount language switcher into page. */
   function mountLanguageSwitcher() {
     bindLanguageSwitcher();
 
@@ -489,6 +493,7 @@ const i18n = (function () {
     syncLanguageSwitchers();
   }
 
+  /** Sync language switcher selected value. */
   function syncLanguageSwitchers() {
     const meta = getLanguageMeta(_lang);
     document.querySelectorAll('.bk-lang-select').forEach(function (select) {
@@ -503,6 +508,7 @@ const i18n = (function () {
     });
   }
 
+  /** Apply multiline translated HTML. */
   function setMultilineHtml(el, key) {
     el.textContent = '';
     String(t(key))
@@ -513,6 +519,7 @@ const i18n = (function () {
       });
   }
 
+  /** Apply shared translated labels. */
   function applySharedStaticLabels() {
     document.querySelectorAll('.navbar .form-inline input[type="search"]').forEach(function (input) {
       if (!input.dataset.i18nPlaceholder) input.placeholder = t('nav.search');
@@ -551,6 +558,7 @@ const i18n = (function () {
     applySharedStaticLabels();
   }
 
+  /** Run callback when DOM is ready. */
   function ready() {
     applyAll();
     mountLanguageSwitcher();

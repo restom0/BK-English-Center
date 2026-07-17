@@ -3,6 +3,7 @@ $(document).ready(function () {
 });
 let tableData = [];
 
+/** Handle staff profile edit success UI. */
 function handleStaffProfileEditSuccess() {
   Toast.fire({
     icon: 'success',
@@ -17,6 +18,7 @@ function handleStaffProfileEditSuccess() {
   });
 }
 
+/** Submit edited record data. */
 function editData() {
   $('.edit').click(function (e) {
     e.preventDefault();
@@ -218,6 +220,7 @@ function editData() {
     });
   });
 }
+/** Load page data from API. */
 function loadData() {
   $.ajax({
     type: 'get',
@@ -274,6 +277,7 @@ function loadData() {
     },
   });
 }
+/** Format date for display. */
 function formatDate(date) {
   const day = String(date.getDate()).padStart(2, '0');
   const month = String(date.getMonth() + 1).padStart(2, '0');

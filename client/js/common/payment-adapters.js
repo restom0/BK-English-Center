@@ -30,6 +30,7 @@
     },
   };
 
+  /** Initialize component behavior. */
   function init(role) {
     global.BkPageScriptLoader.loadScriptsWhenWindowReady(
       [{ src: 'payment-page.js', baseUrl: adapterScriptUrl }],

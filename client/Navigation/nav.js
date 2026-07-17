@@ -2,6 +2,7 @@ $(document).ready(function () {
   loadNav();
 });
 
+/** Load role-specific navigation. */
 function loadNav() {
   const role = localStorage.getItem('role');
   if (role === 'student') {

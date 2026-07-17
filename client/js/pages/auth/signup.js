@@ -1,3 +1,4 @@
+/** Toggle OTP field by selected role. */
 function toggleAuthenticationCode() {
   if ($('#floating_roles').val() === 'staff' || $('#floating_roles').val() === 'admin') {
     $('#authentication-code').removeClass('hidden');
@@ -21,6 +22,7 @@ $(document).ready(function () {
   register();
   toggleAuthenticationCode();
 });
+/** Bind registration form actions. */
 function register() {
   $('#sendMail').click(function (e) {
     e.preventDefault();

@@ -18,6 +18,7 @@ $(document).ready(function () {
   injectLangSwitcher();
 });
 
+/** Load current user info for navigation. */
 function getNavInfo() {
   if (!getToken()) return; // utils/auth.js
 

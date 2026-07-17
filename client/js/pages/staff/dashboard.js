@@ -24,6 +24,7 @@ if (localStorage.getItem('role') === 'admin') {
   );
 }
 
+/** Load page data from API. */
 function loadData() {
   apiRequest({
     type: 'get',

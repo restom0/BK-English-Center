@@ -152,6 +152,7 @@ const courses = [
 $(document).ready(function () {
   loadData();
 });
+/** Load page data from API. */
 function loadData() {
   const url = new URLSearchParams(window.location.search);
   const id = url.get('id');
@@ -172,10 +173,14 @@ function loadData() {
 }
 
 const card = [1, 2, 3, 4];
+/** Load selected page record. */
 function load() {
   let str = '';
   card.forEach((el) => {
-    const detailHref = typeof routeHref === 'function' ? routeHref('course-detail', { id: el }) : `./index.html?id=${el}`;
+    const detailHref =
+      typeof routeHref === 'function'
+        ? routeHref('course-detail', { id: el })
+        : `./index.html?id=${el}`;
     str += `<li class="course">
         <h3>${el}</h3>
         <p>Khóa học Luyện thi TOEIC 4 kỹ năng sẽ trang bị cho bạn những kiến thức và kỹ năng cần thiết để chinh phục

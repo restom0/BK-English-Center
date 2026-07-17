@@ -7,6 +7,7 @@ $(document).ready(function () {
   loadAddData();
 });
 
+/** Load page data from API. */
 function loadData() {
   // Load courses cho dropdown
   apiRequest({
@@ -71,6 +72,7 @@ function loadData() {
   });
 }
 
+/** Build course select options. */
 function buildCourseOptions(selectedName) {
   return courseData
     .map(function (el) {
@@ -80,6 +82,7 @@ function buildCourseOptions(selectedName) {
     .join('');
 }
 
+/** Open add modal and prepare data. */
 function loadAddData() {
   $('.addModal').click(function (e) {
     e.preventDefault();
@@ -154,6 +157,7 @@ function loadAddData() {
   });
 }
 
+/** Submit new record data. */
 function addData() {
   $('.submitAddBtn').click(function (e) {
     e.preventDefault();
@@ -191,6 +195,7 @@ function addData() {
   });
 }
 
+/** Open edit modal and fill current data. */
 function loadEditData() {
   $('.editBtn').click(function (e) {
     e.preventDefault();
@@ -271,6 +276,7 @@ function loadEditData() {
   });
 }
 
+/** Submit edited record data. */
 function editData(id) {
   $('.submitEditBtn').click(function (e) {
     e.preventDefault();
@@ -312,6 +318,7 @@ function editData(id) {
   });
 }
 
+/** Delete selected record. */
 function deleteData() {
   $('.deleteBtn').click(function (e) {
     e.preventDefault();
@@ -345,17 +352,20 @@ function deleteData() {
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
+/** Format date for display. */
 function formatDate(date) {
   const d = new Date(date);
   return `${String(d.getDate()).padStart(2, '0')}/${String(d.getMonth() + 1).padStart(2, '0')}/${d.getFullYear()}`;
 }
 
+/** Convert date string for local date input. */
 function toLocalDate(dateStr) {
   const d = new Date(dateStr);
   d.setMinutes(d.getMinutes() - d.getTimezoneOffset());
   return d.toISOString().split('T')[0];
 }
 
+/** Close modal after transition. */
 function closeModal(selector) {
   $(selector).removeClass('opacity-100').addClass('invisible opacity-0');
   setTimeout(function () {

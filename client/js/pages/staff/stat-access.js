@@ -59,6 +59,7 @@ function loadRegisterLog() {
 /* ── Danh sách email được phép ───────────────────────────────────── */
 let temp = [];
 
+/** Load email logs from API. */
 function loadEmailLog() {
   apiRequest({ type: 'get', url: '/emails' })
     .then(function (res) {
@@ -144,6 +145,7 @@ function loadAddData() {
   });
 }
 
+/** Submit new record data. */
 function addData() {
   $('.submitAddBtn').on('click', function (e) {
     e.preventDefault();
@@ -207,6 +209,7 @@ function loadEditData() {
   });
 }
 
+/** Submit edited record data. */
 function editData(id) {
   $('.submitEditBtn').on('click', function (e) {
     e.preventDefault();

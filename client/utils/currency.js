@@ -31,6 +31,7 @@ const BkCurrency = (function () {
   let _fetching = null; // ongoing fetch Promise
 
   // ── Fetch exchange rates from frankfurter.app ──────────────────────
+  /** Fetch currency exchange rates. */
   function _fetchRates() {
     // Build unique currency codes (exclude VND itself)
     const targets = [];
@@ -60,6 +61,7 @@ const BkCurrency = (function () {
   }
 
   // ── Convert a VND amount to the current currency ───────────────────
+  /** Convert VND amount to selected currency. */
   function _convert(vndAmount) {
     const cfg = LANG_CONFIG[_lang] || LANG_CONFIG['vi'];
     if (cfg.code === 'VND') return vndAmount;
@@ -69,6 +71,7 @@ const BkCurrency = (function () {
   }
 
   // ── Format a VND amount as a locale-aware currency string ──────────
+  /** Format amount in selected currency. */
   function format(vndAmount) {
     const num = Number.parseFloat(vndAmount);
     if (Number.isNaN(num)) return '';
@@ -98,6 +101,7 @@ const BkCurrency = (function () {
   }
 
   // ── Re-render all [data-vnd] elements in DOM ───────────────────────
+  /** Apply currency formatting to marked elements. */
   function _applyAll() {
     document.querySelectorAll('[data-vnd]').forEach(function (el) {
       const raw = Number.parseFloat(el.dataset.vnd);
@@ -106,6 +110,7 @@ const BkCurrency = (function () {
   }
 
   // ── Public: change language, fetch rates if needed, re-render ──────
+  /** Set active language. */
   function setLang(lang) {
     _lang = lang;
     const cfg = LANG_CONFIG[lang] || LANG_CONFIG['vi'];
@@ -124,6 +129,7 @@ const BkCurrency = (function () {
   }
 
   // ── Public: init (called on page load) ────────────────────────────
+  /** Initialize component behavior. */
   function init() {
     _lang = typeof i18n !== 'undefined' ? i18n.getLang() : 'vi';
     const cfg = LANG_CONFIG[_lang] || LANG_CONFIG['vi'];
