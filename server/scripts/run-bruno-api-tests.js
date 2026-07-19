@@ -45,8 +45,10 @@ function waitFor(url, timeoutMs = 30_000) {
 
 function run(command, args, options = {}) {
   return new Promise((resolve, reject) => {
-    const spawnCommand =
-      isWindows && command.endsWith('.cmd') ? process.env.ComSpec || 'cmd.exe' : command;
+    // Use a fixed interpreter name rather than %ComSpec% so the command is
+    // never derived from the environment (CodeQL js/shell-command-from-environment).
+    // Args are still passed as an array with shell:false, so nothing is interpolated.
+    const spawnCommand = isWindows && command.endsWith('.cmd') ? 'cmd.exe' : command;
     const spawnArgs = isWindows && command.endsWith('.cmd') ? ['/d', '/c', command, ...args] : args;
 
     const child = spawn(spawnCommand, spawnArgs, {

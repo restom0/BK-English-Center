@@ -11,6 +11,11 @@ on:
     branches: [main]
   workflow_dispatch:
 
+# Least privilege: deployment happens through the Vercel API, not the
+# GitHub token, so the workflow only needs to read the checkout.
+permissions:
+  contents: read
+
 concurrency:
   group: deploy-vercel-${{ github.ref }}
   cancel-in-progress: true
