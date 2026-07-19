@@ -23,10 +23,11 @@ function makeRes() {
   return res;
 }
 
-function makeReq({ method = 'GET', cookies, headers = {} } = {}) {
+function makeReq({ method = 'GET', cookies, headers = {}, path = '/courses' } = {}) {
   return {
     method,
     cookies,
+    path,
     get: (name) => headers[String(name).toLowerCase()],
   };
 }
@@ -143,6 +144,17 @@ describe('csrfProtection', () => {
       expect(res.cookie).toHaveBeenCalledTimes(1);
       expect(next).not.toHaveBeenCalled();
       expect(res.statusCode).toBe(403);
+    });
+
+    it('exempts the login bootstrap route (no cookie exists yet on a cold session)', () => {
+      const req = makeReq({ method: 'POST', cookies: {}, path: '/users/login' });
+      const res = makeRes();
+      const next = jest.fn();
+
+      csrfProtection(req, res, next);
+
+      expect(next).toHaveBeenCalledTimes(1);
+      expect(res.status).not.toHaveBeenCalled();
     });
 
     it.each(['POST', 'PUT', 'PATCH', 'DELETE'])('guards %s', (method) => {

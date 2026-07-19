@@ -40,8 +40,8 @@ function login() {
       userpassword: password,
     };
     $.ajax({
-      type: 'get',
-      url: `${API_URL}/users/user`,
+      type: 'post',
+      url: `${API_URL}/users/login`,
       data: info,
       dataType: 'JSON',
       success: function (res) {

@@ -15,6 +15,12 @@ const { randomBytes, timingSafeEqual } = require('node:crypto');
 const CSRF_COOKIE = 'csrfToken';
 const SAFE_METHODS = new Set(['GET', 'HEAD', 'OPTIONS']);
 
+// Sign-in is the bootstrap request. The login page is static and never calls
+// the API, so a first-time visitor has no CSRF cookie yet and requiring the
+// header here would make signing in impossible. The credentials themselves
+// authenticate this route and there is no session to hijack at that point.
+const CSRF_EXEMPT_PATHS = new Set(['/users/login']);
+
 function cookieOptions() {
   return {
     httpOnly: false, // must be readable by JS to echo into the header
@@ -25,13 +31,14 @@ function cookieOptions() {
 }
 
 function csrfProtection(req, res, next) {
-  let token = req.cookies && req.cookies[CSRF_COOKIE];
+  let token = req.cookies?.[CSRF_COOKIE];
   if (!token) {
     token = randomBytes(32).toString('hex');
     res.cookie(CSRF_COOKIE, token, cookieOptions());
   }
 
   if (SAFE_METHODS.has(req.method)) return next();
+  if (CSRF_EXEMPT_PATHS.has(req.path)) return next();
 
   const header = req.get('x-csrf-token') || '';
   const a = Buffer.from(header);

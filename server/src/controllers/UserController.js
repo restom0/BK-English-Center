@@ -3,7 +3,6 @@ const Log = require('../models/Log'); // Fix: thiếu import Log
 const { createApiKey } = require('../middleware/useApiKey');
 const RegisterLog = require('../models/RegisterLog');
 const { createHash, checkPassword } = require('../middleware/usePassword');
-const { randomBytes } = require('crypto');
 
 // Helper validate các trường bắt buộc
 const validateRequired = (fields, res) => {
@@ -17,10 +16,10 @@ const validateRequired = (fields, res) => {
 };
 
 class UserController {
-  // [GET] /users/login
+  /** Authenticate user and set API token cookie. */
   async login(req, res) {
     try {
-      const { username, userpassword } = req.query;
+      const { username, userpassword } = req.body;
       if (
         !validateRequired(
           [
@@ -42,12 +41,8 @@ class UserController {
         return res.status(401).json({ check: false, msg: req.t('auth.wrongPassword') });
       }
 
-      // Create JWT for authentication, but do NOT store it directly in client cookie.
-      // Store only an opaque session key in the cookie to avoid cleartext sensitive storage.
       const token = createApiKey({ id: queryResult.id, role: queryResult.role });
-      const sessionKey = randomBytes(32).toString('hex');
-      // TODO: Persist mapping { sessionKey -> token } in server-side session store (Redis/DB).
-      res.cookie('apitoken', sessionKey, {
+      res.cookie('apitoken', token, {
         httpOnly: true,
         sameSite: 'lax',
         secure: process.env.COOKIE_SECURE === 'true',
@@ -62,7 +57,7 @@ class UserController {
     }
   }
 
-  // [GET] /users/info
+  /** Return authenticated account profile info. */
   async getInfo(req, res) {
     try {
       const queryResult = await User.getInfo(res.user.id, res.user.role);
@@ -76,7 +71,7 @@ class UserController {
     }
   }
 
-  // [POST] /users/add
+  /** Register a new account. */
   async addAccount(req, res) {
     try {
       const { username, userpassword, name, email, dob, sex, phone, address, role } = req.body;
@@ -124,7 +119,7 @@ class UserController {
     }
   }
 
-  // [PUT] /users/change
+  /** Update authenticated account profile fields. */
   async changeAccount(req, res) {
     try {
       const { name, email, dob, sex, phone, address } = req.body;
