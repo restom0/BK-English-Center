@@ -190,6 +190,14 @@ jobs:
       - name: Run server quality gate (format + ESLint + Jest coverage)
         run: npm run quality
 
+      - name: Upload coverage report (lcov + HTML)
+        if: always()
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4
+        with:
+          name: server-coverage
+          path: server/coverage/
+          retention-days: 7
+
       - name: Run Bruno API smoke collection
         run: npm run test:bruno
 
