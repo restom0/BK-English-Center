@@ -34,8 +34,8 @@ jobs:
       - name: Server tests with coverage
         working-directory: server
         run: |
-          npm ci
-          npx prisma generate
+          npm ci --ignore-scripts
+          ./node_modules/.bin/prisma generate
           npm run test:cov || true
 
       - name: SonarCloud scan

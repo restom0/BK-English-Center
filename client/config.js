@@ -500,10 +500,15 @@ if (window.jQuery) {
  * @param {object} options - jQuery AJAX options (type, url, data, success, error)
  */
 function apiRequest(options) {
+  const headers = { ...authHeader() };
+  if (options.headers) {
+    Object.assign(headers, options.headers);
+  }
+
   return $.ajax({
     ...options,
     url: API_URL + options.url,
-    headers: { ...authHeader(), ...(options.headers || {}) },
+    headers,
     dataType: options.dataType || 'JSON',
   });
 }

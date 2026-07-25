@@ -1,6 +1,44 @@
 let tableData = [];
 let teacher = [];
 let temp = [];
+
+/** Hide a modal-like element, then clear it after the fade finishes. */
+function hideAndClear(selector, revealSelector) {
+  $(selector).removeClass('opacity-100');
+  $(selector).addClass('invisible opacity-0');
+  setTimeout(function () {
+    if (revealSelector) $(revealSelector).removeClass('hidden');
+    $(selector).empty();
+  }, 200);
+}
+
+function finishFileModal() {
+  hideAndClear('.editModal', '.addBtn');
+  loadData();
+}
+
+function closeStudentModal() {
+  hideAndClear('#studentModal');
+}
+
+function closeFileModal() {
+  hideAndClear('.editModal', '.addBtn');
+}
+
+function handleFileAddSuccess() {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.add_ok'),
+  }).then(finishFileModal);
+}
+
+function handleFileEditSuccess() {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.edit_ok'),
+  }).then(finishFileModal);
+}
+
 $.ajax({
   type: 'get',
   url: `${API_URL}/teachers`,
@@ -264,18 +302,8 @@ function loadStudentModal() {
     BkSecurity.setSafeHtml($('#studentModal'), str);
     $('#studentModal').removeClass('invisible opacity-0');
     $('#studentModal').addClass('opacity-100');
-    $('.editModal').removeClass('opacity-100');
-    $('.editModal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('.editModal').empty();
-    }, 200);
-    $('.closeBtn').click(function (e) {
-      $('#studentModal').removeClass('opacity-100');
-      $('#studentModal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('#studentModal').empty();
-      }, 200);
-    });
+    hideAndClear('.editModal');
+    $('.closeBtn').click(closeStudentModal);
   });
 }
 /** Send warning notification email. */
@@ -417,19 +445,8 @@ function addModal() {
     BkSecurity.setSafeHtml($('.editModal'), str);
     $('.editModal').removeClass('invisible opacity-0');
     $('.editModal').addClass('opacity-100');
-    $('#studentModal').removeClass('opacity-100');
-    $('#studentModal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('#studentModal').empty();
-    }, 200);
-    $('.closeBtn').click(function (e) {
-      $('.editModal').removeClass('opacity-100');
-      $('.editModal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('.editModal').empty();
-        $('.addBtn').removeClass('hidden');
-      }, 200);
-    });
+    closeStudentModal();
+    $('.closeBtn').click(closeFileModal);
     addBook();
   });
 }
@@ -484,20 +501,7 @@ function addBook() {
           fileStatus: status,
         },
         dataType: 'JSON',
-        success: function (res) {
-          Toast.fire({
-            icon: 'success',
-            title: i18n.t('toast.add_ok'),
-          }).then(() => {
-            $('.editModal').removeClass('opacity-100');
-            $('.editModal').addClass('invisible opacity-0');
-            setTimeout(function () {
-              $('.editModal').empty();
-              $('.addBtn').removeClass('hidden');
-            }, 200);
-            loadData();
-          });
-        },
+        success: handleFileAddSuccess,
         error: function (jqXHR, textStatus, errorThrown) {
           Toast.fire({
             icon: 'error',
@@ -507,14 +511,7 @@ function addBook() {
       });
     }
   });
-  $('.closeBtn').click(function (e) {
-    $('.editModal').removeClass('opacity-100');
-    $('.editModal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('.editModal').empty();
-      $('.addBtn').removeClass('hidden');
-    }, 200);
-  });
+  $('.closeBtn').click(closeFileModal);
 }
 /** Open edit modal. */
 function editModal() {
@@ -627,19 +624,8 @@ function editModal() {
     BkSecurity.setSafeHtml($('.editModal'), str);
     $('.editModal').removeClass('invisible opacity-0');
     $('.editModal').addClass('opacity-100');
-    $('#studentModal').removeClass('opacity-100');
-    $('#studentModal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('#studentModal').empty();
-    }, 200);
-    $('.closeBtn').click(function (e) {
-      $('.editModal').removeClass('opacity-100');
-      $('.editModal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('.editModal').empty();
-        $('.addBtn').removeClass('hidden');
-      }, 200);
-    });
+    closeStudentModal();
+    $('.closeBtn').click(closeFileModal);
     editBook(id);
   });
 }
@@ -675,20 +661,7 @@ function editBook(id) {
             fileStatus: status,
           },
           dataType: 'JSON',
-          success: function (res) {
-            Toast.fire({
-              icon: 'success',
-              title: i18n.t('toast.edit_ok'),
-            }).then(() => {
-              $('.editModal').removeClass('opacity-100');
-              $('.editModal').addClass('invisible opacity-0');
-              setTimeout(function () {
-                $('.editModal').empty();
-                $('.addBtn').removeClass('hidden');
-              }, 200);
-              loadData();
-            });
-          },
+            success: handleFileEditSuccess,
           error: function (jqXHR, textStatus, errorThrown) {
             Toast.fire({
               icon: 'error',
@@ -699,14 +672,7 @@ function editBook(id) {
       }
     });
   });
-  $('.closeBtn').click(function (e) {
-    $('.editModal').removeClass('opacity-100');
-    $('.editModal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('.editModal').empty();
-      $('.addBtn').removeClass('hidden');
-    }, 200);
-  });
+  $('.closeBtn').click(closeFileModal);
 }
 /** Open delete confirmation modal. */
 function deleteModal() {

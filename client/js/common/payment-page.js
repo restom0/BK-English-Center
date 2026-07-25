@@ -4,6 +4,69 @@ let tempPay = [];
 let tempPrize = [];
 let nullPrize = [];
 
+/** Hide a modal-like element, then clear it after the fade finishes. */
+function hideAndClear(selector, revealSelector) {
+  $(selector).removeClass('opacity-100');
+  $(selector).addClass('invisible opacity-0');
+  setTimeout(function () {
+    if (revealSelector) $(revealSelector).removeClass('hidden');
+    $(selector).empty();
+  }, 200);
+}
+
+function closeStudentModal() {
+  hideAndClear('#studentModal');
+}
+
+function closePayModal() {
+  hideAndClear('#payModal', '.payModal');
+}
+
+function closePrizeModal() {
+  hideAndClear('#prizeModal', '.prizeModal');
+}
+
+function closePayAndPrizeModals() {
+  closePayModal();
+  closePrizeModal();
+}
+
+function finishAddPrize() {
+  loadData();
+  closePrizeModal();
+}
+
+function handleAddPrizeSuccess() {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.add_ok'),
+  }).then(finishAddPrize);
+}
+
+function finishEditPay() {
+  closePayModal();
+  loadData();
+}
+
+function handleEditPaySuccess() {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.edit_ok'),
+  }).then(finishEditPay);
+}
+
+function finishEditPrize() {
+  closePrizeModal();
+  loadData();
+}
+
+function handleEditPrizeSuccess() {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.edit_ok'),
+  }).then(finishEditPrize);
+}
+
 /** Initialize shared payment page behavior. */
 function bkInitPaymentPage(config) {
   bkPaymentSettings = config;
@@ -665,23 +728,8 @@ function loadStudentModal() {
     BkSecurity.setSafeHtml($('#studentModal'), str);
     $('#studentModal').removeClass('invisible opacity-0');
     $('#studentModal').addClass('opacity-100');
-    $('#payModal').removeClass('opacity-100');
-    $('#payModal').addClass('invisible opacity-0');
-    $('#prizeModal').removeClass('opacity-100');
-    $('#prizeModal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('.payModal').removeClass('hidden');
-      $('.prizeModal').removeClass('hidden');
-      $('#payModal').empty();
-      $('#prizeModal').empty();
-    }, 200);
-    $('.closeBtn').click(function (e) {
-      $('#studentModal').removeClass('opacity-100');
-      $('#studentModal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('#studentModal').empty();
-      }, 200);
-    });
+    closePayAndPrizeModals();
+    $('.closeBtn').click(closeStudentModal);
   });
 }
 /** Open add prize modal. */
@@ -756,19 +804,8 @@ function addPrizeModal() {
     BkSecurity.setSafeHtml($('#prizeModal'), str);
     $('#prizeModal').removeClass('invisible opacity-0');
     $('#prizeModal').addClass('opacity-100');
-    $('#studentModal').removeClass('opacity-100');
-    $('#studentModal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('#studentModal').empty();
-    }, 200);
-    $('.closeBtn').click(function (e) {
-      $('#prizeModal').removeClass('opacity-100');
-      $('#prizeModal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('.prizeModal').removeClass('hidden');
-        $('#prizeModal').empty();
-      }, 200);
-    });
+    closeStudentModal();
+    $('.closeBtn').click(closePrizeModal);
     addPrize();
   });
 }
@@ -801,20 +838,7 @@ function addPrize() {
           prizeStatus: status,
         },
         dataType: 'JSON',
-        success: function (res) {
-          Toast.fire({
-            icon: 'success',
-            title: i18n.t('toast.add_ok'),
-          }).then(() => {
-            loadData();
-            $('#prizeModal').removeClass('opacity-100');
-            $('#prizeModal').addClass('invisible opacity-0');
-            setTimeout(function () {
-              $('.prizeModal').removeClass('hidden');
-              $('#prizeModal').empty();
-            }, 200);
-          });
-        },
+        success: handleAddPrizeSuccess,
         error: function (jqXHR, textStatus, errorThrown) {
           Toast.fire({
             icon: 'error',
@@ -997,19 +1021,8 @@ function editPayModal() {
     BkSecurity.setSafeHtml($('#payModal'), str);
     $('#payModal').removeClass('invisible opacity-0');
     $('#payModal').addClass('opacity-100');
-    $('#studentModal').removeClass('opacity-100');
-    $('#studentModal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('#studentModal').empty();
-    }, 200);
-    $('.closeBtn').click(function (e) {
-      $('#payModal').removeClass('opacity-100');
-      $('#payModal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('.payModal').removeClass('hidden');
-        $('#payModal').empty();
-      }, 200);
-    });
+    closeStudentModal();
+    $('.closeBtn').click(closePayModal);
     editPay(id, tempPay[id].id);
   });
 }
@@ -1048,20 +1061,7 @@ function editPay(i, id) {
               paidStatus: status,
             },
             dataType: 'JSON',
-            success: function (res) {
-              Toast.fire({
-                icon: 'success',
-                title: i18n.t('toast.edit_ok'),
-              }).then(() => {
-                $('#payModal').removeClass('opacity-100');
-                $('#payModal').addClass('invisible opacity-0');
-                setTimeout(function () {
-                  $('.payModal').removeClass('hidden');
-                  $('#payModal').empty();
-                }, 200);
-                loadData();
-              });
-            },
+            success: handleEditPaySuccess,
             error: function (jqXHR, textStatus, errorThrown) {
               Toast.fire({
                 icon: 'error',
@@ -1176,19 +1176,8 @@ function editPrizeModal() {
     BkSecurity.setSafeHtml($('#prizeModal'), str);
     $('#prizeModal').removeClass('invisible opacity-0');
     $('#prizeModal').addClass('opacity-100');
-    $('#studentModal').removeClass('opacity-100');
-    $('#studentModal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('#studentModal').empty();
-    }, 200);
-    $('.closeBtn').click(function (e) {
-      $('#prizeModal').removeClass('opacity-100');
-      $('#prizeModal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('.prizeModal').removeClass('hidden');
-        $('#prizeModal').empty();
-      }, 200);
-    });
+    closeStudentModal();
+    $('.closeBtn').click(closePrizeModal);
     editPrize(id, tempPrize[id].id);
   });
 }
@@ -1227,20 +1216,7 @@ function editPrize(i, id) {
               prizeStatus: status,
             },
             dataType: 'JSON',
-            success: function (res) {
-              Toast.fire({
-                icon: 'success',
-                title: i18n.t('toast.edit_ok'),
-              }).then(() => {
-                $('#prizeModal').removeClass('opacity-100');
-                $('#prizeModal').addClass('invisible opacity-0');
-                setTimeout(function () {
-                  $('.prizeModal').removeClass('hidden');
-                  $('#prizeModal').empty();
-                }, 200);
-                loadData();
-              });
-            },
+            success: handleEditPrizeSuccess,
             error: function (jqXHR, textStatus, errorThrown) {
               Toast.fire({
                 icon: 'error',
@@ -1281,13 +1257,11 @@ function deletePrize() {
             id: tempPrize[id].id,
           },
           dataType: 'JSON',
-          success: function (res) {
+          success: function () {
             Toast.fire({
               icon: 'success',
               title: i18n.t('toast.delete_ok'),
-            }).then(() => {
-              loadData();
-            });
+            }).then(loadData);
           },
           error: function (jqXHR, textStatus, errorThrown) {
             Toast.fire({

@@ -38,11 +38,11 @@ jobs:
       - name: Compile SCSS → CSS
         working-directory: client
         run: |
-          npm ci --prefer-offline
+          npm ci --prefer-offline --ignore-scripts
           npm run build:css
 
       - name: Install Vercel CLI
-        run: npm install --global vercel@latest
+        run: npm install --global vercel@56.4.1 --ignore-scripts
 
       - name: Pull Vercel project settings
         working-directory: client

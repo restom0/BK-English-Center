@@ -18,6 +18,25 @@ function handleStaffProfileEditSuccess() {
   });
 }
 
+function submitStaffProfileEdit(profile) {
+  $.ajax({
+    type: 'patch',
+    url: `${API_URL}/staffs/staff`,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
+    },
+    data: profile,
+    dataType: 'JSON',
+    success: handleStaffProfileEditSuccess,
+    error: function (jqXHR, textStatus, errorThrown) {
+      Toast.fire({
+        icon: 'error',
+        title: jqXHR.responseJSON?.msg ?? 'Lá»—i káº¿t ná»‘i mÃ¡y chá»§',
+      });
+    },
+  });
+}
+
 /** Submit edited record data. */
 function editData() {
   $('.edit').click(function (e) {
@@ -191,29 +210,14 @@ function editData() {
         confirmButtonText: i18n.t('action.confirm'),
       }).then((result) => {
         if (result.isConfirmed) {
-          $.ajax({
-            type: 'patch',
-            url: `${API_URL}/staffs/staff`,
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
-            },
-            data: {
-              id: idStaff,
-              name: fullName,
-              sex: gender,
-              dayofbirth: dob,
-              phone: phone,
-              address: address,
-              email: email,
-            },
-            dataType: 'JSON',
-            success: handleStaffProfileEditSuccess,
-            error: function (jqXHR, textStatus, errorThrown) {
-              Toast.fire({
-                icon: 'error',
-                title: jqXHR.responseJSON?.msg ?? 'Lỗi kết nối máy chủ',
-              });
-            },
+          submitStaffProfileEdit({
+            id: idStaff,
+            name: fullName,
+            sex: gender,
+            dayofbirth: dob,
+            phone: phone,
+            address: address,
+            email: email,
           });
         }
       });

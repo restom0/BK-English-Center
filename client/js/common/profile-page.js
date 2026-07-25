@@ -17,6 +17,25 @@ function handleProfileEditSuccess() {
   });
 }
 
+function submitProfileEdit(profile) {
+  $.ajax({
+    type: 'patch',
+    url: `${API_URL}/${bkProfileSettings.updateEndpoint}`,
+    headers: {
+      Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
+    },
+    data: profile,
+    dataType: 'JSON',
+    success: handleProfileEditSuccess,
+    error: function (jqXHR, textStatus, errorThrown) {
+      Toast.fire({
+        icon: 'error',
+        title: jqXHR.responseJSON?.msg ?? 'LÃ¡Â»â€”i kÃ¡ÂºÂ¿t nÃ¡Â»â€˜i mÃƒÂ¡y chÃ¡Â»Â§',
+      });
+    },
+  });
+}
+
 /** Initialize shared profile page behavior. */
 function bkInitProfilePage(config) {
   bkProfileSettings = config;
@@ -200,29 +219,14 @@ function editData() {
         confirmButtonText: i18n.t('action.confirm'),
       }).then((result) => {
         if (result.isConfirmed) {
-          $.ajax({
-            type: 'patch',
-            url: `${API_URL}/${bkProfileSettings.updateEndpoint}`,
-            headers: {
-              Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
-            },
-            data: {
-              id: idCourse,
-              name: fullName,
-              sex: sex,
-              dateofbirth: new Date(dob),
-              address: address,
-              email: email,
-              phone: phone,
-            },
-            dataType: 'JSON',
-            success: handleProfileEditSuccess,
-            error: function (jqXHR, textStatus, errorThrown) {
-              Toast.fire({
-                icon: 'error',
-                title: jqXHR.responseJSON?.msg ?? 'Lá»—i káº¿t ná»‘i mÃ¡y chá»§',
-              });
-            },
+          submitProfileEdit({
+            id: idCourse,
+            name: fullName,
+            sex: sex,
+            dateofbirth: new Date(dob),
+            address: address,
+            email: email,
+            phone: phone,
           });
         }
       });

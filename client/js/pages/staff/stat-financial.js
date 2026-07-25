@@ -7,6 +7,29 @@
 const data = [];
 let sponsorData = [];
 
+function finishSponsorEdit() {
+  closeModal();
+  loadSponsor();
+  loadData();
+}
+
+function handleSponsorEditSaved() {
+  toastSuccess(i18n.t('toast.edit_ok')).then(finishSponsorEdit);
+}
+
+function finishSponsorAdd() {
+  closeModal();
+  loadSponsor();
+}
+
+function handleSponsorAdded() {
+  toastSuccess(i18n.t('toast.add_ok')).then(finishSponsorAdd);
+}
+
+function handleSponsorDeleted() {
+  toastSuccess(i18n.t('toast.delete_ok')).then(loadSponsor);
+}
+
 $(document).ready(function () {
   loadIncome();
   loadOutcome();
@@ -227,12 +250,7 @@ function addData() {
       return;
     }
     apiRequest({ type: 'post', url: '/sponsors/sponsor', data: { name, amount, status } })
-      .then(function () {
-        toastSuccess(i18n.t('toast.add_ok')).then(function () {
-          closeModal();
-          loadSponsor();
-        });
-      })
+      .then(handleSponsorAdded)
       .fail(function (jqXHR) {
         toastError(getErrorMsg(jqXHR));
       });
@@ -325,13 +343,7 @@ function editData(id, sponsorid) {
         url: '/sponsors/sponsor',
         data: { name, amount, status, id: sponsorid },
       })
-        .then(function () {
-          toastSuccess(i18n.t('toast.edit_ok')).then(function () {
-            closeModal();
-            loadSponsor();
-            loadData();
-          });
-        })
+        .then(handleSponsorEditSaved)
         .fail(function (jqXHR) {
           toastError(getErrorMsg(jqXHR));
         });
@@ -357,11 +369,7 @@ function deleteData() {
     }).then(function (result) {
       if (!result.isConfirmed) return;
       apiRequest({ type: 'delete', url: `/sponsors/sponsor?id=${sponsorid}` })
-        .then(function () {
-          toastSuccess(i18n.t('toast.delete_ok')).then(function () {
-            loadSponsor();
-          });
-        })
+        .then(handleSponsorDeleted)
         .fail(function (jqXHR) {
           toastError(getErrorMsg(jqXHR));
         });

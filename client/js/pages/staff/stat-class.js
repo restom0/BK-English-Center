@@ -2,6 +2,28 @@
 let classData;
 let courseData;
 
+function finishClassEdit() {
+  closeModal('#editModal');
+  loadData();
+}
+
+function handleClassEditSuccess() {
+  Toast.fire({ icon: 'success', title: i18n.t('toast.edit_ok') }).then(finishClassEdit);
+}
+
+function handleClassDeleteSuccess() {
+  Toast.fire({ icon: 'success', title: i18n.t('toast.delete_ok') }).then(loadData);
+}
+
+function finishClassAdd() {
+  closeModal('#addModal');
+  loadData();
+}
+
+function handleClassAddSuccess() {
+  Toast.fire({ icon: 'success', title: i18n.t('toast.add_ok') }).then(finishClassAdd);
+}
+
 $(document).ready(function () {
   loadData();
   loadAddData();
@@ -182,12 +204,7 @@ function addData() {
       type: 'post',
       url: '/classes/class',
       data: payload,
-      success: function () {
-        Toast.fire({ icon: 'success', title: i18n.t('toast.add_ok') }).then(function () {
-          closeModal('#addModal');
-          loadData();
-        });
-      },
+      success: handleClassAddSuccess,
       error: function (jqXHR) {
         Toast.fire({ icon: 'error', title: jqXHR.responseJSON?.msg ?? 'Lỗi kết nối máy chủ' });
       },
@@ -304,12 +321,7 @@ function editData(id) {
           address: $('#address').val(),
           oldname: $('#className').attr('data-value'),
         },
-        success: function () {
-          Toast.fire({ icon: 'success', title: i18n.t('toast.edit_ok') }).then(function () {
-            closeModal('#editModal');
-            loadData();
-          });
-        },
+        success: handleClassEditSuccess,
         error: function (jqXHR) {
           Toast.fire({ icon: 'error', title: jqXHR.responseJSON?.msg ?? 'Lỗi kết nối máy chủ' });
         },
@@ -337,11 +349,7 @@ function deleteData() {
       apiRequest({
         type: 'delete',
         url: `/classes/class?name=${encodeURIComponent(cls.name)}`,
-        success: function () {
-          Toast.fire({ icon: 'success', title: i18n.t('toast.delete_ok') }).then(function () {
-            loadData();
-          });
-        },
+        success: handleClassDeleteSuccess,
         error: function (jqXHR) {
           Toast.fire({ icon: 'error', title: jqXHR.responseJSON?.msg ?? 'Lỗi kết nối máy chủ' });
         },

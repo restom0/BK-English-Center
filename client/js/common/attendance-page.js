@@ -5,6 +5,60 @@ let tableData = [];
 let temp = [];
 let nullClass = [];
 
+/** Hide a modal-like element, then clear it after the fade finishes. */
+function hideAndClear(selector, revealSelector) {
+  $(selector).removeClass('opacity-100');
+  $(selector).addClass('invisible opacity-0');
+  setTimeout(function () {
+    if (revealSelector) $(revealSelector).removeClass('hidden');
+    $(selector).empty();
+  }, 200);
+}
+
+function closeModalOnly() {
+  hideAndClear('#modal');
+}
+
+function closeEditModalOnly() {
+  hideAndClear('#editModal');
+}
+
+function closeEditModalAndShowAdd() {
+  hideAndClear('#editModal', '.add');
+}
+
+function showAttendanceMarked(name) {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('outcome.marked_ok', { name }),
+  }).then(loadData);
+}
+
+function finishAddDate() {
+  loadData();
+  closeEditModalAndShowAdd();
+}
+
+function handleAddDateSuccess() {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.add_ok'),
+  }).then(finishAddDate);
+}
+
+function finishEditDate() {
+  loadData();
+  closeEditModalAndShowAdd();
+  loadData();
+}
+
+function handleEditDateSuccess() {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.edit_ok'),
+  }).then(finishEditDate);
+}
+
 /** Initialize shared attendance page behavior. */
 function bkInitAttendancePage(config) {
   bkAttendanceSettings = {
@@ -317,18 +371,8 @@ ${i18n.t('action.edit')}
         BkSecurity.setSafeHtml($('#modal'), str);
         $('#modal').removeClass('invisible opacity-0');
         $('#modal').addClass('opacity-100');
-        $('#editModal').removeClass('opacity-100');
-        $('#editModal').addClass('invisible opacity-0');
-        setTimeout(function () {
-          $('#editModal').empty();
-        }, 200);
-        $('.closeBtn').click(function (e) {
-          $('#modal').removeClass('opacity-100');
-          $('#modal').addClass('invisible opacity-0');
-          setTimeout(function () {
-            $('#modal').empty();
-          }, 200);
-        });
+        hideAndClear('#editModal');
+        $('.closeBtn').click(closeModalOnly);
       });
     },
   });
@@ -368,13 +412,8 @@ function addCheck() {
             attendDate: temp[id].attendDate + 1,
           },
           dataType: 'JSON',
-          success: function (res) {
-            Toast.fire({
-              icon: 'success',
-              title: i18n.t('outcome.marked_ok', { name: temp[id]['name'] }),
-            }).then(() => {
-              loadData();
-            });
+          success: function () {
+            showAttendanceMarked(temp[id]['name']);
           },
           error: function (jqXHR, textStatus, errorThrown) {
             Toast.fire({
@@ -494,18 +533,8 @@ function addModal() {
     BkSecurity.setSafeHtml($('#editModal'), str);
     $('#editModal').removeClass('invisible opacity-0');
     $('#editModal').addClass('opacity-100');
-    $('#modal').removeClass('opacity-100');
-    $('#modal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('#modal').empty();
-    }, 200);
-    $('.closeBtn').click(function (e) {
-      $('#editModal').removeClass('opacity-100');
-      $('#editModal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('#editModal').empty();
-      }, 200);
-    });
+    hideAndClear('#modal');
+    $('.closeBtn').click(closeEditModalOnly);
     addDate();
   });
 }
@@ -538,20 +567,7 @@ function addDate() {
           idClass: className,
         },
         dataType: 'JSON',
-        success: function (res) {
-          Toast.fire({
-            icon: 'success',
-            title: i18n.t('toast.add_ok'),
-          }).then(() => {
-            loadData();
-            $('#editModal').removeClass('opacity-100');
-            $('#editModal').addClass('invisible opacity-0');
-            setTimeout(function () {
-              $('.add').removeClass('hidden');
-              $('#editModal').empty();
-            }, 200);
-          });
-        },
+        success: handleAddDateSuccess,
         error: function (jqXHR, textStatus, errorThrown) {
           Toast.fire({
             icon: 'error',
@@ -561,14 +577,7 @@ function addDate() {
       });
     }
   });
-  $('.closeBtn').click(function (e) {
-    $('#editModal').removeClass('opacity-100');
-    $('#editModal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('.add').removeClass('hidden');
-      $('#editModal').empty();
-    }, 200);
-  });
+  $('.closeBtn').click(closeEditModalAndShowAdd);
 }
 /** Open edit modal. */
 function editModal() {
@@ -656,18 +665,8 @@ function editModal() {
     BkSecurity.setSafeHtml($('#editModal'), str);
     $('#editModal').removeClass('invisible opacity-0');
     $('#editModal').addClass('opacity-100');
-    $('#modal').removeClass('opacity-100');
-    $('#modal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('#modal').empty();
-    }, 200);
-    $('.closeBtn').click(function (e) {
-      $('#editModal').removeClass('opacity-100');
-      $('#editModal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('#editModal').empty();
-      }, 200);
-    });
+    hideAndClear('#modal');
+    $('.closeBtn').click(closeEditModalOnly);
     editDate(id);
   });
 }
@@ -706,21 +705,7 @@ function editDate(id) {
               status: status,
             },
             dataType: 'JSON',
-            success: function (res) {
-              Toast.fire({
-                icon: 'success',
-                title: i18n.t('toast.edit_ok'),
-              }).then(() => {
-                loadData();
-                $('#editModal').removeClass('opacity-100');
-                $('#editModal').addClass('invisible opacity-0');
-                setTimeout(function () {
-                  $('.add').removeClass('hidden');
-                  $('#editModal').empty();
-                }, 200);
-                loadData();
-              });
-            },
+            success: handleEditDateSuccess,
             error: function (jqXHR, textStatus, errorThrown) {
               Toast.fire({
                 icon: 'error',
@@ -732,14 +717,7 @@ function editDate(id) {
       });
     }
   });
-  $('.closeBtn').click(function (e) {
-    $('#editModal').removeClass('opacity-100');
-    $('#editModal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('.add').removeClass('hidden');
-      $('#editModal').empty();
-    }, 200);
-  });
+  $('.closeBtn').click(closeEditModalAndShowAdd);
 }
 
 window.BkAttendancePage = {

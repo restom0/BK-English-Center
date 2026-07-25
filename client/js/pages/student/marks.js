@@ -1,5 +1,35 @@
 let tableData = [];
 let temp = [];
+
+/** Hide a modal-like element, then clear it after the fade finishes. */
+function hideAndClear(selector) {
+  $(selector).removeClass('opacity-100');
+  $(selector).addClass('invisible opacity-0');
+  setTimeout(function () {
+    $(selector).empty();
+  }, 200);
+}
+
+function closeStudentModal() {
+  hideAndClear('#studentModal');
+}
+
+function closeScoreModal() {
+  hideAndClear('#scoreModal');
+}
+
+function finishScoreEdit() {
+  $('#scoreModal').empty();
+  loadData();
+}
+
+function handleScoreEditSuccess() {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.edit_ok'),
+  }).then(finishScoreEdit);
+}
+
 $.ajax({
   type: 'get',
   url: `${API_URL}/students`,
@@ -97,18 +127,8 @@ function loadScoreModal() {
     BkSecurity.setSafeHtml($('#scoreModal'), str);
     $('#scoreModal').removeClass('invisible opacity-0');
     $('#scoreModal').addClass('opacity-100');
-    $('#studentModal').removeClass('opacity-100');
-    $('#studentModal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('#studentModal').empty();
-    }, 200);
-    $('.closeBtn').click(function (e) {
-      $('#scoreModal').removeClass('opacity-100');
-      $('#scoreModal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('#scoreModal').empty();
-      }, 200);
-    });
+    closeStudentModal();
+    $('.closeBtn').click(closeScoreModal);
     editData(id);
   });
 }
@@ -329,18 +349,8 @@ function loadStudentModal() {
     BkSecurity.setSafeHtml($('#studentModal'), str);
     $('#studentModal').removeClass('invisible opacity-0');
     $('#studentModal').addClass('opacity-100');
-    $('#scoreModal').removeClass('opacity-100');
-    $('#scoreModal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('#scoreModal').empty();
-    }, 200);
-    $('.closeBtn').click(function (e) {
-      $('#studentModal').removeClass('opacity-100');
-      $('#studentModal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('#studentModal').empty();
-      }, 200);
-    });
+    closeScoreModal();
+    $('.closeBtn').click(closeStudentModal);
   });
 }
 /** Submit edited record data. */
@@ -403,17 +413,7 @@ function editData(id) {
               speaking: speaking,
             },
             dataType: 'JSON',
-            success: function (res) {
-              if (result.isConfirmed) {
-                Toast.fire({
-                  icon: 'success',
-                  title: i18n.t('toast.edit_ok'),
-                }).then(() => {
-                  $('#scoreModal').empty();
-                  loadData();
-                });
-              }
-            },
+            success: handleScoreEditSuccess,
           });
         }
       });

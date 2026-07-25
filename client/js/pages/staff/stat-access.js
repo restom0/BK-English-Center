@@ -59,6 +59,23 @@ function loadRegisterLog() {
 /* ── Danh sách email được phép ───────────────────────────────────── */
 let temp = [];
 
+function finishEmailEdit() {
+  closeModal();
+  loadEmailLog();
+}
+
+function handleEmailEditSaved() {
+  toastSuccess(i18n.t('toast.edit_ok')).then(finishEmailEdit);
+}
+
+function handleEmailAdded() {
+  toastSuccess(i18n.t('toast.add_ok')).then(finishEmailEdit);
+}
+
+function handleEmailDeleted() {
+  toastSuccess(i18n.t('toast.delete_ok')).then(loadEmailLog);
+}
+
 /** Load email logs from API. */
 function loadEmailLog() {
   apiRequest({ type: 'get', url: '/emails' })
@@ -156,12 +173,7 @@ function addData() {
       return;
     }
     apiRequest({ type: 'post', url: '/emails/email', data: { email, role } })
-      .then(function () {
-        toastSuccess(i18n.t('toast.add_ok')).then(function () {
-          closeModal();
-          loadEmailLog();
-        });
-      })
+      .then(handleEmailAdded)
       .fail(function (jqXHR) {
         toastError(getErrorMsg(jqXHR));
       });
@@ -231,12 +243,7 @@ function editData(id) {
     }).then(function (result) {
       if (!result.isConfirmed) return;
       apiRequest({ type: 'patch', url: '/emails/email', data: { id: temp[id].id, email, role } })
-        .then(function () {
-          toastSuccess(i18n.t('toast.edit_ok')).then(function () {
-            closeModal();
-            loadEmailLog();
-          });
-        })
+        .then(handleEmailEditSaved)
         .fail(function (jqXHR) {
           toastError(getErrorMsg(jqXHR));
         });
@@ -261,11 +268,7 @@ function deleteData() {
     }).then(function (result) {
       if (!result.isConfirmed) return;
       apiRequest({ type: 'delete', url: `/emails/email?id=${temp[id]['id']}` })
-        .then(function () {
-          toastSuccess(i18n.t('toast.delete_ok')).then(function () {
-            loadEmailLog();
-          });
-        })
+        .then(handleEmailDeleted)
         .fail(function (jqXHR) {
           toastError(getErrorMsg(jqXHR));
         });

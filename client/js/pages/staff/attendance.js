@@ -1,5 +1,55 @@
 let tableData = [];
 let temp = [];
+
+/** Hide a modal-like element, then clear it after the fade finishes. */
+function hideAndClear(selector, revealSelector) {
+  $(selector).removeClass('opacity-100');
+  $(selector).addClass('invisible opacity-0');
+  setTimeout(function () {
+    if (revealSelector) $(revealSelector).removeClass('hidden');
+    $(selector).empty();
+  }, 200);
+}
+
+function closeModalAndShowAdd() {
+  hideAndClear('#modal', '.add');
+}
+
+function closeEditModalOnly() {
+  hideAndClear('#editModal');
+}
+
+function showTimekeepingMarked(name) {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('outcome.marked_ok', { name }),
+  }).then(loadData);
+}
+
+function finishTimekeepingEdit() {
+  closeEditModalOnly();
+  loadData();
+}
+
+function handleTimekeepingEditSuccess() {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.edit_ok'),
+  }).then(finishTimekeepingEdit);
+}
+
+function finishTimekeepingAdd() {
+  hideAndClear('#modal', '.add');
+  loadData();
+}
+
+function handleTimekeepingAddSuccess() {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.add_ok'),
+  }).then(finishTimekeepingAdd);
+}
+
 $.ajax({
   type: 'get',
   url: `${API_URL}/staffs/staff`,
@@ -243,19 +293,8 @@ function loadData() {
             BkSecurity.setSafeHtml($('#modal'), str);
             $('#modal').removeClass('invisible opacity-0');
             $('#modal').addClass('opacity-100');
-            $('#editModal').removeClass('opacity-100');
-            $('#editModal').addClass('invisible opacity-0');
-            setTimeout(function () {
-              $('#editModal').empty();
-            }, 200);
-            $('.closeBtn').click(function (e) {
-              $('#modal').removeClass('opacity-100');
-              $('#modal').addClass('invisible opacity-0');
-              $('.add').removeClass('hidden');
-              setTimeout(function () {
-                $('#modal').empty();
-              }, 200);
-            });
+            hideAndClear('#editModal');
+            $('.closeBtn').click(closeModalAndShowAdd);
           },
         });
       });
@@ -299,13 +338,8 @@ function addCheck() {
             attendDate: temp[id]['attendDate'] + 1,
           },
           dataType: 'JSON',
-          success: function (res) {
-            Toast.fire({
-              icon: 'success',
-              title: i18n.t('outcome.marked_ok', { name: temp[id]['name'] }),
-            }).then(() => {
-              loadData();
-            });
+          success: function () {
+            showTimekeepingMarked(temp[id]['name']);
           },
           error: function (jqXHR, textStatus, errorThrown) {
             Toast.fire({
@@ -438,18 +472,8 @@ function editModal() {
     BkSecurity.setSafeHtml($('#editModal'), str);
     $('#editModal').removeClass('invisible opacity-0');
     $('#editModal').addClass('opacity-100');
-    $('#modal').removeClass('opacity-100');
-    $('#modal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('#modal').empty();
-    }, 200);
-    $('.closeBtn').click(function (e) {
-      $('#editModal').removeClass('opacity-100');
-      $('#editModal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('#editModal').empty();
-      }, 200);
-    });
+    hideAndClear('#modal');
+    $('.closeBtn').click(closeEditModalOnly);
     editDate(id);
   });
 }
@@ -487,19 +511,7 @@ function editDate(id) {
               attendDate: dates,
             },
             dataType: 'JSON',
-            success: function (res) {
-              Toast.fire({
-                icon: 'success',
-                title: i18n.t('toast.edit_ok'),
-              }).then(() => {
-                $('#editModal').removeClass('opacity-100');
-                $('#editModal').addClass('invisible opacity-0');
-                setTimeout(function () {
-                  $('#editModal').empty();
-                }, 200);
-                loadData();
-              });
-            },
+            success: handleTimekeepingEditSuccess,
             error: function (jqXHR, textStatus, errorThrown) {
               Toast.fire({
                 icon: 'error',
@@ -511,13 +523,7 @@ function editDate(id) {
       });
     }
   });
-  $('.closeBtn').click(function (e) {
-    $('#editModal').removeClass('opacity-100');
-    $('#editModal').addClass('invisible opacity-0');
-    setTimeout(function () {
-      $('#editModal').empty();
-    }, 200);
-  });
+  $('.closeBtn').click(closeEditModalOnly);
 }
 /** Open add modal and prepare data. */
 function loadAddData() {
@@ -590,14 +596,7 @@ function loadAddData() {
     $('#modal').addClass('opacity-100');
     $('.add').addClass('hidden');
     addData();
-    $('.closeBtn').click(function (e) {
-      $('#modal').removeClass('opacity-100');
-      $('#modal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('#modal').empty();
-        $('.add').removeClass('hidden');
-      }, 200);
-    });
+    $('.closeBtn').click(closeModalAndShowAdd);
   });
 }
 /** Submit new record data. */
@@ -626,20 +625,7 @@ function addData() {
           year: year,
         },
         dataType: 'JSON',
-        success: function (res) {
-          Toast.fire({
-            icon: 'success',
-            title: i18n.t('toast.add_ok'),
-          }).then(() => {
-            $('#modal').removeClass('opacity-100');
-            $('#modal').addClass('invisible opacity-0');
-            setTimeout(function () {
-              $('#modal').empty();
-              $('.add').removeClass('hidden');
-            }, 200);
-            loadData();
-          });
-        },
+        success: handleTimekeepingAddSuccess,
         error: function (jqXHR, textStatus, errorThrown) {
           Toast.fire({
             icon: 'error',

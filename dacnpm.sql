@@ -3,54 +3,54 @@ USE BKEC;
 -- Create Users table
 CREATE TABLE Users (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    username VARCHAR(255),
-    password VARCHAR(255),
-    role VARCHAR(50),
-    email VARCHAR(255),
+    username CHARACTER VARYING(255),
+    password CHARACTER VARYING(255),
+    role CHARACTER VARYING(50),
+    email CHARACTER VARYING(255),
     image BLOB
 );
 
 -- Create Students table
 CREATE TABLE Students (
     id INT PRIMARY KEY,
-    name VARCHAR(255),
-    sex VARCHAR(10),
+    name CHARACTER VARYING(255),
+    sex CHARACTER VARYING(10),
     dateofbirth DATE,
-    phone VARCHAR(20),
-    address VARCHAR(255),
+    phone CHARACTER VARYING(20),
+    address CHARACTER VARYING(255),
     FOREIGN KEY (id) REFERENCES Users(id)
 );
 
 -- Create Teachers table
 CREATE TABLE Teachers (
     id INT PRIMARY KEY,
-    name VARCHAR(255),
-    sex VARCHAR(10),
+    name CHARACTER VARYING(255),
+    sex CHARACTER VARYING(10),
     dateofbirth DATE,
-    phone VARCHAR(20),
-    address VARCHAR(255),
+    phone CHARACTER VARYING(20),
+    address CHARACTER VARYING(255),
     FOREIGN KEY (id) REFERENCES Users(id)
 );
 
 -- Create Staff table
 CREATE TABLE Staff (
     id INT PRIMARY KEY,
-    name VARCHAR(255),
-    sex VARCHAR(10),
+    name CHARACTER VARYING(255),
+    sex CHARACTER VARYING(10),
     dateofbirth DATE,
-    phone VARCHAR(20),
-    address VARCHAR(255),
+    phone CHARACTER VARYING(20),
+    address CHARACTER VARYING(255),
     FOREIGN KEY (id) REFERENCES Users(id)
 );
 
 -- Create Admin table
 CREATE TABLE Admin (
     id INT PRIMARY KEY,
-    name VARCHAR(255),
-    sex VARCHAR(10),
+    name CHARACTER VARYING(255),
+    sex CHARACTER VARYING(10),
     dateofbirth DATE,
-    phone VARCHAR(20),
-    address VARCHAR(255),
+    phone CHARACTER VARYING(20),
+    address CHARACTER VARYING(255),
     FOREIGN KEY (id) REFERENCES Users(id)
 );
 
@@ -70,10 +70,10 @@ CREATE TABLE ManageStaff (
 
 CREATE TABLE Courses (
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) UNIQUE,
+    name CHARACTER VARYING(255) UNIQUE,
     intro LONGBLOB,
-    img VARCHAR(255),
-    imgintro VARCHAR(255),
+    img CHARACTER VARYING(255),
+    imgintro CHARACTER VARYING(255),
     short LONGBLOB,
     description LONGBLOB,
     paidStudent INT,
@@ -86,12 +86,12 @@ CREATE TABLE Courses (
 CREATE TABLE Classes (
     idCourse INT ,
     id INT AUTO_INCREMENT PRIMARY KEY,
-    name VARCHAR(255) UNIQUE,
+    name CHARACTER VARYING(255) UNIQUE,
     startDate DATE,
     endDate DATE,
-    schedule VARCHAR(255),
+    schedule CHARACTER VARYING(255),
     maxStudent INT,
-    address VARCHAR(255),
+    address CHARACTER VARYING(255),
     FOREIGN KEY (IdCourse) REFERENCES Courses(id)
 );
 
@@ -127,8 +127,8 @@ CREATE TABLE TeacherHasFile(
 	 id INT AUTO_INCREMENT PRIMARY KEY,
     idTeacher INT,
     idClass INT,
-	 fileName VARCHAR(255),
-    filetype VARCHAR(255),
+	 fileName CHARACTER VARYING(255),
+    filetype CHARACTER VARYING(255),
     fileAmount INT,
     fileStatus BOOLEAN,
     FOREIGN KEY (idClass) REFERENCES Classes(id),
@@ -138,7 +138,7 @@ CREATE TABLE TeacherHasFile(
 CREATE TABLE Log (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idUser INT,
-    action VARCHAR(255),
+    action CHARACTER VARYING(255),
     status BOOLEAN,
     date DATE,
     FOREIGN KEY (IdUser) REFERENCES Users(id)
@@ -148,18 +148,18 @@ CREATE TABLE Log (
 CREATE TABLE RegisterLog (
     id INT AUTO_INCREMENT PRIMARY KEY,
     idUser INT,
-    email VARCHAR(255),
+    email CHARACTER VARYING(255),
     date DATE,
     FOREIGN KEY (IdUser) REFERENCES Users(id)
 );
 CREATE TABLE Sponsors(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	name VARCHAR(255),
+	name CHARACTER VARYING(255),
 	amount INT,
 	status BOOLEAN
 );
 CREATE TABLE Emails(
 	id INT AUTO_INCREMENT PRIMARY KEY,
-	email VARCHAR(255) UNIQUE,
-	role VARCHAR(255)
+	email CHARACTER VARYING(255) UNIQUE,
+	role CHARACTER VARYING(255)
 )

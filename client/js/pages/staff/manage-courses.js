@@ -1,4 +1,54 @@
 let courseData;
+
+/** Hide a modal-like element, then clear it after the fade finishes. */
+function hideAndClear(selector, revealSelector) {
+  $(selector).removeClass('opacity-100');
+  $(selector).addClass('invisible opacity-0');
+  setTimeout(function () {
+    if (revealSelector) $(revealSelector).removeClass('hidden');
+    $(selector).empty();
+  }, 200);
+}
+
+function finishCourseAdd() {
+  hideAndClear('#addModal', '.addModal');
+  loadData();
+}
+
+function closeAddCourseModal() {
+  hideAndClear('#addModal', '.addModal');
+}
+
+function handleCourseAddSuccess() {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.add_course_ok'),
+  }).then(finishCourseAdd);
+}
+
+function finishCourseEdit() {
+  hideAndClear('#editModal', '.addModal');
+  loadData();
+}
+
+function closeEditCourseModal() {
+  hideAndClear('#editModal', '.addModal');
+}
+
+function handleCourseEditSuccess() {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.edit_course_ok'),
+  }).then(finishCourseEdit);
+}
+
+function handleCourseDeleteSuccess() {
+  Toast.fire({
+    icon: 'success',
+    title: i18n.t('toast.delete_course_ok'),
+  }).then(loadData);
+}
+
 $(document).ready(function () {
   loadData();
   loadAddData();
@@ -254,19 +304,8 @@ function loadAddData() {
     BkSecurity.setSafeHtml($('#addModal'), str);
     $('#addModal').removeClass('invisible opacity-0');
     $('#addModal').addClass('opacity-100');
-    $('#editModal').addClass('invisible opacity-0');
-    $('#editModal').removeClass('opacity-100');
-    setTimeout(function () {
-      $('#editModal').empty();
-    }, 200);
-    $('.closeBtn').click(function (e) {
-      $('#addModal').removeClass('opacity-100');
-      $('#addModal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('.addModal').removeClass('hidden');
-        $('#addModal').empty();
-      }, 200);
-    });
+    hideAndClear('#editModal');
+    $('.closeBtn').click(closeAddCourseModal);
     addData();
   });
 }
@@ -324,20 +363,7 @@ function addData() {
         maxAttendDate: Number(time),
       },
       dataType: 'JSON',
-      success: function (res) {
-        Toast.fire({
-          icon: 'success',
-          title: i18n.t('toast.add_course_ok'),
-        }).then(() => {
-          $('#addModal').removeClass('opacity-100');
-          $('#addModal').addClass('invisible opacity-0');
-          setTimeout(function () {
-            $('.addModal').removeClass('hidden');
-            $('#addModal').empty();
-          }, 200);
-          loadData();
-        });
-      },
+      success: handleCourseAddSuccess,
       error: function (jqXHR, textStatus, errorThrown) {
         Toast.fire({
           icon: 'error',
@@ -506,19 +532,8 @@ function loadEditData() {
     BkSecurity.setSafeHtml($('#editModal'), str);
     $('#editModal').removeClass('invisible opacity-0');
     $('#editModal').addClass('opacity-100');
-    $('#addModal').addClass('invisible opacity-0');
-    $('#addModal').removeClass('opacity-100');
-    setTimeout(function () {
-      $('#addModal').empty();
-    }, 200);
-    $('.closeBtn').click(function (e) {
-      $('#editModal').removeClass('opacity-100');
-      $('#editModal').addClass('invisible opacity-0');
-      setTimeout(function () {
-        $('.addModal').removeClass('hidden');
-        $('#editModal').empty();
-      }, 200);
-    });
+    hideAndClear('#addModal');
+    $('.closeBtn').click(closeEditCourseModal);
     editData(id);
   });
 }
@@ -588,20 +603,7 @@ function editData(id) {
             maxAttendDate: Number(time),
           },
           dataType: 'JSON',
-          success: function (res) {
-            Toast.fire({
-              icon: 'success',
-              title: i18n.t('toast.edit_course_ok'),
-            }).then(() => {
-              $('#editModal').removeClass('opacity-100');
-              $('#editModal').addClass('invisible opacity-0');
-              setTimeout(function () {
-                $('.addModal').removeClass('hidden');
-                $('#editModal').empty();
-              }, 200);
-              loadData();
-            });
-          },
+          success: handleCourseEditSuccess,
           error: function (jqXHR, textStatus, errorThrown) {
             Toast.fire({
               icon: 'error',
@@ -643,14 +645,7 @@ function deleteData() {
             Authorization: `Bearer ${localStorage.getItem('apitoken')}`,
           },
           dataType: 'JSON',
-          success: function (res) {
-            Toast.fire({
-              icon: 'success',
-              title: i18n.t('toast.delete_course_ok'),
-            }).then(() => {
-              loadData();
-            });
-          },
+          success: handleCourseDeleteSuccess,
           error: function (jqXHR, textStatus, errorThrown) {
             Toast.fire({
               icon: 'error',
