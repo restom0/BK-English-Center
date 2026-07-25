@@ -10,7 +10,7 @@ WORKDIR /build
 
 # Install only sass (devDependency)
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --ignore-scripts
 
 # Copy frontend source explicitly; keep repo metadata and local-only files out.
 COPY config.js ./
