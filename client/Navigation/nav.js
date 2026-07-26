@@ -1,5 +1,8 @@
 $(document).ready(function () {
   loadNav();
+  if (window.BkDemoMode) {
+    window.BkDemoMode.mountButton();
+  }
 });
 
 /** Load role-specific navigation. */
@@ -19,7 +22,9 @@ function loadNav() {
   }
   $('#my-class-link').attr(
     'href',
-    typeof routeHref === 'function' ? routeHref('my-courses') : '../pages/public/my-courses/index.html'
+    typeof routeHref === 'function'
+      ? routeHref('my-courses')
+      : '../pages/public/my-courses/index.html'
   );
   $('#my-page-link').attr(
     'href',

@@ -73,7 +73,8 @@ function requireAuth() {
  */
 function guardCurrentPage() {
   const page = window.location.pathname.split('/').pop();
-  if (PROTECTED_PAGES.has(page) && !localStorage.getItem('role')) {
+  const demoEnabled = window.BkDemoMode && window.BkDemoMode.isEnabled();
+  if (PROTECTED_PAGES.has(page) && !localStorage.getItem('role') && !demoEnabled) {
     window.location.replace(authRouteHref('login', '../pages/auth/login/index.html'));
   }
 }
@@ -108,6 +109,9 @@ function redirectAfterLogin(role) {
  * @returns {string|null}
  */
 function getToken() {
+  if (window.BkDemoMode && window.BkDemoMode.isEnabled()) {
+    return window.BkDemoMode.token;
+  }
   // JWT is stored in an httpOnly cookie and cannot be read from JS.
   return null;
 }

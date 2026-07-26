@@ -465,6 +465,9 @@ if (document.readyState === 'loading') {
 
 /** The JWT now lives in an httpOnly cookie and is not readable from JS. */
 function getToken() {
+  if (window.BkDemoMode && window.BkDemoMode.isEnabled()) {
+    return window.BkDemoMode.token;
+  }
   return null;
 }
 
@@ -542,3 +545,29 @@ function initGoogleLogin(buttonContainerId, onCredential) {
     locale: navigator.language || 'en',
   });
 }
+
+/** Load demo-mode modules beside this config file before page scripts run. */
+(function bkLoadDemoModeScripts() {
+  if (typeof document === 'undefined') return;
+  if (document.querySelector('script[src$="js/demo-mode.js"]')) return;
+
+  const currentScript = document.currentScript;
+  const configSrc = currentScript ? currentScript.getAttribute('src') || '' : '';
+  const basePath = configSrc.endsWith('config.js') ? configSrc.slice(0, -'config.js'.length) : './';
+  const dataSrc = `${basePath}js/demo-data.js`;
+  const modeSrc = `${basePath}js/demo-mode.js`;
+
+  if (document.readyState === 'loading') {
+    document.write(`<script src="${dataSrc}"><\/script>\n<script src="${modeSrc}"><\/script>`);
+    return;
+  }
+
+  const dataScript = document.createElement('script');
+  dataScript.src = dataSrc;
+  dataScript.onload = function () {
+    const modeScript = document.createElement('script');
+    modeScript.src = modeSrc;
+    document.head.appendChild(modeScript);
+  };
+  document.head.appendChild(dataScript);
+})();

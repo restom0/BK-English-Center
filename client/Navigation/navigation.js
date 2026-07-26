@@ -13,6 +13,9 @@ guardCurrentPage(); // định nghĩa trong utils/auth.js
 
 /* ── 2. Thông tin user sau khi DOM sẵn sàng ─────────────────────── */
 $(document).ready(function () {
+  if (window.BkDemoMode) {
+    window.BkDemoMode.mountButton();
+  }
   getNavInfo();
   bindSignout();
   injectLangSwitcher();
@@ -20,7 +23,8 @@ $(document).ready(function () {
 
 /** Load current user info for navigation. */
 function getNavInfo() {
-  if (!getToken()) return; // utils/auth.js
+  const demoEnabled = window.BkDemoMode && window.BkDemoMode.isEnabled();
+  if (!getToken() && !demoEnabled) return; // utils/auth.js
 
   apiRequest({ type: 'get', url: '/users/info' })
     .then(function (res) {
